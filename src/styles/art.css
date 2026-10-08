@@ -1,0 +1,621 @@
+/*
+ * Art direction pass: editorial hero, product tiles, quality / control, logistics &
+ * export, origin band, cold chain, dialogs. Loaded last.
+ */
+
+/* ── Hero ─────────────────────────────────────────────────────
+ * Photo fills ~64% of the field; the oxblood panel overlaps it with one slanted edge
+ * (a restrained echo of the old brand's curve). Height ≈ 84vh after the nav.
+ */
+.hero {
+  position: relative;
+  display: block;
+  background: var(--maroon);
+  color: var(--on-dark);
+  overflow: hidden;
+}
+.hero__media {
+  position: relative;
+  aspect-ratio: 16 / 11;
+}
+.hero__media img {
+  object-fit: cover;
+}
+.hero__panel {
+  position: relative;
+  z-index: 1;
+  margin-top: -2rem;
+  background: var(--maroon);
+  clip-path: polygon(0 2rem, 100% 0, 100% 100%, 0 100%);
+}
+.hero__inner {
+  display: flex;
+  flex-direction: column;
+  padding: var(--s-7) var(--gutter) var(--s-6);
+}
+.hero__label {
+  margin: 0 0 var(--s-4);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: #e9a59d;
+}
+.hero__title {
+  margin: 0;
+  font-size: clamp(2.5rem, 1.5rem + 3.4vw, 4.75rem);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: 0.002em;
+  hyphens: manual;
+  text-wrap: balance;
+  min-height: 0;
+}
+.hero__sub {
+  margin: var(--s-4) 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1rem + 0.9vw, 1.75rem);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--on-dark);
+  max-width: 30ch;
+}
+.hero__lead {
+  margin: var(--s-5) 0 0;
+  font-size: var(--fs-base);
+  color: var(--on-dark-muted);
+  max-width: 44ch;
+}
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin: var(--s-6) 0 0;
+}
+.hero__actions .btn {
+  min-width: 0;
+}
+.hero__sales {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--s-3);
+  margin: var(--s-5) 0 0;
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--on-dark-rule);
+  font-size: var(--fs-sm);
+  color: var(--on-dark-muted);
+  max-width: 28rem;
+}
+@media (max-width: 63.99rem) {
+  /* Mobile: CTAs right after the headline, lead follows. */
+  .hero__actions {
+    order: 3;
+  }
+  .hero__lead {
+    order: 4;
+  }
+  .hero__sales {
+    order: 5;
+  }
+  .hero__actions .btn {
+    flex: 1 1 10rem;
+  }
+}
+@media (min-width: 64rem) {
+  .hero {
+    height: clamp(38rem, calc(86svh - var(--header-h)), 52rem);
+  }
+  .hero__media {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: 64%;
+    aspect-ratio: auto;
+  }
+  .hero__panel {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 50%;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 9rem) 100%, 0 100%);
+  }
+  .hero__inner {
+    width: 100%;
+    padding: var(--s-7) 10rem var(--s-7) max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter)));
+  }
+}
+
+/* ── Trust strip ──────────────────────────────────────────────── */
+.trust {
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+}
+.trust__item {
+  padding-block: var(--s-6);
+}
+.trust__value {
+  font-size: clamp(2.25rem, 1.6rem + 1.6vw, 3.25rem);
+  letter-spacing: 0.01em;
+}
+.trust__label {
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  max-width: 24ch;
+}
+
+/* ── Product tiles (home) ─────────────────────────────────────── */
+.ptiles {
+  display: grid;
+  gap: var(--s-6) var(--s-5);
+}
+@media (min-width: 56rem) {
+  .ptiles {
+    grid-template-columns: repeat(12, 1fr);
+  }
+  .ptile:nth-child(1),
+  .ptile:nth-child(4) {
+    grid-column: span 7;
+  }
+  .ptile:nth-child(2),
+  .ptile:nth-child(3) {
+    grid-column: span 5;
+  }
+}
+.ptile__link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+.ptile__photo {
+  position: relative;
+  display: block;
+  height: clamp(12rem, 9rem + 8vw, 16.5rem);
+  overflow: hidden;
+  background: var(--paper-2);
+  border-bottom: 3px solid var(--beef);
+}
+.ptile__photo img {
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.ptile__body {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: var(--s-4);
+  padding-top: var(--s-4);
+}
+.ptile__icon,
+.cat-icon {
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: var(--beef);
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+  flex: none;
+}
+.ptile__text {
+  display: grid;
+  gap: var(--s-1);
+}
+.ptile__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  line-height: 1.05;
+}
+.ptile__summary {
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+.ptile__more {
+  min-height: 2.75rem;
+}
+@media (hover: hover) and (pointer: fine) {
+  .ptile__link:hover .ptile__photo img {
+    transform: scale(1.035);
+  }
+  .ptile__link:hover .arrow-link::after {
+    transform: translateX(3px) rotate(45deg);
+  }
+  .ptile__link:hover .ptile__name {
+    color: var(--beef);
+  }
+}
+.cat-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-right: var(--s-3);
+  vertical-align: -0.15em;
+}
+.uppz-note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4) var(--s-6);
+  margin-top: var(--s-7);
+}
+.uppz-note p {
+  margin: 0;
+}
+
+/* Chain photos use next/image fill */
+.chain__photo {
+  position: relative;
+}
+.chain__photo img {
+  object-fit: cover;
+}
+
+/* ── Quality (home) ───────────────────────────────────────────── */
+.quality-home {
+  background: var(--paper-2);
+}
+.quality-home__grid {
+  display: grid;
+  gap: var(--s-6);
+}
+@media (min-width: 64rem) {
+  .quality-home__grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--s-8);
+    align-items: start;
+  }
+}
+.cert-grid--tight {
+  margin-top: var(--s-5);
+  gap: var(--s-4);
+}
+.cert-grid--tight .cert-label {
+  padding: var(--s-4);
+}
+.cert-grid--tight .cert-label__big {
+  font-size: clamp(2.25rem, 1.8rem + 1.5vw, 3.25rem);
+}
+
+/* ── Logistics & export (home) ────────────────────────────────── */
+.logistics {
+  position: relative;
+  background: var(--paper-2);
+}
+.logistics__photo {
+  position: relative;
+  height: clamp(22rem, 46vw, 42rem);
+  overflow: hidden;
+}
+.logistics__photo img {
+  object-fit: cover;
+}
+.logistics__inner {
+  position: relative;
+  z-index: 1;
+  margin-top: -3rem;
+}
+.logistics__panel {
+  max-width: 34rem;
+  padding: var(--s-6) var(--s-5);
+  background: var(--maroon);
+  color: var(--on-dark);
+  border-top: 4px solid var(--beef);
+}
+.logistics__panel p {
+  color: var(--on-dark-muted);
+}
+.logistics__people {
+  margin: var(--s-4) 0 var(--s-5);
+}
+.logistics__people li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--s-3);
+}
+.logistics__name {
+  font-weight: 600;
+}
+@media (min-width: 64rem) {
+  .logistics__inner {
+    margin-top: -16rem;
+  }
+  .logistics__panel {
+    margin-left: auto;
+    padding: var(--s-7) var(--s-6);
+  }
+}
+.export {
+  padding-top: var(--s-8);
+}
+.export__grid {
+  display: grid;
+  gap: var(--s-6);
+}
+@media (min-width: 64rem) {
+  .export__grid {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: var(--s-8);
+    align-items: center;
+  }
+}
+
+/* ── Origin band (Jakość) ─────────────────────────────────────── */
+.origin {
+  display: grid;
+  background: var(--paper-2);
+}
+.origin__panel {
+  position: relative;
+  z-index: 1;
+  padding: var(--s-6) var(--gutter);
+  background: var(--maroon);
+  color: var(--on-dark);
+}
+@media (min-width: 64rem) {
+  .origin {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: center;
+    padding-block: var(--s-8);
+  }
+  .origin__photo {
+    padding-left: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter)));
+  }
+  .origin__panel {
+    margin-left: -6rem;
+    padding: var(--s-7) var(--s-6);
+    margin-right: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter)));
+  }
+}
+.ticks--light {
+  color: var(--on-dark);
+}
+
+/* ── Control (Jakość) ─────────────────────────────────────────── */
+.control {
+  display: grid;
+  gap: var(--s-6);
+}
+@media (min-width: 64rem) {
+  .control {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+    gap: var(--s-8);
+    align-items: start;
+  }
+  .control__photo {
+    position: sticky;
+    top: calc(var(--header-h) + var(--s-5));
+  }
+}
+.control__rows {
+  margin-top: var(--s-5);
+  border-top: 2px solid var(--rule-strong);
+}
+.control__row {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  gap: var(--s-4);
+  padding: var(--s-4) 0;
+  border-bottom: 1px solid var(--rule);
+}
+.control__row dt {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: 700;
+}
+@media (max-width: 40rem) {
+  .control__row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
+
+/* ── Cold chain (Zakłady) ─────────────────────────────────────── */
+.cold {
+  display: grid;
+  gap: var(--s-6);
+}
+@media (min-width: 64rem) {
+  .cold {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--s-8);
+    align-items: center;
+  }
+}
+.cold__body {
+  max-width: 36rem;
+}
+.cold__body .btn {
+  margin-top: var(--s-5);
+}
+
+/* ── Dialogs: wider form with a phone panel; bottom sheet on mobile ─ */
+.dlg {
+  width: min(64rem, calc(100vw - 2rem));
+}
+.dlg__grid {
+  display: grid;
+  gap: var(--s-6);
+}
+@media (min-width: 56rem) {
+  .dlg__grid {
+    grid-template-columns: minmax(0, 1fr) 15rem;
+  }
+  .dlg__aside {
+    padding-left: var(--s-5);
+    border-left: 1px solid var(--rule);
+  }
+}
+.dlg-aside__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  margin: 0;
+}
+@media (max-width: 40rem) {
+  .dlg {
+    width: 100vw;
+    max-width: 100vw;
+    max-height: 94dvh;
+    margin: auto 0 0;
+    border-radius: 8px 8px 0 0;
+  }
+  .dlg[open] {
+    animation: sheet-in 280ms var(--ease-out);
+  }
+  .dlg__head {
+    position: sticky;
+    top: calc(var(--s-5) * -1);
+    z-index: 1;
+    padding-top: var(--s-2);
+    background: var(--paper);
+  }
+}
+@keyframes sheet-in {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+}
+.form__group {
+  display: grid;
+  gap: var(--s-5);
+  padding-left: var(--s-4);
+  border-left: 3px solid var(--paper-2);
+}
+.form__submit.is-loading {
+  cursor: progress;
+  opacity: 0.75;
+}
+
+/* ── Careers apply block ──────────────────────────────────────── */
+.apply {
+  display: grid;
+  gap: var(--s-6);
+}
+@media (min-width: 64rem) {
+  .apply {
+    grid-template-columns: minmax(0, 1fr) 20rem;
+    align-items: start;
+  }
+  .apply > .form {
+    grid-column: 1;
+  }
+  .apply > .aside-box {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+}
+
+/* ── Typography rhythm ────────────────────────────────────────── */
+.h-section {
+  font-size: clamp(2rem, 1.4rem + 2vw, 3.25rem);
+  line-height: 1.02;
+  margin-bottom: var(--s-4);
+}
+.section__head {
+  margin-bottom: var(--s-7);
+}
+
+/* ── Mobile refinements ───────────────────────────────────────── */
+.hero__actions .btn {
+  white-space: nowrap;
+}
+.btn {
+  max-width: 100%;
+  text-align: center;
+}
+@media (max-width: 40rem) {
+  .hero__actions .btn {
+    flex: 1 1 100%;
+  }
+  .trust__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--s-4);
+  }
+  .trust__item {
+    padding-block: var(--s-5);
+  }
+}
+
+/* ── Product visuals: illustrative note + line-art plate (P1-02) ── */
+.photo-note {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: 0.15rem var(--s-2);
+  background: rgb(255 255 255 / 0.86);
+  color: var(--ink-2);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+}
+/* No authentic photo: the brand beef-cuts line art on paper, framed by two hard rules. */
+.pplate {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background:
+    linear-gradient(var(--rule), var(--rule)) left var(--s-5) top 22% / calc(100% - 2 * var(--s-5)) 1px no-repeat,
+    linear-gradient(var(--rule), var(--rule)) left var(--s-5) bottom 14% / calc(100% - 2 * var(--s-5)) 1px no-repeat,
+    var(--paper-2);
+}
+.pplate::after {
+  content: '';
+  position: absolute;
+  inset: 12% 0 10%;
+  background: var(--maroon);
+  -webkit-mask: var(--art) center / contain no-repeat;
+  mask: var(--art) center / contain no-repeat;
+  opacity: 0.78;
+}
+
+/* ── Markets ledger (home, Sprzedaż i eksport) — replaces the decorative map (P2-05) ── */
+.ledger {
+  display: grid;
+  gap: var(--s-6);
+}
+@media (min-width: 40rem) {
+  .ledger {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--s-6) var(--s-7);
+  }
+}
+.ledger__title {
+  font-family: var(--font-text);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-bottom: var(--s-2);
+  border-bottom: 2px solid var(--ink);
+}
+.ledger__list {
+  margin: 0;
+}
+.ledger__row {
+  display: grid;
+  gap: 0.15rem;
+  padding: var(--s-3) 0;
+  border-bottom: 1px solid var(--rule-strong);
+}
+.ledger__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  line-height: 1.05;
+}
+.ledger__name--sm {
+  font-size: var(--fs-md);
+}
+.ledger__meta {
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+.ledger__note {
+  margin-top: var(--s-3);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+}

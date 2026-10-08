@@ -1,0 +1,17 @@
+{
+  "_note": "Open Graph cards (1200x630). Rendered in a browser on the running dev server so the site's own fonts are used, then saved as JPEG to public/photos/og/<id>-<locale>.jpg. Photos are existing library assets only; text = real page names. See docs/asset-map.md.",
+  "cards": [
+    { "id": "home", "photo": "/photos/hero/cattle-herd-sunrise.webp", "position": "58% 62%",
+      "title": { "pl": "Wołowina od polskiego producenta.", "en": "Beef from a Polish producer.", "de": "Rindfleisch vom polnischen Produzenten." },
+      "sub": { "pl": "Ubój, rozbiór, pakowanie i sprzedaż w jednej grupie.", "en": "Slaughter, cutting, packing and sales within one group.", "de": "Schlachtung, Zerlegung, Verpackung und Vertrieb in einer Gruppe." } },
+    { "id": "products", "photo": "/photos/products/raw-tbone-paper.webp", "position": "center", "paper": true,
+      "title": { "pl": "Produkty", "en": "Products", "de": "Produkte" },
+      "sub": { "pl": "Ćwierci, elementy, mięsa drobne i podroby wołowe.", "en": "Beef quarters, cuts, trimmings and offal.", "de": "Rinderviertel, Teilstücke, Abschnitte und Innereien." } },
+    { "id": "quality", "photo": "/photos/quality/carcass-inspection.webp", "position": "60% center",
+      "title": { "pl": "Jakość i certyfikaty", "en": "Quality and certificates", "de": "Qualität und Zertifikate" },
+      "sub": { "pl": "BRCGS AA+ i IFS Food 98,60%. Zakład rozbioru, Lisków.", "en": "BRCGS AA+ and IFS Food 98.60%. Cutting plant, Lisków.", "de": "BRCGS AA+ und IFS Food 98,60 %. Zerlegebetrieb, Lisków." } },
+    { "id": "careers", "photo": "/photos/production/butcher-cutting.webp", "position": "72% center",
+      "title": { "pl": "Kariera", "en": "Careers", "de": "Karriere" },
+      "sub": { "pl": "Rozbieracz-wykrawacz, Lisków.", "en": "Beef deboner and trimmer, Lisków.", "de": "Zerleger und Ausbeiner (Rind), Lisków." } }
+  ]
+}

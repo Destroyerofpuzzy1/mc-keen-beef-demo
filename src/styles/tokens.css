@@ -1,0 +1,81 @@
+/*
+ * Design tokens. Palette derived from the existing brand (research/03-design-audit.md):
+ * logo red #C2000B, maroon overlays #2B0000, footer brown #1E0C06, warm brown #562E08.
+ * Red is an accent and conversion colour only; never a large background.
+ */
+:root {
+  /* Brand */
+  --beef: #c2000b;
+  --beef-strong: #9b0009;
+  --maroon: #2b0000;
+  --maroon-2: #3a0a06;
+  --brown-dark: #1e0c06;
+  --brown: #562e08;
+
+  /* Neutrals */
+  --paper: #f4f0e8;
+  --paper-2: #ebe5d9;
+  --white: #ffffff;
+  --steel: #e3e6e6;
+  --steel-line: #c4c9ca;
+  --ink: #26211e;
+  --ink-2: #4a423c;
+  --muted: #6e645c;
+  --rule: #d8cfc1;
+  --rule-strong: #26211e;
+
+  /* On dark */
+  --on-dark: #f6efe6;
+  --on-dark-muted: #c9b9aa;
+  --on-dark-rule: rgba(246, 239, 230, 0.18);
+
+  /* Status */
+  --ok: #2f6b3a;
+  --archive: #7a6f66;
+  --focus: #0a58ca;
+
+  /* Type */
+  --font-display: var(--font-barlow), 'Arial Narrow', Arial, sans-serif;
+  --font-text: var(--font-source), 'Segoe UI', Arial, sans-serif;
+
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.9375rem;
+  --fs-base: 1.0625rem;
+  --fs-md: 1.25rem;
+  --fs-lg: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  --fs-xl: clamp(2rem, 1.5rem + 2vw, 3rem);
+  --fs-xxl: clamp(2.375rem, 1.6rem + 3.4vw, 4.25rem);
+  --fs-data: clamp(2.75rem, 2rem + 3vw, 4.5rem);
+
+  --lh-tight: 1.04;
+  --lh-head: 1.12;
+  --lh-text: 1.6;
+
+  /* Space (4px base) */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+  --section: clamp(4.5rem, 2.5rem + 5vw, 9rem);
+
+  /* Layout */
+  --container: 80rem;
+  --container-wide: 86rem;
+  --gutter: clamp(1rem, 0.5rem + 2vw, 2.5rem);
+  --measure: 68ch;
+  --radius: 2px;
+  --header-h: 4.75rem;
+  --header-total: var(--header-h);
+
+  /* Motion (emil-design-eng: strong ease-out, short UI durations) */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --dur-fast: 150ms;
+  --dur: 220ms;
+  --dur-slow: 600ms;
+}

@@ -1,0 +1,488 @@
+{
+  "generatedAt": "2026-10-05T15:44:28.586Z",
+  "images": {
+    "hero-cattle-herd": {
+      "src": "/photos/hero/cattle-herd-sunrise.webp",
+      "width": 1680,
+      "height": 1015
+    },
+    "hereford-pasture": {
+      "src": "/photos/cattle/hereford-pasture.webp",
+      "width": 1920,
+      "height": 847
+    },
+    "hereford-bull": {
+      "src": "/photos/cattle/hereford-bull.webp",
+      "width": 1920,
+      "height": 622
+    },
+    "hand-feeding-cattle": {
+      "src": "/photos/cattle/hand-feeding.webp",
+      "width": 1440,
+      "height": 860
+    },
+    "misty-riverside": {
+      "src": "/photos/cattle/misty-riverside.webp",
+      "width": 1440,
+      "height": 860
+    },
+    "vet-farmer-herd": {
+      "src": "/photos/cattle/vet-farmer-herd.webp",
+      "width": 492,
+      "height": 328
+    },
+    "cattle-grazing-poster": {
+      "src": "/photos/cattle/grazing-poster.webp",
+      "width": 1280,
+      "height": 533
+    },
+    "carcass-inspection": {
+      "src": "/photos/quality/carcass-inspection.webp",
+      "width": 1080,
+      "height": 860
+    },
+    "ifs-brcgs-banner": {
+      "src": "/photos/quality/ifs-brcgs-banner.webp",
+      "width": 1920,
+      "height": 553
+    },
+    "butcher-cutting": {
+      "src": "/photos/production/butcher-cutting.webp",
+      "width": 1920,
+      "height": 847
+    },
+    "truck-highway": {
+      "src": "/photos/logistics/truck-highway.webp",
+      "width": 1920,
+      "height": 847
+    },
+    "truck-trailer": {
+      "src": "/photos/logistics/truck-trailer.webp",
+      "width": 1130,
+      "height": 847
+    },
+    "staff-beef-uniform": {
+      "src": "/photos/company/staff-beef.webp",
+      "width": 1920,
+      "height": 633
+    },
+    "europe-map": {
+      "src": "/photos/company/europe-map.webp",
+      "width": 1920,
+      "height": 724
+    },
+    "raw-tbone-paper": {
+      "src": "/photos/products/raw-tbone-paper.webp",
+      "width": 595,
+      "height": 497
+    },
+    "product-elementy": {
+      "src": "/photos/products/elementy.webp",
+      "width": 630,
+      "height": 233
+    },
+    "product-cwierci": {
+      "src": "/photos/products/cwierci.webp",
+      "width": 660,
+      "height": 232
+    },
+    "product-miesa-drobne": {
+      "src": "/photos/products/miesa-drobne.webp",
+      "width": 660,
+      "height": 235
+    },
+    "product-podroby": {
+      "src": "/photos/products/podroby.webp",
+      "width": 660,
+      "height": 232
+    },
+    "og-default": {
+      "src": "/photos/og-default.jpg",
+      "width": 1200,
+      "height": 630
+    }
+  },
+  "icons": {
+    "cow": "/photos/icons/cow.png",
+    "truck": "/photos/icons/truck.png",
+    "handshake": "/photos/icons/handshake.png",
+    "bull": "/photos/icons/bull.png",
+    "steak": "/photos/icons/steak.png",
+    "liver": "/photos/icons/liver.png",
+    "globe": "/photos/icons/globe.png"
+  },
+  "certificates": [
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2019-brcgs-de.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2019-brcgs-en.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2019-brcgs-pl.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2019-ifs-food-de.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2019-ifs-food-en.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2019-ifs-food-pl.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2020-brcgs-de.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2020-brcgs-en.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2020-brcgs-pl.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2020-ifs-food-de.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2020-ifs-food-en.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2020-ifs-food-pl.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2021-brcgs-de.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2021-brcgs-en.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2021-brcgs-pl.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2021-ekogwarancja-pl.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2021-ifs-food-de.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2021-ifs-food-en.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2021-ifs-food-pl.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2022-brcgs-de.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2022-brcgs-en.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2022-brcgs-pl.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2022-ekogwarancja-pl.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2022-ifs-food-de.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2022-ifs-food-en.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2022-ifs-food-pl.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2023-brcgs-de.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2023-brcgs-en.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2023-brcgs-pl.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2023-ifs-food-de.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2023-ifs-food-en.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2023-ifs-food-pl.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2024-brcgs-de.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2024-brcgs-en.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2024-brcgs-pl.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2024-ifs-food-de.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2024-ifs-food-en.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2024-ifs-food-pl.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2025-brcgs-de.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2025-brcgs-en.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2025-brcgs-pl.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2025-ifs-food-de.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2025-ifs-food-en.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2025-ifs-food-pl.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2026-brcgs-de.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2026-brcgs-en.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2026-brcgs-pl.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2026-ifs-food-de.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2026-ifs-food-en.pdf",
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2026-ifs-food-pl.pdf",
+    "/documents/certificates/slaughterhouse-sh/slaughterhouse-sh-2019-ifs-food-de.pdf",
+    "/documents/certificates/slaughterhouse-sh/slaughterhouse-sh-2019-ifs-food-en.pdf",
+    "/documents/certificates/slaughterhouse-sh/slaughterhouse-sh-2019-ifs-food-pl.pdf",
+    "/documents/certificates/slaughterhouse-sh/slaughterhouse-sh-2021-ekogwarancja-de.pdf",
+    "/documents/certificates/slaughterhouse-sh/slaughterhouse-sh-2021-ekogwarancja-pl.pdf",
+    "/documents/certificates/slaughterhouse-sh/slaughterhouse-sh-2022-ifs-food-de.pdf",
+    "/documents/certificates/slaughterhouse-sh/slaughterhouse-sh-2022-ifs-food-en.pdf",
+    "/documents/certificates/slaughterhouse-sh/slaughterhouse-sh-2022-ifs-food-pl.pdf",
+    "/documents/certificates/slaughterhouse-sh/slaughterhouse-sh-2023-ifs-food-de.pdf",
+    "/documents/certificates/slaughterhouse-sh/slaughterhouse-sh-2023-ifs-food-en.pdf",
+    "/documents/certificates/slaughterhouse-sh/slaughterhouse-sh-2023-ifs-food-pl.pdf"
+  ],
+  "video": {
+    "src": "/assets/video/cattle-grazing.mp4",
+    "poster": "/photos/cattle/grazing-poster.webp"
+  },
+  "certificateScans": {
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2019-brcgs-de.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2019-brcgs-de.webp",
+      "width": 1240,
+      "height": 1753
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2019-brcgs-en.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2019-brcgs-en.webp",
+      "width": 1240,
+      "height": 1753
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2019-brcgs-pl.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2019-brcgs-pl.webp",
+      "width": 1240,
+      "height": 1753
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2019-ifs-food-de.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2019-ifs-food-de.webp",
+      "width": 1240,
+      "height": 1753
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2019-ifs-food-en.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2019-ifs-food-en.webp",
+      "width": 1240,
+      "height": 1753
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2019-ifs-food-pl.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2019-ifs-food-pl.webp",
+      "width": 1240,
+      "height": 1753
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2020-brcgs-de.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2020-brcgs-de.webp",
+      "width": 1240,
+      "height": 1753
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2020-brcgs-en.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2020-brcgs-en.webp",
+      "width": 1240,
+      "height": 1753
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2020-brcgs-pl.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2020-brcgs-pl.webp",
+      "width": 1240,
+      "height": 1753
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2020-ifs-food-de.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2020-ifs-food-de.webp",
+      "width": 1240,
+      "height": 1755
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2020-ifs-food-en.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2020-ifs-food-en.webp",
+      "width": 1240,
+      "height": 1755
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2020-ifs-food-pl.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2020-ifs-food-pl.webp",
+      "width": 1240,
+      "height": 1755
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2021-brcgs-de.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2021-brcgs-de.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2021-brcgs-en.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2021-brcgs-en.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2021-brcgs-pl.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2021-brcgs-pl.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2021-ekogwarancja-pl.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2021-ekogwarancja-pl.webp",
+      "width": 1240,
+      "height": 1755
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2021-ifs-food-de.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2021-ifs-food-de.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2021-ifs-food-en.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2021-ifs-food-en.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2021-ifs-food-pl.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2021-ifs-food-pl.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2022-brcgs-de.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2022-brcgs-de.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2022-brcgs-en.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2022-brcgs-en.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2022-brcgs-pl.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2022-brcgs-pl.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2022-ekogwarancja-pl.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2022-ekogwarancja-pl.webp",
+      "width": 1240,
+      "height": 1753
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2022-ifs-food-de.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2022-ifs-food-de.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2022-ifs-food-en.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2022-ifs-food-en.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2022-ifs-food-pl.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2022-ifs-food-pl.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2023-brcgs-de.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2023-brcgs-de.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2023-brcgs-en.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2023-brcgs-en.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2023-brcgs-pl.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2023-brcgs-pl.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2023-ifs-food-de.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2023-ifs-food-de.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2023-ifs-food-en.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2023-ifs-food-en.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2023-ifs-food-pl.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2023-ifs-food-pl.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2024-brcgs-de.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2024-brcgs-de.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2024-brcgs-en.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2024-brcgs-en.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2024-brcgs-pl.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2024-brcgs-pl.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2024-ifs-food-de.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2024-ifs-food-de.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2024-ifs-food-en.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2024-ifs-food-en.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2024-ifs-food-pl.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2024-ifs-food-pl.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2025-brcgs-de.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2025-brcgs-de.webp",
+      "width": 1232,
+      "height": 1741
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2025-brcgs-en.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2025-brcgs-en.webp",
+      "width": 1232,
+      "height": 1741
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2025-brcgs-pl.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2025-brcgs-pl.webp",
+      "width": 1232,
+      "height": 1741
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2025-ifs-food-de.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2025-ifs-food-de.webp",
+      "width": 1232,
+      "height": 1741
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2025-ifs-food-en.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2025-ifs-food-en.webp",
+      "width": 1232,
+      "height": 1741
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2025-ifs-food-pl.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2025-ifs-food-pl.webp",
+      "width": 1232,
+      "height": 1741
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2026-brcgs-de.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2026-brcgs-de.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2026-brcgs-en.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2026-brcgs-en.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2026-brcgs-pl.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2026-brcgs-pl.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2026-ifs-food-de.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2026-ifs-food-de.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2026-ifs-food-en.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2026-ifs-food-en.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/cutting-plant-cp/cutting-plant-cp-2026-ifs-food-pl.pdf": {
+      "src": "/photos/certificates/cutting-plant-cp-2026-ifs-food-pl.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/slaughterhouse-sh/slaughterhouse-sh-2019-ifs-food-de.pdf": {
+      "src": "/photos/certificates/slaughterhouse-sh-2019-ifs-food-de.webp",
+      "width": 1240,
+      "height": 1755
+    },
+    "/documents/certificates/slaughterhouse-sh/slaughterhouse-sh-2019-ifs-food-en.pdf": {
+      "src": "/photos/certificates/slaughterhouse-sh-2019-ifs-food-en.webp",
+      "width": 1240,
+      "height": 1755
+    },
+    "/documents/certificates/slaughterhouse-sh/slaughterhouse-sh-2019-ifs-food-pl.pdf": {
+      "src": "/photos/certificates/slaughterhouse-sh-2019-ifs-food-pl.webp",
+      "width": 1240,
+      "height": 1755
+    },
+    "/documents/certificates/slaughterhouse-sh/slaughterhouse-sh-2021-ekogwarancja-de.pdf": {
+      "src": "/photos/certificates/slaughterhouse-sh-2021-ekogwarancja-de.webp",
+      "width": 1240,
+      "height": 1755
+    },
+    "/documents/certificates/slaughterhouse-sh/slaughterhouse-sh-2021-ekogwarancja-pl.pdf": {
+      "src": "/photos/certificates/slaughterhouse-sh-2021-ekogwarancja-pl.webp",
+      "width": 1240,
+      "height": 1755
+    },
+    "/documents/certificates/slaughterhouse-sh/slaughterhouse-sh-2022-ifs-food-de.pdf": {
+      "src": "/photos/certificates/slaughterhouse-sh-2022-ifs-food-de.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/slaughterhouse-sh/slaughterhouse-sh-2022-ifs-food-en.pdf": {
+      "src": "/photos/certificates/slaughterhouse-sh-2022-ifs-food-en.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/slaughterhouse-sh/slaughterhouse-sh-2022-ifs-food-pl.pdf": {
+      "src": "/photos/certificates/slaughterhouse-sh-2022-ifs-food-pl.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/slaughterhouse-sh/slaughterhouse-sh-2023-ifs-food-de.pdf": {
+      "src": "/photos/certificates/slaughterhouse-sh-2023-ifs-food-de.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/slaughterhouse-sh/slaughterhouse-sh-2023-ifs-food-en.pdf": {
+      "src": "/photos/certificates/slaughterhouse-sh-2023-ifs-food-en.webp",
+      "width": 1240,
+      "height": 1754
+    },
+    "/documents/certificates/slaughterhouse-sh/slaughterhouse-sh-2023-ifs-food-pl.pdf": {
+      "src": "/photos/certificates/slaughterhouse-sh-2023-ifs-food-pl.webp",
+      "width": 1240,
+      "height": 1754
+    }
+  }
+}

@@ -1,0 +1,411 @@
+/* Page-level sections: home hero, trust strip, chain, bands, layouts. */
+
+/* ── Trust strip ──────────────────────────────────────────────── */
+.trust {
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper);
+}
+.trust__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+}
+.trust__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  padding: var(--s-5) var(--s-4) var(--s-5) 0;
+  border-bottom: 1px solid var(--rule);
+}
+@media (min-width: 56rem) {
+  .trust__item {
+    border-bottom: 0;
+    padding-left: var(--s-5);
+    border-left: 1px solid var(--rule);
+  }
+  .trust__item:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+.trust__value {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--maroon);
+}
+.trust__label {
+  font-size: var(--fs-sm);
+}
+.trust__scope {
+  font-size: var(--fs-xs);
+  color: var(--muted);
+}
+
+/* ── Production chain ─────────────────────────────────────────── */
+.chain {
+  padding: var(--section) 0;
+  background: var(--brown-dark);
+  color: var(--on-dark);
+}
+.chain .lead {
+  color: var(--on-dark-muted);
+}
+.chain__intro {
+  margin-bottom: var(--s-6);
+}
+.chain__photos {
+  display: grid;
+  gap: var(--s-2);
+  margin-bottom: var(--s-6);
+}
+@media (min-width: 48rem) {
+  .chain__photos {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.chain__photo {
+  margin: 0;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+.chain__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.chain__steps {
+  position: relative;
+  display: grid;
+  gap: var(--s-5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+@media (min-width: 64rem) {
+  .chain__steps {
+    grid-template-columns: repeat(7, 1fr);
+    gap: var(--s-4);
+  }
+  .chain__steps::before {
+    content: '';
+    position: absolute;
+    top: 13px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--beef);
+    transform-origin: left center;
+  }
+  .js-reveal .chain__steps::before {
+    transform: scaleX(0);
+    transition: transform 1100ms var(--ease-in-out);
+  }
+  .js-reveal .chain__steps:has(.chain__step.is-in)::before {
+    transform: scaleX(1);
+  }
+}
+@keyframes chain-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.chain__step {
+  position: relative;
+}
+.chain__marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: var(--brown-dark);
+  position: relative;
+}
+.chain__horns {
+  width: 26px;
+  color: var(--beef);
+}
+.chain__num {
+  display: block;
+  margin-top: var(--s-3);
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--on-dark-muted);
+}
+.chain__title {
+  font-size: var(--fs-md);
+  margin: var(--s-1) 0 var(--s-2);
+}
+.chain__text {
+  font-size: var(--fs-sm);
+  color: var(--on-dark-muted);
+}
+
+/* ── Sales band ───────────────────────────────────────────────── */
+.sales-band {
+  display: grid;
+  background: var(--maroon);
+  color: var(--on-dark);
+}
+.sales-band__media {
+  position: relative;
+  min-height: 16rem;
+}
+.sales-band__media img {
+  object-fit: cover;
+}
+.sales-band__text {
+  padding: var(--s-7) var(--gutter);
+  max-width: 40rem;
+}
+.sales-band__text p {
+  color: var(--on-dark-muted);
+}
+.sales-band__people {
+  margin: var(--s-4) 0 var(--s-5);
+}
+.sales-band__people li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--s-3);
+}
+.sales-band__name {
+  font-weight: 600;
+}
+@media (min-width: 64rem) {
+  .sales-band {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ── Fact lists ───────────────────────────────────────────────── */
+.facts-row {
+  display: grid;
+  gap: var(--s-5);
+  border-top: 2px solid var(--rule-strong);
+  padding-top: var(--s-5);
+}
+@media (min-width: 56rem) {
+  .facts-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.facts-row__title {
+  font-size: var(--fs-md);
+  margin-bottom: var(--s-2);
+}
+.facts-col {
+  display: grid;
+  gap: var(--s-4);
+  margin: var(--s-5) 0;
+}
+
+.spec-list {
+  border-top: 2px solid var(--rule-strong);
+}
+.spec-list__row {
+  display: grid;
+  gap: var(--s-1) var(--s-5);
+  padding: var(--s-3) 0;
+  border-bottom: 1px solid var(--rule);
+}
+@media (min-width: 48rem) {
+  .spec-list__row {
+    grid-template-columns: 14rem 1fr;
+  }
+}
+.spec-list dt {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: 600;
+}
+
+.ticks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s-3);
+  max-width: 60ch;
+}
+.ticks li {
+  padding-left: var(--s-5);
+  position: relative;
+}
+.ticks li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 12px;
+  height: 2px;
+  background: var(--beef);
+}
+
+/* ── Image band ───────────────────────────────────────────────── */
+.band {
+  background: var(--paper-2);
+}
+.band__media img {
+  width: 100%;
+  height: auto;
+  max-height: 28rem;
+  object-fit: cover;
+}
+.band__content {
+  padding-block: var(--s-7);
+}
+
+/* ── Layout helpers ───────────────────────────────────────────── */
+.layout-aside,
+.layout-split {
+  display: grid;
+  gap: var(--s-7);
+}
+@media (min-width: 64rem) {
+  .layout-aside {
+    grid-template-columns: 1fr 20rem;
+    align-items: start;
+  }
+  .layout-split {
+    grid-template-columns: 1fr 1fr;
+  }
+  .layout-split--media {
+    align-items: center;
+  }
+}
+.aside-box {
+  position: sticky;
+  top: calc(var(--header-h) + var(--s-4));
+  padding: var(--s-5);
+  background: var(--white);
+  border: 1px solid var(--rule);
+}
+.aside-box__title {
+  font-size: var(--fs-md);
+  margin-bottom: var(--s-2);
+}
+.aside-box .btn {
+  margin-top: var(--s-5);
+}
+.media-frame {
+  margin: 0;
+}
+.media-frame img {
+  width: 100%;
+  height: auto;
+}
+
+/* ── Certificates page ────────────────────────────────────────── */
+.site-title {
+  font-size: var(--fs-lg);
+  margin: var(--s-5) 0 var(--s-4);
+}
+.site-title .muted {
+  font-family: var(--font-text);
+  font-size: var(--fs-sm);
+  font-weight: 400;
+}
+.site-title--spaced {
+  margin-top: var(--s-8);
+}
+/* Two certificates per row only when each (card + scan) gets 34rem; inside an item the
+   scan moves under the card as soon as the card would drop below 20rem. */
+.cert-full {
+  display: grid;
+  gap: var(--s-6);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 34rem), 1fr));
+}
+.cert-full__item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--s-4);
+  min-width: 0;
+}
+.cert-full__item > .cert-label {
+  flex: 1 1 20rem;
+}
+.cert-full__item > .cert-thumb {
+  flex: 0 0 9rem;
+}
+.pending-list li {
+  padding: var(--s-4) 0;
+  border-top: 1px solid var(--rule);
+}
+.pending-list__site {
+  font-weight: 600;
+  margin-bottom: var(--s-1);
+}
+
+/* ── Timeline ─────────────────────────────────────────────────── */
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 2px solid var(--rule-strong);
+}
+.timeline__item {
+  display: grid;
+  gap: var(--s-2);
+  padding: 0 0 var(--s-6) var(--s-5);
+  position: relative;
+}
+.timeline__item::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 0.55em;
+  width: 10px;
+  height: 10px;
+  background: var(--beef);
+}
+@media (min-width: 48rem) {
+  .timeline__item {
+    grid-template-columns: 9rem 1fr;
+    gap: var(--s-5);
+  }
+}
+.timeline__year {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  margin: 0;
+}
+.timeline__title {
+  font-size: var(--fs-md);
+  margin-bottom: var(--s-2);
+}
+.timeline__figure {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+.timeline__value {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--maroon);
+}
+.timeline__unit {
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+
+/* Phones: the three chain photos as one compact strip instead of three stacked 16:9 frames (P2-03). */
+@media (max-width: 47.99rem) {
+  .chain__photos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--s-1);
+  }
+  .chain__photo {
+    aspect-ratio: 3 / 4;
+  }
+}

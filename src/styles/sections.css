@@ -1,0 +1,675 @@
+/* Page sections added in the corrective pass: catalogue, facilities, careers,
+   contact directory, legal pages, 404, reveal motion. Loaded after pages.css. */
+
+/* ── Section variants ─────────────────────────────────────────── */
+.section--tight {
+  padding: var(--s-7) 0;
+}
+.section--flush-top {
+  padding-top: 0;
+}
+.section--dark {
+  background: var(--brown-dark);
+  color: var(--on-dark);
+}
+.section--dark .legal-data dt {
+  color: var(--on-dark-muted);
+}
+.wide-photo .photo {
+  width: 100%;
+  max-height: 34rem;
+}
+.wide-photo--slim .photo {
+  max-height: 18rem;
+}
+.prose {
+  max-width: 46rem;
+}
+.prose ul {
+  padding-left: 1.2rem;
+}
+.prose li + li {
+  margin-top: var(--s-1);
+}
+.photo-stack {
+  display: grid;
+  gap: var(--s-4);
+  align-content: start;
+}
+@media (min-width: 64rem) {
+  .layout-aside--wide {
+    grid-template-columns: 1fr 22rem;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── Product overview (home) ──────────────────────────────────── */
+.poverview {
+  display: grid;
+  gap: var(--s-6) var(--s-5);
+  border-top: 2px solid var(--rule-strong);
+  padding-top: var(--s-5);
+}
+@media (min-width: 40rem) {
+  .poverview {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 64rem) {
+  .poverview {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.poverview__item {
+  display: flex;
+  flex-direction: column;
+}
+.poverview__link {
+  text-decoration: none;
+}
+.poverview__name {
+  font-size: var(--fs-lg);
+  margin: var(--s-4) 0 var(--s-2);
+  min-height: 2.3em;
+}
+.poverview__summary {
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  flex: 1;
+}
+
+/* ── Product catalogue (Produkty) ─────────────────────────────── */
+.jump ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-top: var(--s-5);
+}
+.jump a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--s-4);
+  border: 1px solid var(--rule-strong);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  text-decoration: none;
+  transition:
+    background-color var(--dur-fast) ease,
+    color var(--dur-fast) ease;
+}
+.jump a:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+.catalogue {
+  display: grid;
+  gap: clamp(3rem, 2rem + 4vw, 6rem);
+}
+.cblock {
+  display: grid;
+  gap: var(--s-5);
+  scroll-margin-top: calc(var(--header-h) + 1rem);
+}
+@media (min-width: 64rem) {
+  .cblock {
+    grid-template-columns: minmax(0, 35rem) minmax(0, 1fr);
+    gap: var(--s-8);
+    align-items: start;
+  }
+  .cblock--flip {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 35rem);
+  }
+  .cblock--flip .cblock__photo {
+    order: 2;
+  }
+}
+.cblock__photo {
+  border-bottom: 4px solid var(--beef);
+}
+.cblock__name {
+  font-size: var(--fs-xl);
+  line-height: 1.05;
+  margin-bottom: var(--s-3);
+}
+.cblock__summary {
+  font-size: var(--fs-md);
+  color: var(--ink-2);
+}
+.specs {
+  margin: var(--s-5) 0;
+  border-top: 2px solid var(--rule-strong);
+}
+.specs__row {
+  display: grid;
+  grid-template-columns: 8.5rem 1fr;
+  gap: var(--s-4);
+  padding: var(--s-3) 0;
+  border-bottom: 1px solid var(--rule);
+}
+.specs__row dt {
+  font-weight: 700;
+  font-size: var(--fs-sm);
+}
+.specs__src {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--fs-xs);
+  color: var(--muted);
+}
+.cblock__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+
+/* Sales block */
+.sales-card-row {
+  display: grid;
+  gap: var(--s-6);
+}
+@media (min-width: 64rem) {
+  .sales-card-row {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+}
+.sales-people {
+  display: grid;
+  gap: var(--s-4);
+}
+@media (min-width: 40rem) {
+  .sales-people {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.sales-people li {
+  padding: var(--s-5);
+  border: 1px solid var(--on-dark-rule);
+  background: var(--maroon);
+}
+.sales-people p {
+  margin: 0;
+}
+.sales-people__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+}
+.sales-people__role {
+  color: var(--on-dark-muted);
+  font-size: var(--fs-sm);
+  margin-bottom: var(--s-2) !important;
+}
+.sales-card {
+  border-top: 4px solid var(--beef);
+}
+.sales-card--dark {
+  padding: var(--s-6);
+  background: var(--maroon);
+}
+.sales-card__title {
+  font-size: var(--fs-lg);
+  margin-bottom: var(--s-4);
+}
+.sales-card__people {
+  display: grid;
+  gap: var(--s-4);
+  margin-bottom: var(--s-5);
+}
+.sales-card__people p {
+  margin: 0;
+}
+.markets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-top: var(--s-4);
+}
+.markets li {
+  padding: var(--s-2) var(--s-4);
+  border: 1px solid var(--rule-strong);
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: 600;
+}
+.logistics-contacts {
+  margin-top: var(--s-5);
+}
+
+/* ── Facilities (Zakłady) ─────────────────────────────────────── */
+.structure {
+  display: grid;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+@media (min-width: 48rem) {
+  .structure {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+.structure__link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  height: 100%;
+  padding: var(--s-4);
+  background: var(--paper);
+  text-decoration: none;
+  transition: background-color var(--dur-fast) ease;
+}
+.structure__link:hover {
+  background: var(--white);
+}
+.structure__role {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--maroon);
+}
+.structure__activity {
+  font-size: var(--fs-sm);
+}
+.structure__place {
+  font-size: var(--fs-xs);
+  color: var(--muted);
+}
+.facilities {
+  display: grid;
+  gap: clamp(3rem, 2rem + 3vw, 5rem);
+  margin-top: var(--s-7);
+}
+.facility {
+  display: grid;
+  gap: var(--s-5);
+}
+@media (min-width: 64rem) {
+  .facility {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--s-7);
+    align-items: start;
+  }
+  .facility--flip .facility__photo {
+    order: 2;
+  }
+}
+.facility .entity {
+  scroll-margin-top: calc(var(--header-h) + 1rem);
+}
+.facility__activity {
+  font-size: var(--fs-md);
+  font-weight: 600;
+}
+.facility__details {
+  margin-bottom: var(--s-4);
+}
+.facility__meta {
+  font-size: var(--fs-sm);
+  padding: var(--s-2) 0;
+  border-top: 1px solid var(--rule);
+  margin: 0;
+  max-width: none;
+}
+.facility__label {
+  font-weight: 700;
+}
+
+/* ── Careers ──────────────────────────────────────────────────── */
+.job {
+  display: grid;
+  border-top: 4px solid var(--beef);
+  background: var(--white);
+}
+@media (min-width: 64rem) {
+  .job {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  }
+  .job__photo {
+    height: 100%;
+    aspect-ratio: auto;
+    min-height: 26rem;
+  }
+}
+.job__body {
+  padding: var(--s-5) var(--s-5) var(--s-6);
+}
+.job__company {
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+.job__title {
+  font-size: var(--fs-xl);
+  margin: var(--s-2) 0 var(--s-3);
+}
+.job__pay {
+  display: grid;
+  gap: var(--s-3);
+  margin: var(--s-5) 0;
+}
+@media (min-width: 40rem) {
+  .job__pay {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.job__pay > div {
+  padding: var(--s-3) var(--s-4);
+  background: var(--paper);
+  border-left: 3px solid var(--maroon);
+}
+.job__pay dt {
+  font-weight: 700;
+  font-size: var(--fs-sm);
+}
+.job__amount {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--maroon);
+}
+.job__facts {
+  margin-bottom: var(--s-5);
+}
+.job__facts > div {
+  grid-template-columns: 9rem 1fr;
+}
+.job__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-top: var(--s-5);
+}
+
+/* ── Contact directory ────────────────────────────────────────── */
+.dir__list {
+  display: grid;
+  gap: var(--s-7);
+}
+.dir-entity {
+  display: grid;
+  gap: var(--s-5);
+}
+@media (min-width: 64rem) {
+  .dir-entity {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: var(--s-7);
+  }
+}
+.people {
+  display: grid;
+  gap: 0 var(--s-5);
+  align-content: start;
+  border-top: 2px solid var(--rule-strong);
+}
+@media (min-width: 40rem) {
+  .people {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.router__result {
+  padding: var(--s-5);
+  background: var(--white);
+  border-top: 4px solid var(--maroon);
+}
+.router__contacts {
+  display: grid;
+  gap: 0 var(--s-5);
+}
+@media (min-width: 40rem) {
+  .router__contacts {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ── Legal pages ──────────────────────────────────────────────── */
+.eu-logos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-5);
+  margin-bottom: var(--s-5);
+}
+.eu-logos img {
+  width: auto;
+  height: 4.5rem;
+}
+.eu-programme {
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+.figures {
+  display: grid;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+@media (min-width: 48rem) {
+  .figures {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.figures > div {
+  padding: var(--s-5);
+  background: var(--white);
+}
+.figures dt {
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+.figures dd {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--maroon);
+}
+.notice--plain {
+  margin-top: var(--s-6);
+  border-color: var(--rule-strong);
+}
+.docs {
+  display: grid;
+  gap: var(--s-5);
+}
+@media (min-width: 56rem) {
+  .docs {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.doc {
+  padding: var(--s-5);
+  background: var(--white);
+  border-top: 4px solid var(--maroon);
+}
+.doc__title {
+  font-size: var(--fs-lg);
+  margin-bottom: var(--s-4);
+}
+.doc .btn {
+  margin-top: var(--s-5);
+}
+.tag-line .tag {
+  margin-left: 0;
+}
+.legal-section {
+  margin-top: var(--s-6);
+}
+.legal-section__title {
+  font-size: var(--fs-lg);
+  margin-bottom: var(--s-3);
+}
+.legal-item {
+  border-top: 1px solid var(--rule);
+}
+.legal-item:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+.legal-item summary {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.legal-item__body {
+  padding-bottom: var(--s-4);
+}
+
+/* ── 404 ──────────────────────────────────────────────────────── */
+.nf__horns {
+  width: 64px;
+  color: var(--beef);
+  margin-bottom: var(--s-4);
+}
+.nf__code {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-data);
+  font-weight: 700;
+  color: var(--maroon);
+  line-height: 1;
+}
+.nf__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-top: var(--s-5);
+}
+
+/* ── Mobile safety ────────────────────────────────────────────── */
+@media (max-width: 40rem) {
+  .specs__row,
+  .legal-data > div,
+  .cert-label__data > div,
+  .job__facts > div,
+  .pgroup__facts > div {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  .h-section {
+    font-size: var(--fs-lg);
+  }
+}
+
+/* ── Language-stable text blocks (desktop) ─────────────────────
+ * Space is reserved for the longest translation so PL / EN / DE keep the
+ * same vertical positions: hero title 4 lines, page title 2 lines, lead 3 lines.
+ */
+@media (min-width: 64rem) {
+  .page-head__title {
+    max-width: 24ch;
+    min-height: calc(2 * var(--lh-tight) * 1em);
+    display: flex;
+    align-items: flex-end;
+  }
+  .page-head__lead {
+    min-height: calc(3 * var(--lh-text) * var(--fs-md));
+  }
+}
+
+/* ── One-shot reveals (components/ui/Reveal.tsx) ────────────────
+ * Only active when JS has set .js-reveal (content stays visible without JS).
+ * Text: opacity + 14px rise. Photos: bottom clip opens, image settles 1.03 → 1.
+ */
+.js-reveal :is(.cblock__body, .facility .entity, .poverview__item, .timeline__item, .chain__step, .cert-label, .job, .doc, .trust__item, .ptile, .control__row):not(.is-in) {
+  opacity: 0;
+  transform: translateY(14px);
+}
+.js-reveal :is(.cblock__body, .facility .entity, .poverview__item, .timeline__item, .chain__step, .cert-label, .job, .doc, .trust__item, .ptile, .control__row) {
+  transition:
+    opacity 560ms var(--ease-out),
+    transform 560ms var(--ease-out);
+}
+.js-reveal .poverview__item:nth-child(2),
+.js-reveal .trust__item:nth-child(2),
+.js-reveal .ptile:nth-child(2),
+.js-reveal .control__row:nth-child(2),
+.js-reveal .chain__step:nth-child(2) {
+  transition-delay: 60ms;
+}
+.js-reveal .poverview__item:nth-child(3),
+.js-reveal .trust__item:nth-child(3),
+.js-reveal .ptile:nth-child(3),
+.js-reveal .control__row:nth-child(3),
+.js-reveal .chain__step:nth-child(3) {
+  transition-delay: 120ms;
+}
+.js-reveal .poverview__item:nth-child(4),
+.js-reveal .trust__item:nth-child(4),
+.js-reveal .ptile:nth-child(4),
+.js-reveal .control__row:nth-child(4),
+.js-reveal .chain__step:nth-child(4) {
+  transition-delay: 180ms;
+}
+.js-reveal .chain__step:nth-child(5) {
+  transition-delay: 240ms;
+}
+.js-reveal .chain__step:nth-child(6) {
+  transition-delay: 300ms;
+}
+.js-reveal .chain__step:nth-child(7) {
+  transition-delay: 360ms;
+}
+.js-reveal .photo--reveal {
+  transition: clip-path 900ms var(--ease-out);
+}
+.js-reveal .photo--reveal:not(.is-in) {
+  clip-path: inset(0 0 12% 0);
+}
+.js-reveal .photo--reveal img {
+  transition: transform 1200ms var(--ease-out);
+}
+.js-reveal .photo--reveal:not(.is-in) img {
+  transform: scale(1.03);
+}
+@media (prefers-reduced-motion: reduce) {
+  .js-reveal :is(.cblock__body, .facility .entity, .poverview__item, .timeline__item, .chain__step, .cert-label, .job, .doc, .trust__item, .ptile, .control__row, .photo--reveal) {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+}
+
+/* ── File input (CV) ──────────────────────────────────────────── */
+.field__file {
+  width: 100%;
+  padding: var(--s-3);
+  border: 1.5px dashed var(--steel-line);
+  background: var(--white);
+  cursor: pointer;
+}
+.field__file::file-selector-button {
+  min-height: 40px;
+  margin-right: var(--s-4);
+  padding: 0 var(--s-4);
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--paper);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) ease, color var(--dur-fast) ease;
+}
+.field__file:hover::file-selector-button {
+  background: var(--ink);
+  color: var(--paper);
+}
+.has-error .field__file {
+  border-color: var(--beef);
+}
+.specs__site {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
