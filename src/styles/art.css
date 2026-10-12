@@ -4,124 +4,202 @@
  */
 
 /* ── Hero ─────────────────────────────────────────────────────
- * Photo fills ~64% of the field; the oxblood panel overlaps it with one slanted edge
- * (a restrained echo of the old brand's curve). Height ≈ 84vh after the nav.
+ * Cinematic: the footage fills the whole hero in natural colour on every breakpoint, with only
+ * the headline and one CTA. No veil: the copy starts at 37 % of the height, in the dark band of
+ * tree line and far pasture (measured on every frame: white text keeps ≥ 3.2:1 against the
+ * brightest tenth of that band, 5:1 and more against its median), with a discreet text-shadow.
+ * The bright sky above 35 % stays free of text. Phones 1:1 (the source's full height, so the least
+ * upscaling), tablets 4:3, desktop ≈ 86vh.
  */
 .hero {
   position: relative;
   display: block;
+  aspect-ratio: 1 / 1;
+  max-height: calc(100svh - var(--header-h));
   background: var(--maroon);
-  color: var(--on-dark);
+  color: var(--white);
   overflow: hidden;
 }
 .hero__media {
-  position: relative;
-  aspect-ratio: 16 / 11;
+  position: absolute;
+  inset: 0;
 }
-.hero__media img {
+/* Poster and video share one centred crop, so the first video frame lands exactly on the poster. */
+.hero__media img,
+.hero__video {
   object-fit: cover;
+  object-position: 50% 50%;
 }
-.hero__panel {
-  position: relative;
-  z-index: 1;
-  margin-top: -2rem;
-  background: var(--maroon);
-  clip-path: polygon(0 2rem, 100% 0, 100% 100%, 0 100%);
+/* First shown 1px inside the poster box: the browser rounds a video rect up and an image rect
+   down, so an equal-size video would replace the earlier poster as the LCP element. LCP keeps an
+   element's size from its first paint, so once the fade has started the video grows to the full
+   box; until then the hairline shows the poster, which is the same frame 0 (no static edge). */
+.hero__video {
+  position: absolute;
+  inset: 1px;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  opacity: 0;
+  /* Frame 0 is the poster image: a short fade is enough and leaves no ghosting. */
+  transition: opacity 160ms linear, inset 0s 240ms, width 0s 240ms, height 0s 240ms;
 }
-.hero__inner {
+.hero__video:is([data-state='playing'], [data-state='paused']) {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+}
+.hero__copy {
+  position: absolute;
+  inset: 37% 0 auto;
+  z-index: 2;
   display: flex;
   flex-direction: column;
-  padding: var(--s-7) var(--gutter) var(--s-6);
-}
-.hero__label {
-  margin: 0 0 var(--s-4);
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  color: #e9a59d;
+  align-items: flex-start;
+  gap: clamp(1.75rem, 1rem + 2.4vw, 3rem);
 }
 .hero__title {
   margin: 0;
-  font-size: clamp(2.5rem, 1.5rem + 3.4vw, 4.75rem);
+  max-width: 20ch;
+  font-size: clamp(2.75rem, 1.5rem + 5.4vw, 7.5rem);
   font-weight: 700;
-  line-height: 0.98;
+  line-height: 0.95;
   letter-spacing: 0.002em;
   hyphens: manual;
   text-wrap: balance;
-  min-height: 0;
+  color: var(--white);
+  text-shadow:
+    0 1px 2px rgb(20 12 8 / 0.35),
+    0 2px 18px rgb(20 12 8 / 0.42);
 }
-.hero__sub {
-  margin: var(--s-4) 0 0;
-  font-family: var(--font-display);
-  font-size: clamp(1.25rem, 1rem + 0.9vw, 1.75rem);
-  font-weight: 500;
-  line-height: 1.2;
-  color: var(--on-dark);
-  max-width: 30ch;
+/* Scaled with the headline; the same soft red cushion as the header CTA. */
+.hero__cta {
+  min-height: clamp(3.25rem, 2.6rem + 1vw, 4rem);
+  padding-inline: clamp(1.5rem, 1rem + 1.3vw, 2.25rem);
+  font-size: clamp(1.0625rem, 0.9rem + 0.45vw, 1.3125rem);
+  border-radius: 6px;
+  background: linear-gradient(180deg, #d4111a 0%, var(--beef) 55%, #a9000a 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.28),
+    inset 0 -2px 3px rgb(90 0 6 / 0.35),
+    0 12px 28px -12px rgb(20 12 8 / 0.65);
 }
-.hero__lead {
-  margin: var(--s-5) 0 0;
-  font-size: var(--fs-base);
-  color: var(--on-dark-muted);
-  max-width: 44ch;
+.hero__cta:hover {
+  background: linear-gradient(180deg, #c50d16 0%, var(--beef-strong) 100%);
 }
-.hero__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-3);
-  margin: var(--s-6) 0 0;
-}
-.hero__actions .btn {
-  min-width: 0;
-}
-.hero__sales {
-  display: flex;
-  flex-wrap: wrap;
+.hero__toggle {
+  position: absolute;
+  z-index: 3;
+  right: var(--gutter);
+  bottom: var(--s-4);
+  display: inline-flex;
   align-items: center;
-  gap: 0 var(--s-3);
-  margin: var(--s-5) 0 0;
-  padding-top: var(--s-4);
-  border-top: 1px solid var(--on-dark-rule);
-  font-size: var(--fs-sm);
-  color: var(--on-dark-muted);
-  max-width: 28rem;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid rgb(255 255 255 / 0.45);
+  border-radius: var(--radius);
+  background: rgb(20 12 8 / 0.42);
+  color: var(--white);
+  cursor: pointer;
+  transition:
+    background-color var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out);
 }
-@media (max-width: 63.99rem) {
-  /* Mobile: CTAs right after the headline, lead follows. */
-  .hero__actions {
-    order: 3;
-  }
-  .hero__lead {
-    order: 4;
-  }
-  .hero__sales {
-    order: 5;
-  }
-  .hero__actions .btn {
-    flex: 1 1 10rem;
+.hero__toggle:hover {
+  background: rgb(20 12 8 / 0.68);
+  border-color: rgb(255 255 255 / 0.8);
+}
+.hero__toggle:focus-visible {
+  outline: 2px solid var(--white);
+  outline-offset: 2px;
+}
+@media (min-width: 48rem) {
+  .hero {
+    aspect-ratio: 4 / 3;
   }
 }
 @media (min-width: 64rem) {
   .hero {
-    height: clamp(38rem, calc(86svh - var(--header-h)), 52rem);
-  }
-  .hero__media {
-    position: absolute;
-    inset: 0 0 0 auto;
-    width: 64%;
     aspect-ratio: auto;
+    height: clamp(38rem, calc(86svh - var(--header-h)), 52rem);
+    max-height: none;
   }
-  .hero__panel {
-    position: absolute;
-    inset: 0 auto 0 0;
-    width: 50%;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    clip-path: polygon(0 0, 100% 0, calc(100% - 9rem) 100%, 0 100%);
+  .hero__toggle {
+    right: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter)));
+    bottom: var(--s-5);
   }
-  .hero__inner {
-    width: 100%;
-    padding: var(--s-7) 10rem var(--s-7) max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter)));
+}
+
+/* ── Home intro (≈1.3 s, first home view of a session) ───────────
+ * The gate in app/[locale]/layout.tsx marks <html> `intro-seen` before the first paint in every
+ * other case. Pure CSS: nothing waits for JavaScript or the video; opacity/transform only (no
+ * layout shift) and every link stays usable. 1. the footage settles, 2. the header assembles,
+ * 3. headline, then CTA. The page-enter fade of template.tsx is left untouched and opens
+ * phase 1 (the rest of the page, trust strip included, keeps exactly that fade); overriding it
+ * would restart it when `intro-seen` is set. The header surface only fades: a transform on it
+ * would trap the fixed mobile-menu overlay inside the header.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.intro-seen) .hero__media {
+    animation: intro-settle 1400ms var(--ease-out) both;
+  }
+  html:not(.intro-seen):has(.hero) .site-head {
+    animation: intro-fade 560ms 160ms var(--ease-out) both;
+  }
+  html:not(.intro-seen):has(.hero) .site-head__logo {
+    animation: intro-part 520ms 280ms var(--ease-out) both;
+  }
+  html:not(.intro-seen):has(.hero) .site-head__row > nav {
+    animation: intro-drum 620ms 340ms var(--ease-out) both;
+  }
+  html:not(.intro-seen):has(.hero) .site-head__end > .lang {
+    animation: intro-part 480ms 420ms var(--ease-out) both;
+  }
+  html:not(.intro-seen):has(.hero) .site-head__end > .site-head__cta,
+  html:not(.intro-seen):has(.hero) .site-head__end .mmenu__toggle {
+    animation: intro-part 480ms 480ms var(--ease-out) both;
+  }
+  html:not(.intro-seen) .hero__title {
+    animation: intro-rise-lg 680ms 600ms var(--ease-out) both;
+  }
+  html:not(.intro-seen) .hero__cta {
+    animation: intro-rise 520ms 800ms var(--ease-out) both;
+  }
+}
+@keyframes intro-settle {
+  from {
+    transform: scale(1.06);
+  }
+}
+@keyframes intro-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes intro-part {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+@keyframes intro-drum {
+  from {
+    opacity: 0;
+    transform: translateY(-5px) scale(0.985);
+  }
+}
+@keyframes intro-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+@keyframes intro-rise-lg {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
   }
 }
 
@@ -277,6 +355,128 @@
   font-size: clamp(2.25rem, 1.8rem + 1.5vw, 3.25rem);
 }
 
+/* ── Environment (home, UX-IA-001 stage 1.3) ──────────────────── */
+/* Between quality and sales. The plants' own measures (waste, photovoltaics) are ruled rows with
+   embroidered icons, like the markets ledger in the sales section; the biogas plant project is the
+   one stitched card, marked with a small felt patch (no lettering) and holding the link to its
+   documentation. Phones: head, rows, card (patch beside its title). Tablets: the two rows side by
+   side, the patch left of the card's text. From 64rem the card stands beside the head and the rows,
+   patch on top, from the eyebrow to the rows' bottom line (its content is 1–34 px shorter than that
+   column at 1024–1920 px; the difference goes into its row gaps). */
+.env-home__grid {
+  display: grid;
+  gap: var(--s-6);
+}
+.env-home__list {
+  display: grid;
+  border-top: 2px solid var(--rule-strong);
+}
+.env-home__item {
+  --bicon: 2.75rem;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: var(--s-4);
+  align-items: start;
+  padding: var(--s-4) 0;
+  border-bottom: 1px solid var(--rule-strong);
+}
+.env-home__title {
+  font-size: var(--fs-md);
+  line-height: 1.15;
+  margin-bottom: var(--s-1);
+}
+.env-home__item p {
+  margin: 0;
+  color: var(--ink-2);
+}
+.env-home__project {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    'mark title'
+    'text text'
+    'link link';
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-6) var(--s-5);
+}
+.env-home__project .patch {
+  --patch: 4.5rem;
+  grid-area: mark;
+}
+.env-home__project .env-home__title {
+  grid-area: title;
+  font-size: var(--fs-lg);
+  margin: 0;
+}
+.env-home__project p {
+  grid-area: text;
+  margin: 0;
+}
+.env-home__project .btn {
+  grid-area: link;
+  justify-self: start;
+}
+@media (min-width: 40rem) {
+  .env-home__list {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: var(--s-6);
+  }
+  .env-home__project {
+    grid-template-areas:
+      'mark title'
+      'mark text'
+      'mark link';
+    align-items: start;
+    column-gap: var(--s-5);
+    row-gap: var(--s-3);
+    padding: var(--s-6);
+  }
+  .env-home__project .patch {
+    --patch: 5.5rem;
+  }
+  .env-home__project .btn {
+    margin-top: var(--s-2);
+  }
+}
+/* The biogas motif is low and wide; a little larger than other small patches' motifs. */
+.env-home__project .patch .patch__motif {
+  --bicon: calc(var(--patch) * 0.56);
+}
+@media (min-width: 64rem) {
+  .env-home__grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    column-gap: var(--s-7);
+    row-gap: var(--s-5);
+  }
+  .env-home__head {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .env-home__list {
+    grid-column: 1;
+    grid-row: 2;
+    grid-template-columns: none;
+    align-self: end;
+  }
+  .env-home__project {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'mark'
+      'title'
+      'text'
+      'link';
+    padding: var(--s-7) var(--s-6);
+  }
+}
+@media (min-width: 80rem) {
+  .env-home__grid {
+    column-gap: var(--s-8);
+  }
+}
+
 /* ── Logistics & export (home) ────────────────────────────────── */
 .logistics {
   position: relative;
@@ -326,18 +526,207 @@
     padding: var(--s-7) var(--s-6);
   }
 }
-.export {
-  padding-top: var(--s-8);
+/* Sales, markets and sites as one sewn board (UX-IA-001 stages 1 and 1.2): the dark sales panel and
+   the light markets-and-sites card are two pieces of cloth joined without a gap, square where they
+   meet, rounded outside, each with its own running stitch. Phones and tablets: the photo, the panel
+   overlapping it, the card sewn on below. From 64rem the card sits on the left from the photo's
+   lower edge (the trailer lettering stays clear). The panel on the right keeps its own height and
+   stands on the card's bottom line, so it rises into the photo by as much as it is taller than the
+   card (PL/EN about 4.5–7rem, DE up to about 9.75rem; at most --board-lift-max). Neither piece is
+   stretched. */
+.logistics {
+  --board-lift-max: 10rem;
+  padding-bottom: var(--section);
 }
-.export__grid {
+.logistics__inner {
   display: grid;
-  gap: var(--s-6);
+}
+.logistics .logistics__panel {
+  max-width: none;
+  border-radius: 12px 12px 0 0;
+}
+.logistics__markets {
+  display: grid;
+  gap: var(--s-5);
+  align-content: start;
+  padding: var(--s-6) var(--s-5);
+  border-radius: 0 0 12px 12px;
+  background: var(--card);
+  outline: 1px dashed var(--thread);
+  outline-offset: -7px;
+  box-shadow:
+    0 1px 1px rgb(70 52 34 / 0.08),
+    0 12px 22px -16px rgb(70 52 34 / 0.4);
+}
+/* The ledger is part of the card here, not a card of its own (unchanged on Sprzedaż i eksport). */
+.logistics .ledger {
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  outline: 0;
+  box-shadow: none;
+}
+.logistics__subhead {
+  font-size: var(--fs-lg);
+  line-height: 1.1;
+}
+/* The contacts ruled like the ledger rows beside them. */
+.logistics__people li {
+  border-bottom: 1px solid var(--on-dark-rule);
 }
 @media (min-width: 64rem) {
-  .export__grid {
-    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
-    gap: var(--s-8);
-    align-items: center;
+  .logistics__inner {
+    grid-template-columns: minmax(0, 1fr) minmax(24rem, 30rem);
+    margin-top: calc(-1 * var(--board-lift-max));
+  }
+  .logistics .logistics__panel {
+    align-self: end;
+    grid-column: 2;
+    grid-row: 1;
+    margin-left: 0;
+    border-radius: 12px 12px 12px 0;
+  }
+  .logistics .logistics__people li {
+    padding: var(--s-2) 0;
+  }
+  .logistics__markets {
+    grid-column: 1;
+    grid-row: 1;
+    margin-top: var(--board-lift-max);
+    padding: var(--s-7) var(--s-6);
+    border-radius: 12px 0 0 12px;
+  }
+}
+@media (min-width: 80rem) {
+  .logistics__inner {
+    grid-template-columns: minmax(0, 1fr) 34rem;
+  }
+}
+
+/* ── Contact and cooperation (home close, UX-IA-001 stage 1) ──── */
+/* One sewn board in the card cloth: the buyer's side marked by the beef-red edge, a seam, then the
+   other audiences' topics as ruled rows, like the ledger above. */
+.coop {
+  padding: var(--s-7) 0 var(--s-8);
+}
+.coop__board {
+  display: grid;
+  margin-top: var(--s-5);
+  border-radius: 14px;
+  background: var(--card);
+  outline: 1px dashed var(--thread);
+  outline-offset: -8px;
+  box-shadow:
+    0 1px 1px rgb(70 52 34 / 0.08),
+    0 16px 28px -20px rgb(70 52 34 / 0.45);
+}
+.coop__buy {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: var(--s-3);
+  padding: var(--s-5);
+  border-radius: 14px 14px 0 0;
+  box-shadow: inset 0 4px 0 var(--beef);
+}
+.coop__label {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-size: var(--fs-lg);
+  line-height: 1.1;
+}
+.coop__icon {
+  --bicon: 2.4rem;
+}
+.coop__buy p {
+  max-width: 36ch;
+  color: var(--ink-2);
+}
+.coop__paths {
+  padding: var(--s-4) var(--s-5) var(--s-3);
+  border-top: 1px dashed var(--thread);
+}
+.coop__intro {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--muted);
+}
+.coop__list {
+  margin: var(--s-2) 0 0;
+}
+.coop__list li + li {
+  border-top: 1px solid rgb(70 52 34 / 0.14);
+}
+.coop__path {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: var(--s-3);
+  min-height: 44px;
+  padding: var(--s-3) 0;
+  color: var(--ink);
+  text-decoration: none;
+}
+.coop__path::after {
+  content: '';
+  width: 0.5em;
+  height: 0.5em;
+  margin-right: 0.3em;
+  border-top: 2px solid var(--beef);
+  border-right: 2px solid var(--beef);
+  transform: rotate(45deg);
+  transition: transform var(--dur) var(--ease-out);
+}
+.coop__path:hover .coop__path-label {
+  color: var(--beef);
+}
+.coop__path:hover::after {
+  transform: translateX(3px) rotate(45deg);
+}
+.coop__path-icon {
+  --bicon: 2rem;
+}
+.coop__path-text {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+.coop__path-label {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  line-height: 1.15;
+}
+.coop__path-hint {
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+.coop__all {
+  margin-top: var(--s-1);
+}
+@media (min-width: 64rem) {
+  .coop {
+    padding: var(--s-8) 0 var(--s-9);
+  }
+  .coop__board {
+    margin-top: var(--s-6);
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+  .coop__buy {
+    align-content: center;
+    padding: var(--s-7) var(--s-6);
+    border-radius: 14px 0 0 14px;
+  }
+  .coop__paths {
+    padding: var(--s-5) var(--s-6) var(--s-4);
+    border-top: 0;
+    border-left: 1px dashed var(--thread);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .coop__path::after {
+    transition: none;
   }
 }
 
@@ -519,7 +908,7 @@
 }
 
 /* ── Mobile refinements ───────────────────────────────────────── */
-.hero__actions .btn {
+.hero__cta {
   white-space: nowrap;
 }
 .btn {
@@ -527,9 +916,6 @@
   text-align: center;
 }
 @media (max-width: 40rem) {
-  .hero__actions .btn {
-    flex: 1 1 100%;
-  }
   .trust__list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: var(--s-4);

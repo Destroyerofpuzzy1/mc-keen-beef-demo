@@ -1,0 +1,1248 @@
+/*
+ * Beef identity layer (experimental): DESIGN-001 (materials) and DESIGN-002 (one shared system on
+ * every page). The crafted header (NAV-005) is the source: warm cream fabric, sewn seams, red
+ * embroidery. Loaded last. The marks themselves come from components/brand/BrandMarks.tsx.
+ * The header, the hero and the trust strip are not touched.
+ *
+ * System: 1 tokens · 2 materials (grain, seams, stitched cards) · 3 section labels (numbered ear
+ * tags and a red running stitch under every section title) · 4 embroidery (icons, patches, the
+ * cuts diagram) · 5 ear-tag labels · 6 page-header motif · 7 photographs · 8 page applications.
+ */
+
+/* ── 1 Tokens ─────────────────────────────────────────────────────── */
+:root {
+  /* The header's fractal noise, fainter and without its weave: no moiré, no visible noise under text. */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.42 0 0 0 0 0.34 0 0 0 0 0.25 0 0 0 0.065 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23g)'/%3E%3C/svg%3E");
+  /* Running stitches (thread on cream, red thread, thread on dark) and the fold of light under a seam. */
+  --stitch: repeating-linear-gradient(90deg, rgb(120 96 70 / 0.45) 0 6px, rgb(120 96 70 / 0) 6px 10px);
+  --stitch-red: repeating-linear-gradient(90deg, #b3000c 0 8px, rgb(179 0 12 / 0) 8px 12px);
+  --stitch-dark: repeating-linear-gradient(90deg, rgb(246 239 230 / 0.3) 0 6px, rgb(246 239 230 / 0) 6px 10px);
+  --stitch-light: linear-gradient(rgb(255 255 255 / 0.65), rgb(255 255 255 / 0.65));
+  --thread: rgb(120 96 70 / 0.4);
+  --thread-red: rgb(178 18 24 / 0.55);
+  --thread-light: rgb(246 239 230 / 0.32);
+  /* Embroidery: the wordmark's satin texture over red thread, raised off the fabric. */
+  --satin: repeating-linear-gradient(118deg, rgb(255 214 208 / 0.3) 0 0.7px, rgb(255 255 255 / 0) 0.7px 1.7px, rgb(80 0 6 / 0.22) 1.7px 2.3px);
+  --red-thread: linear-gradient(180deg, #e3262f 0%, #c70d16 48%, #a1000b 100%);
+  --red-thread-bright: linear-gradient(180deg, #f2433f 0%, #d6161d 50%, #b0060f 100%);
+  --raised: drop-shadow(0 1px 0 rgb(255 255 255 / 0.85)) drop-shadow(0 1px 1.2px rgb(70 0 6 / 0.45));
+  --raised-dark: drop-shadow(0 1px 1px rgb(0 0 0 / 0.7)) drop-shadow(0 -0.5px 0 rgb(255 190 180 / 0.2));
+  /* Felt for patches and plates, tan and red for ear tags, a warm white for stitched cards. */
+  --felt: radial-gradient(circle at 34% 28%, #fdfaf3 0%, #f1e9da 58%, #e2d5bf 100%);
+  --tag: linear-gradient(180deg, #ede1c9 0%, #d5c19d 100%);
+  --tag-red: linear-gradient(180deg, #d81a22 0%, #ad000b 100%);
+  --card: linear-gradient(180deg, #fffdf8 0%, #faf5ec 100%);
+  --tag-hole: radial-gradient(circle, rgb(60 40 20 / 0.78) 0 38%, rgb(255 255 255 / 0.65) 46% 62%, rgb(110 82 52 / 0.35) 70%);
+}
+
+/* ── 2 Materials ──────────────────────────────────────────────────── */
+body {
+  background: var(--grain) var(--paper);
+}
+
+/* Paper-2 bands read as panels sewn into the page: a seam along each edge, softly padded. */
+:is(.section--paper2, .quality-home, .origin) {
+  background:
+    var(--stitch) 0 12px / 100% 1px no-repeat,
+    var(--stitch-light) 0 13px / 100% 1px no-repeat,
+    var(--stitch) 0 calc(100% - 12px) / 100% 1px no-repeat,
+    var(--stitch-light) 0 calc(100% - 11px) / 100% 1px no-repeat,
+    var(--grain) var(--paper-2);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.55),
+    inset 0 14px 18px -16px rgb(70 52 34 / 0.2),
+    inset 0 -14px 18px -16px rgb(70 52 34 / 0.14);
+}
+/* Dark bands: a light seam along each edge. */
+:is(.chain, .section--dark) {
+  background:
+    var(--stitch-dark) 0 12px / 100% 1px no-repeat,
+    var(--stitch-dark) 0 calc(100% - 12px) / 100% 1px no-repeat,
+    var(--brown-dark);
+}
+
+/* Page headers: the rule becomes a seam and a soft lip over the content below. */
+.page-head {
+  position: relative;
+  z-index: 1;
+  border-bottom: 0;
+  background:
+    var(--stitch) 0 calc(100% - 9px) / 100% 1px no-repeat,
+    var(--stitch-light) 0 calc(100% - 8px) / 100% 1px no-repeat;
+  box-shadow:
+    0 1px 0 rgb(70 52 34 / 0.1),
+    0 7px 12px -9px rgb(70 52 34 / 0.22);
+}
+.page-head--dark {
+  background:
+    var(--stitch-dark) 0 calc(100% - 9px) / 100% 1px no-repeat,
+    var(--maroon);
+}
+
+/* Footer: a light seam along its top edge, the page's cream fabric folding into it. */
+.site-foot {
+  background:
+    var(--stitch-dark) 0 12px / 100% 1px no-repeat,
+    var(--brown-dark);
+  box-shadow: inset 0 16px 20px -18px rgb(0 0 0 / 0.65);
+}
+
+/* Stitched cards: warm white, soft corners, a running stitch inside the edge, a slight lift. */
+.stitched,
+.cert-label,
+.cblock,
+.ledger {
+  border-radius: 12px;
+  background: var(--card);
+  outline: 1px dashed var(--thread);
+  outline-offset: -7px;
+  box-shadow:
+    0 1px 1px rgb(70 52 34 / 0.08),
+    0 12px 22px -16px rgb(70 52 34 / 0.4);
+}
+.cblock {
+  padding: var(--s-5);
+}
+.ledger {
+  padding: var(--s-5) var(--s-5) var(--s-4);
+}
+@media (min-width: 40rem) {
+  .cblock,
+  .ledger {
+    padding: var(--s-6);
+  }
+}
+/* On dark felt: the same card in dark cloth with a light thread. */
+.stitched--dark,
+.logistics__panel,
+.sales-people li,
+.sales-card--dark,
+.origin__panel {
+  border: 0;
+  border-radius: 12px;
+  outline: 1px dashed var(--thread-light);
+  outline-offset: -7px;
+  box-shadow: 0 14px 26px -18px rgb(0 0 0 / 0.8);
+}
+/* A recessed, stitched panel for side notes. */
+.uppz-note,
+.stitched-inset {
+  position: relative;
+  border-left: 0;
+  border-radius: 14px;
+  padding: var(--s-5) var(--s-6);
+  background: var(--grain) var(--paper-2);
+  box-shadow:
+    inset 0 1px 3px rgb(70 52 34 / 0.16),
+    inset 0 -1px 0 rgb(255 255 255 / 0.8);
+}
+.uppz-note::before,
+.stitched-inset::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px dashed var(--thread);
+  border-radius: 10px;
+  pointer-events: none;
+}
+
+/* ── 3 Section labels ─────────────────────────────────────────────── */
+/* Every section title on a page carries its number on a small red ear tag (generated, hidden from
+   assistive technology) and is underlined by a short red running stitch. Legal texts (.prose) stay
+   plain. */
+#main {
+  counter-reset: brand-section;
+}
+#main .h-section:not(.visually-hidden, .prose .h-section) {
+  counter-increment: brand-section;
+}
+#main .h-section:not(.visually-hidden, .prose .h-section)::before {
+  content: counter(brand-section, decimal-leading-zero) / '';
+  display: inline-flex;
+  align-items: center;
+  height: 1.55em;
+  margin-right: 0.6em;
+  padding: 0 0.55em 0 1.35em;
+  border-radius: 0.38em 0.8em 0.8em 0.38em;
+  background:
+    radial-gradient(circle at 0.62em 50%, rgb(40 0 4 / 0.82) 0 0.13em, rgb(255 210 200 / 0.55) 0.15em 0.22em, rgb(255 210 200 / 0) 0.24em),
+    var(--tag-red);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.3),
+    inset 0 -2px 3px rgb(80 0 6 / 0.35),
+    0 2px 4px -1px rgb(70 20 10 / 0.45);
+  color: #fdf3ea;
+  font-size: 0.36em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-shadow: 0 -1px 0 rgb(80 0 6 / 0.5);
+  vertical-align: 0.42em;
+}
+#main .h-section:not(.visually-hidden, .prose .h-section)::after {
+  content: '';
+  display: block;
+  width: 4.5rem;
+  height: 2px;
+  margin-top: 0.32em;
+  background: var(--stitch-red);
+}
+:is(.chain, .section--dark, .origin__panel, .logistics__panel) .h-section::after {
+  background: repeating-linear-gradient(90deg, #ff5a52 0 8px, rgb(255 90 82 / 0) 8px 12px);
+}
+
+/* ── 4 Embroidery ─────────────────────────────────────────────────── */
+/* An embroidered icon: a line drawing as a mask over red satin thread. */
+.bicon {
+  display: inline-block;
+  flex: none;
+  width: var(--bicon, 2.75rem);
+  aspect-ratio: 1;
+  filter: var(--raised);
+}
+.bicon::before {
+  content: '';
+  display: block;
+  height: 100%;
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+  background: var(--satin), var(--red-thread);
+}
+:is(.chain, .section--dark, .site-foot, .origin__panel, .logistics__panel) .bicon {
+  filter: var(--raised-dark);
+}
+:is(.chain, .section--dark, .site-foot, .origin__panel, .logistics__panel) .bicon::before {
+  background: var(--satin), var(--red-thread-bright);
+}
+
+/* The embroidered bull on its own (DESIGN-001 placements). */
+.cattle-mark {
+  display: block;
+  width: var(--cattle-w, 6rem);
+  aspect-ratio: 240 / 182;
+  filter: var(--raised);
+}
+.cattle-mark::before {
+  content: '';
+  display: block;
+  height: 100%;
+  -webkit-mask: url('/craft/cattle-outline.svg') center / contain no-repeat;
+  mask: url('/craft/cattle-outline.svg') center / contain no-repeat;
+  background: var(--satin), var(--red-thread);
+}
+.cattle-mark--dark {
+  filter: var(--raised-dark);
+}
+.cattle-mark--dark::before {
+  background: var(--satin), var(--red-thread-bright);
+}
+
+/* Patch: cream felt, a red satin (merrowed) edge, an inner running stitch, lettering on the ring. */
+.patch {
+  --patch: 9rem;
+  --edge: calc(var(--patch) * 0.045);
+  position: relative;
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: var(--patch);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--grain), var(--felt);
+  box-shadow:
+    0 1px 2px rgb(70 52 34 / 0.3),
+    0 16px 28px -16px rgb(40 20 8 / 0.6),
+    inset 0 -3px 6px rgb(110 82 52 / 0.18);
+}
+.patch::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--satin), var(--red-thread);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--edge)), #000 calc(100% - var(--edge) + 0.5px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - var(--edge)), #000 calc(100% - var(--edge) + 0.5px));
+}
+.patch::after {
+  content: '';
+  position: absolute;
+  inset: calc(var(--edge) + var(--patch) * 0.04);
+  border: 1.5px dashed rgb(160 30 30 / 0.5);
+  border-radius: 50%;
+}
+.patch__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: #a8060f;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-anchor: middle;
+  filter: drop-shadow(0 0.6px 0 rgb(255 255 255 / 0.8));
+}
+.patch__ring path {
+  fill: none;
+}
+.patch .patch__motif {
+  --bicon: calc(var(--patch) * 0.4);
+  filter: var(--raised);
+}
+.patch .patch__motif::before {
+  background: var(--satin), var(--red-thread);
+}
+.patch .bicon--cattle {
+  --bicon: calc(var(--patch) * 0.5);
+}
+.patch--sm {
+  --patch: 5.5rem;
+}
+.patch--sm .patch__motif {
+  --bicon: calc(var(--patch) * 0.48);
+}
+.patch--md {
+  --patch: 9rem;
+}
+.patch--lg {
+  --patch: 13.5rem;
+}
+
+/* The brand cuts diagram sewn in red thread; `--plate`: on a stitched felt plate. */
+.cuts {
+  display: block;
+}
+.cuts__art {
+  display: block;
+  aspect-ratio: 500 / 383.26;
+  filter: var(--raised);
+}
+.cuts__art::before {
+  content: '';
+  display: block;
+  height: 100%;
+  -webkit-mask: url('/assets/brand/beef-cuts-bull.svg') center / contain no-repeat;
+  mask: url('/assets/brand/beef-cuts-bull.svg') center / contain no-repeat;
+  background: var(--satin), var(--red-thread);
+}
+.cuts--plate {
+  padding: 1.4rem 1.6rem;
+  border-radius: 18px;
+  background: var(--grain), var(--felt);
+  outline: 1.5px dashed var(--thread-red);
+  outline-offset: -9px;
+  box-shadow:
+    0 1px 2px rgb(70 52 34 / 0.25),
+    0 18px 30px -18px rgb(40 20 8 / 0.55),
+    inset 0 -3px 6px rgb(110 82 52 / 0.15);
+}
+
+/* ── 5 Ear-tag labels ─────────────────────────────────────────────── */
+/* Small embossed tags with a punched hole, for real labels only (places, roles, categories, years). */
+.eartag {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  width: fit-content;
+  min-height: 1.95em;
+  padding: 0.2em 0.85em 0.2em 1.6em;
+  border-radius: 0.5em 1.05em 1.05em 0.5em;
+  background: var(--tag);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.65),
+    inset 0 -2px 3px rgb(110 82 52 / 0.25),
+    0 2px 4px -1px rgb(70 52 34 / 0.4);
+  color: #4a2f19;
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+  text-decoration: none;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 0.55);
+  text-transform: uppercase;
+}
+.eartag::before {
+  content: '';
+  position: absolute;
+  left: 0.58em;
+  top: 50%;
+  width: 0.52em;
+  height: 0.52em;
+  margin-top: -0.26em;
+  border-radius: 50%;
+  background: var(--tag-hole);
+}
+.eartag--red {
+  background: var(--tag-red);
+  color: #fdf3ea;
+  text-shadow: 0 -1px 0 rgb(80 0 6 / 0.5);
+}
+.eartag--red::before {
+  background: radial-gradient(circle, rgb(40 0 4 / 0.82) 0 38%, rgb(255 210 200 / 0.5) 46% 62%, rgb(80 0 6 / 0.4) 70%);
+}
+
+/* ── 6 Page-header motif ──────────────────────────────────────────── */
+/* The page's main mark beside the title: large on desktop, a small patch at the top right on phones. */
+.page-head__motif {
+  position: absolute;
+  top: var(--s-4);
+  right: var(--gutter);
+  z-index: 1;
+}
+.page-head__motif .patch {
+  --patch: 4.25rem;
+}
+.page-head__motif .patch__ring {
+  display: none;
+}
+.page-head__motif .cuts {
+  display: none;
+}
+.page-head--motif .crumbs,
+.page-head--motif .page-head__title {
+  padding-right: 5.25rem;
+}
+@media (min-width: 64rem) {
+  .page-head__motif {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .page-head__motif .patch {
+    --patch: 12.5rem;
+  }
+  .page-head__motif .patch__ring {
+    display: block;
+  }
+  .page-head__motif .cuts {
+    display: block;
+    width: 27rem;
+  }
+  .page-head--motif .crumbs,
+  .page-head--motif .page-head__title {
+    padding-right: 0;
+  }
+  /* Keep the jump links clear of the cuts plate. */
+  .page-head--motif .jump {
+    margin-right: 29rem;
+  }
+}
+
+/* ── 7 Photographs ────────────────────────────────────────────────── */
+/* Photographs inside the content column sit on the fabric like mounted prints: soft corners, a
+   fine light edge, a quiet shadow. Full-bleed bands (.wide-photo, the Jakość origin band) keep
+   square edges; certificate scans are documents and are not touched. */
+.photo:not(.wide-photo .photo, .origin__photo .photo) {
+  border-radius: 10px;
+  box-shadow:
+    0 1px 2px rgb(70 52 34 / 0.12),
+    0 14px 26px -20px rgb(70 52 34 / 0.5);
+}
+.photo:not(.wide-photo .photo, .origin__photo .photo)::after,
+.chain__photo::after,
+.ptile__photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.14),
+    inset 0 1px 0 rgb(255 255 255 / 0.22);
+  pointer-events: none;
+}
+.chain__photo {
+  border-radius: 8px;
+}
+.ptile__photo {
+  border-radius: 10px 10px 0 0;
+}
+/* Two pasture photographs carry a strong golden-hour cast; a gentle grade brings them closer to
+   the natural light of the hero footage. */
+.photo--natural img {
+  filter: saturate(0.84) sepia(0.05) brightness(1.02);
+}
+.photo-note {
+  right: var(--s-2);
+  bottom: var(--s-2);
+  padding: 0.1rem 0.6rem 0.1rem 1.15rem;
+  border-radius: 3px 9px 9px 3px;
+  background: linear-gradient(180deg, rgb(251 247 239 / 0.95), rgb(236 228 213 / 0.95));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.8),
+    0 1px 3px rgb(0 0 0 / 0.28);
+  text-shadow: 0 1px 0 rgb(255 255 255 / 0.6);
+}
+.photo-note::before {
+  content: '';
+  position: absolute;
+  left: 0.42rem;
+  top: 50%;
+  width: 0.36rem;
+  height: 0.36rem;
+  margin-top: -0.18rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(70 52 34 / 0.6) 0 38%, rgb(255 255 255 / 0.7) 46% 62%, rgb(110 88 62 / 0.4) 70%);
+}
+
+/* ── 8 Page applications ──────────────────────────────────────────── */
+
+/* Shared labels: eyebrows become red ear tags; the main motif of a page shows its phone or its
+   desktop form. */
+#main .eyebrow-plain {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.95em;
+  margin-bottom: var(--s-3);
+  padding: 0.2em 0.85em 0.2em 1.6em;
+  border-radius: 0.5em 1.05em 1.05em 0.5em;
+  background: var(--tag-red);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.3),
+    inset 0 -2px 3px rgb(80 0 6 / 0.35),
+    0 2px 4px -1px rgb(0 0 0 / 0.45);
+  color: #fdf3ea;
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.02em;
+  text-shadow: 0 -1px 0 rgb(80 0 6 / 0.5);
+}
+#main .eyebrow-plain::before {
+  content: '';
+  position: absolute;
+  left: 0.58em;
+  top: 50%;
+  width: 0.52em;
+  height: 0.52em;
+  margin-top: -0.26em;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(40 0 4 / 0.82) 0 38%, rgb(255 210 200 / 0.5) 46% 62%, rgb(80 0 6 / 0.4) 70%);
+}
+@media (min-width: 64rem) {
+  .page-head__motif .motif--phone {
+    display: none;
+  }
+}
+
+/* Category badges (home tiles, Produkty): the legacy category icon embroidered on a felt disc. */
+.ptile__icon,
+.cat-icon {
+  position: relative;
+  width: 3.4rem;
+  height: 3.4rem;
+  -webkit-mask: none;
+  mask: none;
+  border-radius: 50%;
+  background: var(--grain), var(--felt);
+  box-shadow:
+    0 1px 2px rgb(70 52 34 / 0.3),
+    0 8px 14px -8px rgb(40 20 8 / 0.5),
+    inset 0 -2px 4px rgb(110 82 52 / 0.18);
+}
+.ptile__icon::before,
+.cat-icon::before {
+  content: '';
+  position: absolute;
+  inset: 21%;
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+  background: var(--satin), var(--red-thread);
+}
+.ptile__icon::after,
+.cat-icon::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px dashed rgb(160 30 30 / 0.45);
+  border-radius: 50%;
+}
+.cat-icon {
+  width: 3rem;
+  height: 3rem;
+  vertical-align: middle;
+}
+
+/* Ćwierci (no authentic photo): the brand cuts diagram sewn in red thread on felt, between two
+   stitched lines. */
+.pplate {
+  background:
+    var(--stitch) left var(--s-5) top 16% / calc(100% - 2 * var(--s-5)) 1px no-repeat,
+    var(--stitch) left var(--s-5) bottom 10% / calc(100% - 2 * var(--s-5)) 1px no-repeat,
+    var(--grain),
+    var(--felt);
+}
+.pplate::before {
+  content: '';
+  position: absolute;
+  inset: 12% 0 10%;
+  translate: 0 1px;
+  -webkit-mask: var(--art) center / contain no-repeat;
+  mask: var(--art) center / contain no-repeat;
+  background: rgb(70 0 6 / 0.35);
+}
+.pplate::after {
+  background: var(--satin), var(--red-thread);
+  opacity: 1;
+}
+
+/* Produkty: the jump links to the four groups as ear tags. */
+.jump a {
+  position: relative;
+  padding: 0 1.1rem 0 2rem;
+  border: 0;
+  border-radius: 0.65rem 1.4rem 1.4rem 0.65rem;
+  background: var(--tag);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.65),
+    inset 0 -2px 3px rgb(110 82 52 / 0.25),
+    0 2px 4px -1px rgb(70 52 34 / 0.4);
+  color: #4a2f19;
+  font-family: var(--font-display);
+  font-size: var(--fs-base);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 0.55);
+}
+.jump a::before {
+  content: '';
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-top: -0.275rem;
+  border-radius: 50%;
+  background: var(--tag-hole);
+}
+.jump a:hover {
+  background: var(--tag-red);
+  color: #fdf3ea;
+  text-shadow: 0 -1px 0 rgb(80 0 6 / 0.5);
+}
+
+/* Markets ledger: the column titles as ear tags. */
+.ledger__title {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.95em;
+  margin-bottom: var(--s-3);
+  padding: 0.2em 0.85em 0.2em 1.6em;
+  border: 0;
+  border-radius: 0.5em 1.05em 1.05em 0.5em;
+  background: var(--tag);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.65),
+    inset 0 -2px 3px rgb(110 82 52 / 0.25),
+    0 2px 4px -1px rgb(70 52 34 / 0.4);
+  color: #4a2f19;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 0.55);
+}
+.ledger__title::before {
+  content: '';
+  position: absolute;
+  left: 0.58em;
+  top: 50%;
+  width: 0.52em;
+  height: 0.52em;
+  margin-top: -0.26em;
+  border-radius: 50%;
+  background: var(--tag-hole);
+}
+
+/* Home: the production chain. The three photos in one row of varied proportions (the Hereford
+   close-up leads); the real step numbers on ear tags hanging under the horn markers. */
+@media (min-width: 48rem) {
+  .chain__photos {
+    grid-template-columns: 1.55fr 1fr 1fr;
+    gap: var(--s-3);
+  }
+  .chain__photo {
+    aspect-ratio: auto;
+    height: clamp(9.5rem, 4rem + 9vw, 14rem);
+  }
+}
+.chain__intro {
+  position: relative;
+}
+.chain__patch {
+  position: absolute;
+  top: 0;
+  right: 0;
+  --patch: 5.25rem;
+}
+.chain__patch .patch__ring {
+  display: none;
+}
+.chain__intro > .eyebrow-plain,
+.chain__intro > .h-section {
+  margin-right: 6rem;
+}
+@media (min-width: 64rem) {
+  .chain__patch {
+    --patch: 10.5rem;
+    top: 50%;
+    translate: 0 -50%;
+  }
+  .chain__patch .patch__ring {
+    display: block;
+  }
+  .chain__intro > .eyebrow-plain,
+  .chain__intro > .h-section {
+    margin-right: 0;
+  }
+}
+.chain__badge {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--s-3);
+  margin-top: var(--s-3);
+}
+.chain__badge .chain__num {
+  margin-top: 0;
+}
+.chain__icon {
+  --bicon: 2.6rem;
+}
+.chain__num {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: fit-content;
+  min-width: 2.1rem;
+  height: 2.45rem;
+  padding: 0.7rem 0.45rem 0.15rem;
+  border-radius: 46% 46% 30% 30% / 34% 34% 22% 22%;
+  background: linear-gradient(180deg, #e2d6bf 0%, #c9b794 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.6),
+    inset 0 -2px 3px rgb(110 82 52 / 0.28),
+    0 2px 5px -1px rgb(0 0 0 / 0.45);
+  font-size: 1.125rem;
+  line-height: 1;
+  color: #4f321b;
+  text-shadow:
+    0 1px 0 rgb(255 255 255 / 0.55),
+    0 -1px 0 rgb(60 30 10 / 0.18);
+}
+.chain__num::before {
+  content: '';
+  position: absolute;
+  top: 0.32rem;
+  left: 50%;
+  width: 0.38rem;
+  height: 0.38rem;
+  margin-left: -0.19rem;
+  border-radius: 50%;
+  background: var(--brown-dark);
+  box-shadow:
+    inset 0 1px 1.5px rgb(0 0 0 / 0.6),
+    0 1px 0 rgb(255 255 255 / 0.5);
+}
+
+/* A section's own embroidered icon above its title (Zakłady cold chain, Jakość origin panel). */
+.section-icon,
+.origin__icon {
+  --bicon: 3rem;
+  display: block;
+  margin-bottom: var(--s-3);
+}
+
+/* Jakość: the quality systems and the control areas on stitched cards, their names on ear tags. */
+.spec-list,
+.control__rows {
+  border-top: 0;
+  border-radius: 12px;
+  padding: var(--s-2) var(--s-5);
+  background: var(--card);
+  outline: 1px dashed var(--thread);
+  outline-offset: -7px;
+  box-shadow:
+    0 1px 1px rgb(70 52 34 / 0.08),
+    0 12px 22px -16px rgb(70 52 34 / 0.4);
+}
+.spec-list__row,
+.control__row {
+  align-items: center;
+  border-bottom: 1px dashed var(--thread);
+}
+.spec-list__row:last-child,
+.control__row:last-child {
+  border-bottom: 0;
+}
+.spec-list dt,
+.control__row dt {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 2em;
+  padding: 0.15em 0.9em 0.15em 1.75em;
+  border-radius: 0.5em 1.05em 1.05em 0.5em;
+  background: var(--tag);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.65),
+    inset 0 -2px 3px rgb(110 82 52 / 0.25),
+    0 2px 4px -1px rgb(70 52 34 / 0.4);
+  color: #4a2f19;
+  font-size: var(--fs-base);
+  text-shadow: 0 1px 0 rgb(255 255 255 / 0.55);
+}
+.spec-list dt::before,
+.control__row dt::before {
+  content: '';
+  position: absolute;
+  left: 0.62em;
+  top: 50%;
+  width: 0.52em;
+  height: 0.52em;
+  margin-top: -0.26em;
+  border-radius: 50%;
+  background: var(--tag-hole);
+}
+
+/* Certificates read as sewn-in quality labels: a red running stitch inside the frame. */
+.cert-label {
+  outline-color: var(--thread-red);
+}
+.site-title::before {
+  content: '';
+  display: inline-block;
+  width: 1.15em;
+  height: 1.15em;
+  margin-right: 0.35em;
+  vertical-align: -0.15em;
+  -webkit-mask: url('/craft/icons/pin.svg') center / contain no-repeat;
+  mask: url('/craft/icons/pin.svg') center / contain no-repeat;
+  background: var(--satin), var(--red-thread);
+}
+.pending-list li {
+  margin-bottom: var(--s-3);
+  padding: var(--s-4) var(--s-5);
+  border-top: 0;
+  border-radius: 12px;
+  background: var(--card);
+  outline: 1px dashed var(--thread);
+  outline-offset: -6px;
+  box-shadow: 0 10px 18px -14px rgb(70 52 34 / 0.35);
+}
+.archive {
+  padding: var(--s-2) var(--s-5);
+  border-radius: 12px;
+  background: var(--card);
+  outline: 1px dashed var(--thread);
+  outline-offset: -7px;
+  box-shadow: 0 12px 22px -16px rgb(70 52 34 / 0.4);
+}
+.archive__group,
+.archive__group:last-child {
+  border-color: var(--thread);
+  border-top-style: dashed;
+  border-bottom-style: dashed;
+}
+.archive__group:first-of-type {
+  border-top: 0;
+}
+.archive__group:last-child {
+  border-bottom: 0;
+}
+/* UXA-07: on phones the archive entries get the width for the labelled document rows. */
+@media (max-width: 39.99rem) {
+  .archive {
+    padding-inline: var(--s-4);
+  }
+}
+
+/* Zakłady: the group structure as stitched cards with location tags; company cards stitched,
+   their role on a red ear tag. The same company cards appear in the Kontakt directory. */
+.structure {
+  gap: var(--s-3);
+  background: none;
+  border: 0;
+}
+/* Links and buttons keep `outline` for their focus ring: their stitch is a pseudo-element. */
+.structure__link {
+  position: relative;
+  border-radius: 12px;
+  background: var(--card);
+  box-shadow:
+    0 1px 1px rgb(70 52 34 / 0.08),
+    0 10px 18px -14px rgb(70 52 34 / 0.4);
+}
+.structure__link::after,
+.router__option::after {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px dashed var(--thread);
+  border-radius: 7px;
+  pointer-events: none;
+}
+.structure__link:hover {
+  background: #fff;
+}
+.structure__link:hover::after {
+  border-color: var(--thread-red);
+}
+.structure__place {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 1.95em;
+  margin-top: auto;
+  padding: 0.2em 0.8em 0.2em 1.55em;
+  border-radius: 0.5em 1.05em 1.05em 0.5em;
+  background: var(--tag);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.65),
+    inset 0 -2px 3px rgb(110 82 52 / 0.25),
+    0 2px 4px -1px rgb(70 52 34 / 0.4);
+  color: #4a2f19;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 0.55);
+  text-transform: uppercase;
+}
+.structure__place::before {
+  content: '';
+  position: absolute;
+  left: 0.55em;
+  top: 50%;
+  width: 0.52em;
+  height: 0.52em;
+  margin-top: -0.26em;
+  border-radius: 50%;
+  background: var(--tag-hole);
+}
+.entity {
+  padding: var(--s-5);
+  border-top: 0;
+  border-radius: 12px;
+  background: var(--card);
+  outline: 1px dashed var(--thread);
+  outline-offset: -7px;
+  box-shadow:
+    0 1px 1px rgb(70 52 34 / 0.08),
+    0 12px 22px -16px rgb(70 52 34 / 0.4);
+}
+.entity__role {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.95em;
+  margin-bottom: var(--s-2);
+  padding: 0.2em 0.85em 0.2em 1.6em;
+  border-radius: 0.5em 1.05em 1.05em 0.5em;
+  background: var(--tag-red);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.3),
+    inset 0 -2px 3px rgb(80 0 6 / 0.35),
+    0 2px 4px -1px rgb(70 20 10 / 0.4);
+  color: #fdf3ea;
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.06em;
+  text-shadow: 0 -1px 0 rgb(80 0 6 / 0.5);
+  text-transform: uppercase;
+}
+.entity__role::before {
+  content: '';
+  position: absolute;
+  left: 0.58em;
+  top: 50%;
+  width: 0.52em;
+  height: 0.52em;
+  margin-top: -0.26em;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(40 0 4 / 0.82) 0 38%, rgb(255 210 200 / 0.5) 46% 62%, rgb(80 0 6 / 0.4) 70%);
+}
+.facility__meta {
+  border-top: 1px dashed var(--thread);
+}
+
+/* O firmie: the largest patch (the embroidered bull); the history as ear tags on a red seam. */
+@media (min-width: 64rem) {
+  .page-head__motif .patch--hero {
+    --patch: 15rem;
+  }
+}
+.timeline {
+  border-left: 0;
+  background: repeating-linear-gradient(180deg, #b3000c 0 8px, rgb(179 0 12 / 0) 8px 12px) 0 0 / 2px 100% no-repeat;
+}
+.timeline__item::before {
+  left: -4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--satin), var(--red-thread);
+  box-shadow: 0 0 0 3px var(--paper-2);
+}
+.timeline__year {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  align-self: start;
+  width: fit-content;
+  min-height: 1.9em;
+  padding: 0.12em 0.75em 0.12em 1.45em;
+  border-radius: 0.45em 0.95em 0.95em 0.45em;
+  background: var(--tag);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.65),
+    inset 0 -2px 3px rgb(110 82 52 / 0.25),
+    0 2px 4px -1px rgb(70 52 34 / 0.4);
+  color: #4a2f19;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 0.55);
+}
+.timeline__year::before {
+  content: '';
+  position: absolute;
+  left: 0.5em;
+  top: 50%;
+  width: 0.42em;
+  height: 0.42em;
+  margin-top: -0.21em;
+  border-radius: 50%;
+  background: var(--tag-hole);
+}
+/* The small "historical" labels and other plain tags as tiny ear tags. */
+.tag {
+  position: relative;
+  padding: 0.08rem 0.5rem 0.08rem 1.05rem;
+  border: 0;
+  border-radius: 0.3rem 0.7rem 0.7rem 0.3rem;
+  background: var(--tag);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.65),
+    0 1px 2px rgb(70 52 34 / 0.35);
+  color: #4a2f19;
+}
+.tag::before {
+  content: '';
+  position: absolute;
+  left: 0.4rem;
+  top: 50%;
+  width: 0.32rem;
+  height: 0.32rem;
+  margin-top: -0.16rem;
+  border-radius: 50%;
+  background: var(--tag-hole);
+}
+
+/* List markers carry meaning (UXA-19). By default a red running stitch (two short stitches),
+   neutral like the plain dash in pages.css: statements, legal text. Lists of a plant's own
+   capabilities add .ticks--check for a stitched check. No list uses a cross: an "X" reads as
+   "no / not available". The markers are empty pseudo-elements, so screen readers skip them. */
+.ticks li::before {
+  top: calc(0.8em - 1px);
+  width: 0.75em;
+  height: 2px;
+  background: linear-gradient(90deg, #b3000c 0 40%, rgb(179 0 12 / 0) 40% 60%, #b3000c 60%);
+}
+.ticks--check li::before {
+  top: 0.22em;
+  left: 0.2em;
+  width: 0.34em;
+  height: 0.66em;
+  border: solid #b3000c;
+  border-width: 0 2px 2px 0;
+  background: none;
+  transform: rotate(45deg);
+}
+.ticks--light li::before,
+:is(.chain, .section--dark, .origin__panel, .logistics__panel) .ticks li::before {
+  background: linear-gradient(90deg, #ff5a52 0 40%, rgb(255 90 82 / 0) 40% 60%, #ff5a52 60%);
+}
+.ticks--light.ticks--check li::before,
+:is(.chain, .section--dark, .origin__panel, .logistics__panel) .ticks--check li::before {
+  border-color: #ff5a52;
+  background: none;
+}
+
+/* Kariera: the job as a stitched card with a red seam on top, the company on a red ear tag; the
+   pay figures on small stitched insets; the application aside stitched. Form fields unchanged. */
+.job {
+  border-top: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--card);
+  outline: 1px dashed var(--thread);
+  outline-offset: -7px;
+  box-shadow:
+    inset 0 4px 0 var(--beef),
+    0 1px 1px rgb(70 52 34 / 0.08),
+    0 14px 26px -18px rgb(70 52 34 / 0.45);
+}
+.job__company {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.95em;
+  padding: 0.2em 0.85em 0.2em 1.6em;
+  border-radius: 0.5em 1.05em 1.05em 0.5em;
+  background: var(--tag-red);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.3),
+    inset 0 -2px 3px rgb(80 0 6 / 0.35),
+    0 2px 4px -1px rgb(70 20 10 / 0.4);
+  color: #fdf3ea;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-shadow: 0 -1px 0 rgb(80 0 6 / 0.5);
+}
+.job__company::before {
+  content: '';
+  position: absolute;
+  left: 0.58em;
+  top: 50%;
+  width: 0.52em;
+  height: 0.52em;
+  margin-top: -0.26em;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(40 0 4 / 0.82) 0 38%, rgb(255 210 200 / 0.5) 46% 62%, rgb(80 0 6 / 0.4) 70%);
+}
+.job__pay > div {
+  position: relative;
+  border-left: 0;
+  border-radius: 10px;
+  background: var(--grain) var(--paper-2);
+  box-shadow:
+    inset 0 1px 3px rgb(70 52 34 / 0.16),
+    inset 0 -1px 0 rgb(255 255 255 / 0.8);
+}
+.job__pay > div::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border: 1px dashed var(--thread);
+  border-radius: 7px;
+  pointer-events: none;
+}
+.aside-box {
+  border: 0;
+  border-radius: 12px;
+  background: var(--card);
+  outline: 1px dashed var(--thread-red);
+  outline-offset: -7px;
+  box-shadow:
+    inset 0 4px 0 var(--beef),
+    0 14px 26px -18px rgb(70 52 34 / 0.45);
+}
+
+/* Kontakt: topics as stitched cards (the chosen one red), the answer on a stitched card, the
+   directory filter as location ear tags, departments as small tags. Phone numbers unchanged. */
+.router__option {
+  position: relative;
+  border: 0;
+  border-radius: 10px;
+  background: var(--card);
+  box-shadow:
+    0 1px 1px rgb(70 52 34 / 0.1),
+    0 8px 14px -12px rgb(70 52 34 / 0.45);
+}
+.router__option[aria-expanded='true'] {
+  background: var(--tag-red);
+  color: #fdf3ea;
+}
+.router__option[aria-expanded='true']::after {
+  border-color: rgb(255 225 215 / 0.45);
+}
+.router__result {
+  border-top: 0;
+  border-radius: 12px;
+  background: var(--card);
+  outline: 1px dashed var(--thread);
+  outline-offset: -7px;
+  box-shadow:
+    inset 0 4px 0 var(--maroon),
+    0 14px 26px -18px rgb(70 52 34 / 0.45);
+}
+.chip {
+  position: relative;
+  padding-left: 1.75rem;
+  border: 0;
+  border-radius: 0.6rem 1.3rem 1.3rem 0.6rem;
+  background: var(--tag);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.65),
+    inset 0 -2px 3px rgb(110 82 52 / 0.25),
+    0 2px 4px -1px rgb(70 52 34 / 0.4);
+  color: #4a2f19;
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+}
+.chip::before {
+  content: '';
+  position: absolute;
+  left: 0.7rem;
+  top: 50%;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-top: -0.25rem;
+  border-radius: 50%;
+  background: var(--tag-hole);
+}
+.chip[aria-pressed='true'] {
+  background: var(--tag-red);
+  color: #fdf3ea;
+}
+.person__dept {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin-bottom: var(--s-1);
+  padding: 0.1rem 0.6rem 0.1rem 1.25rem;
+  border-radius: 0.35rem 0.8rem 0.8rem 0.35rem;
+  background: var(--tag);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.65),
+    0 1px 2px rgb(70 52 34 / 0.35);
+  color: #4a2f19;
+}
+.person__dept::before {
+  content: '';
+  position: absolute;
+  left: 0.45rem;
+  top: 50%;
+  width: 0.38rem;
+  height: 0.38rem;
+  margin-top: -0.19rem;
+  border-radius: 50%;
+  background: var(--tag-hole);
+}
+
+/* Footer: the brand patch in the brand column; stitched dividers. */
+.site-foot__patch {
+  --patch: 8.5rem;
+  margin-top: var(--s-5);
+}
+.site-foot__top,
+.site-foot__group {
+  border-bottom: 1px dashed rgb(246 239 230 / 0.28);
+}
+.site-foot__cattle {
+  --cattle-w: 6.5rem;
+  margin-top: var(--s-5);
+}
+
+/* O firmie (DESIGN-001 emblem; replaced by the page-header patch in DESIGN-002). */
+.page-head__cattle {
+  display: none;
+}
+@media (min-width: 64rem) {
+  .page-head__cattle {
+    --cattle-w: 10.5rem;
+    display: block;
+    position: absolute;
+    right: var(--gutter);
+    bottom: 0;
+  }
+}

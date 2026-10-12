@@ -19,6 +19,7 @@ const pl = {
     external: 'otwiera się w nowej karcie',
     footerNav: 'Nawigacja w stopce',
     close: 'Zamknij',
+    toTop: 'Powrót na górę',
   },
   nav: {
     home: 'Strona główna',
@@ -38,6 +39,13 @@ const pl = {
   },
   /** Shorter labels for the desktop bar only (full label stays in the mobile menu and footer). */
   navShort: { sales: 'Eksport' },
+  drum: {
+    previous: 'Poprzednia sekcja',
+    next: 'Następna sekcja',
+    hint: 'Kliknij zakładkę albo przeciągnij selektor',
+    keyboard:
+      'Strzałki w lewo i w prawo przesuwają selektor po zakładkach, Home i End na pierwszą i ostatnią. Enter otwiera wybraną stronę po zatrzaśnięciu, Escape anuluje wybór. Zakładki można też po prostu kliknąć.',
+  },
   draftNotice: '',
   common: {
     illustrative: 'Zdjęcie poglądowe',
@@ -91,10 +99,16 @@ const pl = {
     files: 'Pliki',
     scopeNote: 'Wyniki dotyczą wyłącznie zakładu, dla którego wydano certyfikat.',
     noCurrent: 'Aktualny certyfikat tego zakładu nie jest opublikowany na stronie.',
-    verify: 'Ważność certyfikatów można sprawdzić w bazach BRCGS Directory (brcdirectory.com) oraz IFS (ifs-certification.com).',
+    askQuality: 'Zapytaj dział jakości',
+    documentsLink: 'Dokumenty certyfikatów',
+    verify: 'Weryfikacja certyfikatów w oficjalnych bazach BRCGS i IFS wymaga zalogowania na konto. BRCGS oferuje bezpłatne konto Directory Lite.',
+    verifyBrcgs: 'BRCGS Directory (directory.brcgs.com)',
+    verifyIfs: 'Baza IFS (login.ifs-certification.com)',
     archiveIntro: 'Certyfikaty wygasłe. Publikujemy je jako dokumentację historii certyfikacji. Nie potwierdzają aktualnego statusu.',
     validFor: 'Dotyczy',
     document: 'Dokument',
+    preview: 'Podgląd',
+    originalPdf: 'Oryginał PDF',
     viewer: 'Podgląd certyfikatu',
     langGroup: 'Wersja językowa',
     zoomIn: 'Powiększ dokument',
@@ -113,6 +127,8 @@ const pl = {
     sentEnquiry: 'Dział sprzedaży odpowie na podany adres e-mail.',
     sentCareers: 'Skontaktujemy się z wybranymi osobami telefonicznie.',
     errorTitle: 'Nie udało się wysłać formularza.',
+    unknownTitle: 'Brak wyniku do wyświetlenia',
+    unknownText: 'Na tej stronie nie możemy potwierdzić, czy formularz został wysłany. Jeśli chcesz mieć pewność, skontaktuj się z nami bezpośrednio:',
     errorGeneric: 'Spróbuj ponownie za chwilę albo skontaktuj się bezpośrednio:',
     errorFields: 'Popraw zaznaczone pola.',
     errorRate: 'Zbyt wiele prób w krótkim czasie. Spróbuj ponownie za kilka minut.',
@@ -174,7 +190,9 @@ const pl = {
     title: 'McKeen Beef: producent wołowiny z Polski',
     description:
       'Polski producent wołowiny dla odbiorców B2B. Ubój, rozbiór, pakowanie, mroźnia i sprzedaż w grupie MCKEEN-BEEF. Ćwierci, elementy, mięsa drobne i podroby.',
-    heroTitle: 'Wołowina od polskiego producenta.',
+    heroTitle: 'Polska wołowina jakościowa',
+    heroVideoPause: 'Zatrzymaj film w tle',
+    heroVideoPlay: 'Odtwórz film w tle',
     heroLead:
       'Dostarczamy ćwierci, elementy, mięsa drobne i podroby wołowe odbiorcom biznesowym w Polsce i za granicą.',
     heroLabel: 'Grupa MCKEEN-BEEF, Lisków, od 2009 roku',
@@ -188,7 +206,6 @@ const pl = {
     marketsTitle: 'Rynki',
     marketsNote: 'Wybrane rynki odbiorców.',
     sitesTitle: 'Zakłady i biura',
-    exportSales: 'Sprzedaż: MCKEEN-BEEF SO GmbH, Oelde (Niemcy)',
     heroImageAlt: 'Stado bydła na pastwisku o wschodzie słońca',
     ctaProducts: 'Zobacz produkty',
     trustSince: 'rok rozpoczęcia działalności',
@@ -207,6 +224,8 @@ const pl = {
     salesLink: 'Sprzedaż i eksport',
     envTitle: 'Fotowoltaika i projekt biogazowni',
     envLink: 'Projekt biogazowni w Linne',
+    coopEyebrow: 'Kontakt i współpraca',
+    coopTitle: 'Porozmawiajmy o współpracy',
     truckAlt: 'Ciężarówka chłodnia z logo McKeen-Beef na autostradzie',
   },
   products: {
@@ -220,7 +239,7 @@ const pl = {
   },
   quality: {
     title: 'Jakość i bezpieczeństwo żywności',
-    description: 'System jakości grupy MCKEEN-BEEF: HACCP, GMP, GHP, IFS Food i BRCGS. Sprawdzone hodowle, dobrostan zwierząt, kontrola na każdym etapie, biogazownia i fotowoltaika.',
+    description: 'System jakości grupy MCKEEN-BEEF: HACCP, GMP i GHP. Certyfikaty BRCGS i IFS Food ma zakład rozbioru w Liskowie. Sprawdzone hodowle, dobrostan, środowisko.',
     lead: 'Jakość zaczyna się w hodowli. Monitorujemy każdy etap produkcji i prowadzimy dokładną dokumentację. Tak opisujemy nasz system.',
     systemTitle: 'System jakości',
     systemLead: 'Zakłady działają zgodnie z przepisami prawa żywnościowego. Od 2010 roku korzystamy z certyfikowanego systemu zarządzania jakością.',

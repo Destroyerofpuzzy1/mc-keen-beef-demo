@@ -48,6 +48,9 @@
   background: var(--brown-dark);
   color: var(--on-dark);
 }
+.chain .eyebrow-plain {
+  color: #ff9a90;
+}
 .chain .lead {
   color: var(--on-dark-muted);
 }
@@ -74,49 +77,29 @@
   height: 100%;
   object-fit: cover;
 }
+/* Steps (UX-IA-001 stage 1.1). Below 64rem: a vertical thread runs through the horn markers; per
+   step the number tag, icon and title form one row, and the text and links sit indented under the
+   tag. From 64rem: two rows on horizontal threads, 1–4 from the animal to the product and 5–7 to
+   the customer; inside a row the badges, titles, texts and links line up (subgrid). The links close
+   each step quietly. Text sizes are unchanged. */
 .chain__steps {
   position: relative;
   display: grid;
-  gap: var(--s-5);
+  row-gap: var(--s-6);
   list-style: none;
   margin: 0;
   padding: 0;
 }
-@media (min-width: 64rem) {
-  .chain__steps {
-    grid-template-columns: repeat(7, 1fr);
-    gap: var(--s-4);
-  }
-  .chain__steps::before {
-    content: '';
-    position: absolute;
-    top: 13px;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--beef);
-    transform-origin: left center;
-  }
-  .js-reveal .chain__steps::before {
-    transform: scaleX(0);
-    transition: transform 1100ms var(--ease-in-out);
-  }
-  .js-reveal .chain__steps:has(.chain__step.is-in)::before {
-    transform: scaleX(1);
-  }
-}
-@keyframes chain-draw {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
-}
 .chain__step {
   position: relative;
+  display: grid;
+  grid-template-columns: 1.75rem auto minmax(0, 1fr);
+  column-gap: var(--s-3);
+  align-items: center;
 }
 .chain__marker {
+  grid-column: 1;
+  grid-row: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -137,13 +120,175 @@
   font-weight: 700;
   color: var(--on-dark-muted);
 }
+/* The number tag leads; the embroidered icon is a little smaller than before (2.6rem). */
+.chain__steps .chain__badge {
+  grid-column: 2;
+  grid-row: 1;
+  margin-top: 0;
+}
+.chain__steps .chain__icon {
+  --bicon: 2.2rem;
+}
 .chain__title {
+  grid-column: 3;
+  grid-row: 1;
+  margin: 0;
   font-size: var(--fs-md);
-  margin: var(--s-1) 0 var(--s-2);
 }
 .chain__text {
+  grid-column: 2 / -1;
+  grid-row: 2;
+  max-width: 40rem;
+  margin-top: var(--s-2);
   font-size: var(--fs-sm);
   color: var(--on-dark-muted);
+}
+.chain__links {
+  grid-column: 2 / -1;
+  grid-row: 3;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--s-5);
+  margin: var(--s-1) 0 0;
+}
+/* The thread from this step's marker to the next one; the markers' dark ground masks it. */
+.chain__step:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  top: 1.2rem;
+  left: 13px;
+  bottom: calc(-1 * (var(--s-6) + 1.2rem));
+  width: 2px;
+  background: var(--beef);
+  transform-origin: center top;
+}
+.js-reveal .chain__step::before {
+  transform: scaleY(0);
+  transition: transform 600ms var(--ease-in-out);
+  transition-delay: inherit;
+}
+.js-reveal .chain__step.is-in::before {
+  transform: none;
+}
+@media (min-width: 64rem) {
+  .chain__steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: var(--s-6);
+    row-gap: 0;
+  }
+  .chain__step {
+    grid-row: span 5;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: subgrid;
+    align-items: start;
+  }
+  .chain__steps .chain__badge {
+    grid-column: 1;
+    grid-row: 2;
+    margin-top: var(--s-3);
+  }
+  .chain__title {
+    grid-column: 1;
+    grid-row: 3;
+    margin-top: var(--s-3);
+  }
+  .chain__text {
+    grid-column: 1;
+    grid-row: 4;
+    max-width: none;
+  }
+  .chain__links {
+    grid-column: 1;
+    grid-row: 5;
+    margin-top: var(--s-3);
+  }
+  /* Space before the second row, carried by its markers (the rows are shared by the subgrids). */
+  .chain__step:nth-child(n + 5) .chain__marker {
+    margin-top: var(--s-7);
+  }
+  /* The thread: horizontal through the markers, on to the next step of the same row. */
+  .chain__step::before,
+  .chain__step:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    top: 13px;
+    left: 0;
+    right: calc(-1 * var(--s-6));
+    bottom: auto;
+    width: auto;
+    height: 2px;
+    background: var(--beef);
+    transform-origin: left center;
+  }
+  .chain__step:nth-child(n + 5)::before {
+    top: calc(var(--s-7) + 13px);
+  }
+  .chain__step:nth-child(4)::before,
+  .chain__step:last-child::before {
+    right: 0;
+  }
+  .js-reveal .chain__step::before {
+    transform: scaleX(0);
+  }
+  .js-reveal .chain__step.is-in::before {
+    transform: none;
+  }
+}
+/* A step's link to where it is described: readable but quieter than before, a warm light tone
+   with a fine coral underline and the coral arrow; full coral on hover. */
+.chain .chain__link {
+  display: inline-block;
+  min-height: 2.75rem;
+  padding: 0.6rem 0;
+  font-size: var(--fs-sm);
+  line-height: 1.25;
+  color: #e7b8b0;
+  text-decoration: underline;
+  text-decoration-color: rgb(255 154 144 / 0.4);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.28em;
+}
+.chain .chain__link::after {
+  display: inline-block;
+  margin-left: 0.45em;
+  /* No net width: the arrow never wraps onto a line of its own; it may hang into the gap. */
+  margin-right: -0.95em;
+  vertical-align: 0.1em;
+  border-color: #ff9a90;
+}
+.chain .chain__link:hover {
+  color: #ff9a90;
+  text-decoration-color: currentColor;
+}
+.chain__more {
+  margin: var(--s-6) 0 0;
+}
+/* With a mouse the links need no 44 px touch height, so a two-link step does not stretch its row
+   (each link stays about 30 px high, above the 24 px minimum). */
+@media (min-width: 64rem) and (pointer: fine) {
+  .chain .chain__link {
+    min-height: 0;
+    padding: 0.35rem 0;
+  }
+}
+/* The plants button closes the chain in the free fourth cell of the second row (seven steps in four
+   columns), bottom-aligned with that row's links. */
+@media (min-width: 64rem) {
+  .chain .container {
+    position: relative;
+  }
+  .chain__more {
+    position: absolute;
+    bottom: 0;
+    left: calc(var(--gutter) + (3 * (100% - 2 * var(--gutter)) + 3 * var(--s-6)) / 4);
+    width: calc((100% - 2 * var(--gutter) - 3 * var(--s-6)) / 4);
+    margin: 0;
+  }
+  .chain__more .btn {
+    max-width: 100%;
+    justify-content: flex-start;
+    text-align: left;
+  }
 }
 
 /* ── Sales band ───────────────────────────────────────────────── */
@@ -185,17 +330,6 @@
 }
 
 /* ── Fact lists ───────────────────────────────────────────────── */
-.facts-row {
-  display: grid;
-  gap: var(--s-5);
-  border-top: 2px solid var(--rule-strong);
-  padding-top: var(--s-5);
-}
-@media (min-width: 56rem) {
-  .facts-row {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
 .facts-row__title {
   font-size: var(--fs-md);
   margin-bottom: var(--s-2);

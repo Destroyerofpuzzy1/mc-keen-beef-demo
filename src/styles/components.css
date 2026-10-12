@@ -82,6 +82,11 @@
 .clink:hover span {
   text-decoration: underline;
 }
+/* A11Y-001: paint the focused link above the ear tag next to it (Kontakt directory), which would cover its ring. */
+.clink:focus-visible {
+  position: relative;
+  z-index: 1;
+}
 .clink svg {
   flex: none;
   color: var(--beef);
@@ -129,15 +134,62 @@ p > .tag:first-child {
 }
 
 /* ── Header ───────────────────────────────────────────────────
- * One bar. Geometry is identical in PL / EN / DE: seven equal nav columns sized
- * for the longest label, fixed-width language switch and CTA.
+ * Crafted, soft-tactile construction (NAV-005): one warm cream upholstered surface with a fine
+ * fabric grain, lit from above, stitched along its lower edge and finished with a soft lip and
+ * shadow. The McKeen-Beef wordmark is embroidered into it; the page selector
+ * (DrumNav.module.css), the language switch and the CTA are set into the same material as soft
+ * recesses and cushions. While the selector moves, a light pool over it and the CTA's lit edge
+ * brighten through --glint; nothing else moves. The traditional mobile menu shares these styles.
  */
+@property --glint {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
 .site-head {
+  --glint: 0;
+  --edge: 4px;
+  /* Fabric grain: tiny fractal noise, a few percent opaque (inline SVG, allowed by img-src data:). */
+  --fabric: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.42 0 0 0 0 0.34 0 0 0 0 0.25 0 0 0 0.1 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23f)'/%3E%3C/svg%3E");
   position: sticky;
   top: 0;
   z-index: 40;
-  background: rgba(244, 240, 232, 0.97);
-  border-bottom: 1px solid var(--rule);
+  background:
+    radial-gradient(ellipse 34% 130% at 50% 0%, rgb(255 255 255 / calc(0.3 + 0.3 * var(--glint))), rgb(255 255 255 / 0) 70%),
+    var(--fabric),
+    repeating-linear-gradient(45deg, rgb(110 90 66 / 0.025) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(-45deg, rgb(255 255 255 / 0.06) 0 1px, transparent 1px 4px),
+    linear-gradient(180deg, #fbf8f2 0%, #f4efe5 55%, #ebe4d6 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.95),
+    inset 0 -10px 14px -12px rgb(110 88 62 / 0.2);
+  transition: --glint 360ms var(--ease-out);
+}
+.site-head:has(nav[data-phase='dragging'], nav[data-phase='coasting'], nav[data-phase='snapping']) {
+  --glint: 1;
+}
+/* A sewn seam along the lower edge. */
+.site-head::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--edge) + 6px);
+  border-top: 1px dashed rgb(120 96 70 / 0.3);
+  pointer-events: none;
+}
+/* Soft lip of the surface and the shadow it casts on the page. */
+.site-head::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: var(--edge);
+  background: linear-gradient(180deg, #e6decf 0%, #d4c9b7 100%);
+  box-shadow:
+    0 1px 0 rgb(70 52 34 / 0.14),
+    0 6px 14px -6px rgb(70 52 34 / 0.3),
+    0 18px 32px -20px rgb(70 52 34 / 0.32);
+  pointer-events: none;
 }
 .container--wide {
   max-width: var(--container-wide);
@@ -148,14 +200,45 @@ p > .tag:first-child {
   align-items: center;
   column-gap: var(--s-5);
   height: var(--header-h);
+  padding-bottom: var(--edge);
 }
+/* Embroidered wordmark: satin-stitch texture masked by the logo, raised off the fabric by its own
+   shadow, inside a sewn seam. Flush with the surface, not a separate plate. */
 .site-head__logo {
+  position: relative;
   display: block;
-  width: 9.5rem;
+  width: calc(9.5rem + 16px);
+  padding: 8px;
+  border-radius: 9px;
+  box-shadow:
+    inset 0 1px 2px rgb(70 52 34 / 0.12),
+    inset 0 -1px 0 rgb(255 255 255 / 0.7);
 }
-.site-head__logo img {
-  width: 100%;
-  height: auto;
+.site-head__logo::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px dashed rgb(150 26 26 / 0.36);
+  border-radius: 7px;
+  pointer-events: none;
+}
+.site-head__embroidery {
+  position: relative;
+  display: block;
+  aspect-ratio: 204.53 / 43.01;
+  filter:
+    drop-shadow(0 1px 0 rgb(255 255 255 / 0.85))
+    drop-shadow(0 1px 1.2px rgb(70 0 6 / 0.45));
+}
+.site-head__embroidery::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  -webkit-mask: url('/assets/brand/logo.svg') center / contain no-repeat;
+  mask: url('/assets/brand/logo.svg') center / contain no-repeat;
+  background:
+    repeating-linear-gradient(118deg, rgb(255 214 208 / 0.26) 0 0.7px, rgb(255 255 255 / 0) 0.7px 1.7px, rgb(80 0 6 / 0.2) 1.7px 2.3px),
+    linear-gradient(180deg, #e3262f 0%, #c70d16 48%, #a1000b 100%);
 }
 /* Always the last column, flush right: when the desktop nav is hidden the middle 1fr
    column stays empty instead of swallowing the language switch / menu button. */
@@ -166,51 +249,33 @@ p > .tag:first-child {
   align-items: center;
   gap: var(--s-4);
 }
+/* The one red cushion: a lit top edge, a soft inner curve and shadow; it presses in. */
 .site-head__cta {
-  width: 11rem;
-  padding-inline: var(--s-3);
+  padding-inline: 1.1rem;
   white-space: nowrap;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #d4111a 0%, var(--beef) 55%, #a9000a 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / calc(0.26 + 0.2 * var(--glint))),
+    inset 0 -2px 3px rgb(90 0 6 / 0.35),
+    0 1px 1px rgb(70 0 6 / 0.3),
+    0 6px 14px -6px rgb(155 0 9 / 0.55);
+}
+.site-head__cta:hover {
+  background: linear-gradient(180deg, #c50d16 0%, var(--beef-strong) 100%);
+}
+.site-head__cta:active {
+  transform: translateY(1px);
+  box-shadow:
+    inset 0 1px 3px rgb(70 0 6 / 0.45),
+    0 2px 6px -3px rgb(155 0 9 / 0.5);
 }
 
-.mainnav {
-  grid-column: 2;
-  justify-self: center;
-}
-.mainnav ul {
-  display: grid;
-  grid-template-columns: repeat(8, 5.6rem);
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.mainnav a {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: var(--header-h);
-  font-weight: 600;
-  font-size: 0.9375rem;
-  white-space: nowrap;
-  text-decoration: none;
-}
-.mainnav a::after {
-  content: '';
-  position: absolute;
-  left: 22%;
-  right: 22%;
-  bottom: 1.15rem;
-  height: 2px;
-  background: var(--beef);
-  transform: scaleX(0);
-  transition: transform var(--dur) var(--ease-out);
-}
-.mainnav a:hover::after,
-.mainnav a[aria-current='page']::after {
-  transform: scaleX(1);
-}
-.mainnav a:hover {
-  color: var(--ink);
+@media (min-width: 76rem) {
+  .site-head__row {
+    /* The selector takes all the room between the wordmark and the language/CTA group. */
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
 }
 
 .lang ul {
@@ -234,6 +299,10 @@ p > .tag:first-child {
 .lang__item:hover {
   color: var(--ink);
 }
+/* A11Y-001: paint the focused item above the raised current-language pill, which would cover its ring. */
+.lang__item:focus-visible {
+  z-index: 1;
+}
 .lang__item.is-current {
   color: var(--ink);
   text-decoration: underline;
@@ -241,22 +310,57 @@ p > .tag:first-child {
   text-decoration-thickness: 2px;
   text-underline-offset: 0.35em;
 }
-
-@media (max-width: 75.99rem) {
-  .mainnav {
-    display: none;
+/* In the header: a soft recess with the active language as a small raised cushion. */
+.site-head__end > .lang ul {
+  gap: 2px;
+  padding: 3px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgb(98 78 58 / 0.1) 0%, rgb(255 255 255 / 0.4) 100%);
+  box-shadow:
+    inset 0 2px 3px rgb(70 52 34 / 0.18),
+    inset 0 -1px 0 rgb(255 255 255 / 0.75),
+    0 1px 0 rgb(255 255 255 / 0.85);
+}
+.site-head__end > .lang .lang__item {
+  position: relative;
+  min-height: 40px;
+  width: 2.1rem;
+  border-radius: 9px;
+  color: var(--ink-2);
+  text-shadow: 0 1px 0 rgb(255 255 255 / 0.75);
+}
+.site-head__end > .lang a.lang__item:hover {
+  color: var(--beef);
+}
+.site-head__end > .lang .lang__item.is-current {
+  color: var(--ink);
+  text-decoration: none;
+  background: linear-gradient(180deg, #fffefa 0%, #efe8dc 100%);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 1px 1px rgb(70 52 34 / 0.2),
+    0 3px 6px -2px rgb(70 52 34 / 0.28);
+}
+.site-head__end > .lang .lang__item.is-current::after {
+  content: '';
+  position: absolute;
+  left: calc(50% - 6px);
+  bottom: 5px;
+  width: 12px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--beef);
+}
+@media (min-width: 76rem) {
+  .site-head__end > .lang .lang__item {
+    min-height: 34px;
   }
 }
-/* 76–86rem: eight items still fit with slightly narrower columns, gaps and CTA. */
+
+/* 76–86rem: keep comfortable space around the selector, language switch and CTA. */
 @media (min-width: 76rem) and (max-width: 85.99rem) {
   .site-head__row {
     column-gap: var(--s-4);
-  }
-  .mainnav ul {
-    grid-template-columns: repeat(8, 5.25rem);
-  }
-  .site-head__cta {
-    width: 10rem;
   }
 }
 @media (max-width: 40rem) {
@@ -265,8 +369,19 @@ p > .tag:first-child {
     display: none;
   }
   .site-head__logo {
-    width: 8.5rem;
+    width: calc(8rem + 14px);
+    padding: 7px;
   }
+}
+/* The mobile menu button: a small cushion of the same material. */
+.site-head__end .mmenu__toggle {
+  border-radius: 12px;
+  color: var(--ink);
+  background: linear-gradient(180deg, #fffefa 0%, #efe8dc 100%);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 1px 1px rgb(70 52 34 / 0.2),
+    0 3px 8px -3px rgb(70 52 34 / 0.3);
 }
 @media (min-width: 76rem) {
   .mmenu {
@@ -731,6 +846,39 @@ p > .tag:first-child {
   min-width: 40px;
   min-height: 40px;
 }
+/* Certyfikaty: "Podgląd" (scan viewer) and "Oryginał PDF" rows, labels in one column. */
+.cert-docs {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  align-items: center;
+  gap: var(--s-2) var(--s-3);
+  margin-top: var(--s-3);
+}
+.cert-docs > .cert-files {
+  display: contents;
+}
+.data-table .cert-docs {
+  gap: var(--s-1) var(--s-2);
+  margin-top: 0;
+}
+.data-table .cert-docs .cert-files__label {
+  display: inline-flex;
+  font-size: var(--fs-xs);
+}
+/* Certyfikaty: the verification note and the two official databases, external links (UXA-08). */
+.cert-verify p {
+  margin-bottom: 0;
+}
+.cert-verify__links {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--s-5);
+  margin-top: var(--s-1);
+}
+.cert-verify__links .clink {
+  color: var(--ink);
+  font-weight: 600;
+}
 
 /* Scan thumbnail (Certyfikaty): opens the viewer. */
 .cert-thumb {
@@ -1004,6 +1152,102 @@ html:has(.cview[open]) {
 }
 .data-table .cert-files__link {
   min-height: 32px;
+}
+/* Archive field labels: shown only in the phone layout below. */
+.archive__label {
+  display: none;
+}
+/* UXA-07 — Archive on phones: each certificate is one compact entry (year and standard; result
+   and validity; the labelled preview and PDF rows), so every document button is in view without
+   sideways scrolling. Same table and links as on larger screens; the explicit table roles in
+   CertificateArchive keep its semantics. Scoped to the archive (Biogazownia also has data tables). */
+@media (max-width: 39.99rem) {
+  .archive .table-wrap {
+    overflow: visible;
+  }
+  .archive .data-table {
+    position: relative;
+  }
+  .archive .data-table,
+  .archive .data-table tbody {
+    display: block;
+  }
+  /* The column headers stay for screen readers; every entry shows its own labels. */
+  .archive .data-table thead {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .archive .data-table tbody tr {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: var(--s-3);
+    padding: var(--s-3) 0;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.4;
+  }
+  .archive .data-table tbody :is(th, td) {
+    padding: 0;
+    border: 0;
+  }
+  .archive .data-table tbody th {
+    font-size: var(--fs-base);
+  }
+  /* Line 1: year and standard, then a full-width break (the ::after), result and validity, files. */
+  .archive .data-table tbody :is(th, td:first-of-type),
+  .archive .data-table tbody tr::after {
+    order: -1;
+  }
+  .archive .data-table tbody td:first-of-type {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .archive .data-table tbody tr::after {
+    content: '';
+    flex-basis: 100%;
+  }
+  .archive .data-table tbody td {
+    margin-top: var(--s-1);
+  }
+  .archive .data-table tbody td:first-of-type {
+    margin-top: 0;
+  }
+  .archive .data-table tbody td:last-child {
+    flex-basis: 100%;
+    margin-top: var(--s-2);
+  }
+  /* No result (EKO): no "Wynik –" line; the cell stays for screen readers so columns keep their headers. */
+  .archive .data-table tbody td.archive__none {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .archive__label {
+    display: inline;
+    margin-right: var(--s-1);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .archive .cert-docs {
+    grid-template-columns: max-content minmax(0, 1fr);
+  }
+  .archive .cert-files__langs {
+    flex-wrap: wrap;
+  }
+  .archive .data-table .cert-files__lang {
+    min-width: 44px;
+    min-height: 44px;
+  }
 }
 
 /* ── Entities / legal data / people ───────────────────────────── */
@@ -1406,6 +1650,8 @@ html:has(.dlg[open]) {
   color: var(--ink);
   overflow-y: auto;
   overscroll-behavior: contain;
+  /* A11Y-001: when Tab scrolls a field to the dialog's edge, keep room for its focus ring. */
+  scroll-padding-block: var(--s-3);
 }
 .dlg::backdrop {
   background: rgba(30, 12, 6, 0.72);

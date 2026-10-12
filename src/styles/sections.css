@@ -167,6 +167,10 @@
   font-size: var(--fs-xs);
   color: var(--muted);
 }
+/* "ważny do 27.04.2027" stays on one line; a narrow card breaks after the comma. */
+.specs__validity {
+  white-space: nowrap;
+}
 .cblock__actions {
   display: flex;
   flex-wrap: wrap;

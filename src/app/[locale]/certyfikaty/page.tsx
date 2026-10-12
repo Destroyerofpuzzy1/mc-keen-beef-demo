@@ -1,12 +1,17 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { getDictionary, resolveLocale, t } from '@/i18n';
 import { hasLocale } from '@/i18n/config';
+import { href } from '@/i18n/routes';
 import { pageMetadata } from '@/lib/seo';
 import { entityById } from '@/content/entities';
-import { currentCertificates, sitesWithoutCurrentCertificate, todayIso } from '@/content/certificates';
+import { currentCertificates, sitesWithoutCurrentCertificate, todayIso, verificationDatabases } from '@/content/certificates';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { CertificateArchive } from '@/components/certificates/CertificateArchive';
 import { CertificateLabel, CertificateThumb } from '@/components/certificates/CertificateStatus';
+import { QualityContactLink } from '@/components/certificates/QualityContactLink';
+import { BrandPatch } from '@/components/brand/BrandMarks';
+import { Icon } from '@/components/ui/Icon';
 
 export async function generateMetadata({ params }: PageProps<'/[locale]/certyfikaty'>): Promise<Metadata> {
   const { locale } = await params;
@@ -24,7 +29,13 @@ export default async function CertificatesPage({ params }: PageProps<'/[locale]/
 
   return (
     <>
-      <PageHeader locale={locale} routeKey="certificates" title={d.certificates.title} lead={d.certificates.lead} />
+      <PageHeader
+        locale={locale}
+        routeKey="certificates"
+        title={d.certificates.title}
+        lead={d.certificates.lead}
+        motif={<BrandPatch id="certificates" motif="certificate" bottom={d.nav.certificates.toUpperCase()} />}
+      />
 
       <section className="section" aria-labelledby="cur-h">
         <div className="container">
@@ -40,14 +51,36 @@ export default async function CertificatesPage({ params }: PageProps<'/[locale]/
               <div className="cert-full">
                 {current.map((c) => (
                   <div key={c.id} className="cert-full__item">
-                    <CertificateLabel cert={c} locale={locale} />
+                    <CertificateLabel cert={c} locale={locale} pdf />
                     <CertificateThumb cert={c} locale={locale} sizes="144px" />
                   </div>
                 ))}
               </div>
             </>
           ) : null}
-          <p className="note">{d.cert.verify}</p>
+          {/* UXA-08: what verification needs (a sign-in) and the official databases, as external
+              links. Nothing here says a record of these plants was checked there (GAP-03 open). */}
+          <div className="note cert-verify">
+            <p>{d.cert.verify}</p>
+            <ul className="plain cert-verify__links">
+              {(
+                [
+                  [verificationDatabases.brcgs, d.cert.verifyBrcgs],
+                  [verificationDatabases.ifs, d.cert.verifyIfs],
+                ] as const
+              ).map(([url, label]) => (
+                <li key={url}>
+                  <a className="clink" href={url} target="_blank" rel="noopener noreferrer">
+                    <Icon name="external" size={18} />
+                    <span>
+                      {label}
+                      <span className="visually-hidden"> ({d.a11y.external})</span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
           <h3 className="site-title site-title--spaced" id="zaklad-uboju">
             {d.certificates.otherSitesTitle}
@@ -64,6 +97,9 @@ export default async function CertificatesPage({ params }: PageProps<'/[locale]/
                   <p>
                     {d.cert.noCurrent}
                   </p>
+                  <p>
+                    <QualityContactLink locale={locale} />
+                  </p>
                 </li>
               );
             })}
@@ -77,6 +113,14 @@ export default async function CertificatesPage({ params }: PageProps<'/[locale]/
             {d.certificates.archiveTitle}
           </h2>
           <CertificateArchive locale={locale} today={today} />
+          {/* UXA-05 stage 1: the page's next steps after the documents, for every plant (the
+              quality links above belong to the plants without a published certificate). */}
+          <p className="link-row">
+            <QualityContactLink locale={locale} />
+            <Link href={`${href(locale, 'quality')}#system-jakosci`} className="arrow-link">
+              {d.quality.systemTitle}
+            </Link>
+          </p>
         </div>
       </section>
     </>

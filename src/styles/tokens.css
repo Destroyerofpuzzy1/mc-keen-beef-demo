@@ -31,8 +31,9 @@
 
   /* Status */
   --ok: #2f6b3a;
-  --archive: #7a6f66;
+  --archive: #625850; /* "expired" badge text, 5.5:1 on --paper-2 (was #7a6f66, 3.9:1; UXA-07) */
   --focus: #0a58ca;
+  --focus-on-dark: #9cc3ff; /* focus ring on dark surfaces: 9.5–10.6:1 on maroon and dark brown (A11Y-001) */
 
   /* Type */
   --font-display: var(--font-barlow), 'Arial Narrow', Arial, sans-serif;
@@ -78,4 +79,9 @@
   --dur-fast: 150ms;
   --dur: 220ms;
   --dur-slow: 600ms;
+}
+
+/* Desktop header: the drum (84px) plus the 4px front lip; shared offsets follow the actual bar. */
+@media (min-width: 76rem) {
+  :root { --header-h: 6.5rem; }
 }

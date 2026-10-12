@@ -17,6 +17,7 @@ const de: Dictionary = {
     external: 'öffnet in einem neuen Tab',
     footerNav: 'Fußzeilennavigation',
     close: 'Schließen',
+    toTop: 'Zurück nach oben',
   },
   nav: {
     home: 'Startseite',
@@ -36,6 +37,13 @@ const de: Dictionary = {
   },
   /** Shorter labels for the desktop bar only (full label stays in the mobile menu and footer). */
   navShort: { sales: 'Export' },
+  drum: {
+    previous: 'Vorheriger Bereich',
+    next: 'Nächster Bereich',
+    hint: 'Reiter anklicken oder den Wähler ziehen',
+    keyboard:
+      'Pfeil links und rechts bewegen den Wähler über die Reiter, Pos1 und Ende zum ersten und letzten. Enter öffnet die gewählte Seite nach dem Einrasten, Escape bricht die Auswahl ab. Die Reiter lassen sich auch einfach anklicken.',
+  },
   draftNotice: 'Diese deutsche Fassung wird derzeit geprüft. Maßgeblich ist die polnische Version.',
   common: {
     illustrative: 'Beispielfoto',
@@ -89,10 +97,16 @@ const de: Dictionary = {
     files: 'Dateien',
     scopeNote: 'Die Ergebnisse gelten nur für den Betrieb, für den das Zertifikat ausgestellt wurde.',
     noCurrent: 'Ein aktuelles Zertifikat dieses Betriebs ist auf dieser Website nicht veröffentlicht.',
-    verify: 'Zertifikate lassen sich im BRCGS Directory (brcdirectory.com) und in der IFS-Datenbank (ifs-certification.com) prüfen.',
+    askQuality: 'Qualitätsabteilung kontaktieren',
+    documentsLink: 'Zertifikatsdokumente',
+    verify: 'Die Prüfung von Zertifikaten in den offiziellen Datenbanken von BRCGS und IFS erfordert die Anmeldung mit einem Konto. BRCGS bietet ein kostenloses Directory-Lite-Konto an.',
+    verifyBrcgs: 'BRCGS Directory (directory.brcgs.com)',
+    verifyIfs: 'IFS-Datenbank (login.ifs-certification.com)',
     archiveIntro: 'Abgelaufene Zertifikate, veröffentlicht als Nachweis unserer Zertifizierungshistorie. Sie bestätigen keinen aktuellen Status.',
     validFor: 'Gilt für',
     document: 'Dokument',
+    preview: 'Vorschau',
+    originalPdf: 'Original-PDF',
     viewer: 'Zertifikatsansicht',
     langGroup: 'Sprachversion',
     zoomIn: 'Vergrößern',
@@ -111,6 +125,8 @@ const de: Dictionary = {
     sentEnquiry: 'Unser Vertrieb antwortet an die angegebene E-Mail-Adresse.',
     sentCareers: 'Wir melden uns telefonisch bei ausgewählten Bewerberinnen und Bewerbern.',
     errorTitle: 'Das Formular konnte nicht gesendet werden.',
+    unknownTitle: 'Kein Ergebnis vorhanden',
+    unknownText: 'Diese Seite kann nicht bestätigen, ob ein Formular gesendet wurde. Wenn Sie sichergehen möchten, kontaktieren Sie uns bitte direkt:',
     errorGeneric: 'Bitte versuchen Sie es gleich noch einmal oder kontaktieren Sie uns direkt:',
     errorFields: 'Bitte korrigieren Sie die markierten Felder.',
     errorRate: 'Zu viele Versuche in kurzer Zeit. Bitte versuchen Sie es in einigen Minuten erneut.',
@@ -172,7 +188,10 @@ const de: Dictionary = {
     title: 'McKeen Beef: Rindfleischproduzent aus Polen',
     description:
       'Polnischer Rindfleischproduzent für B2B-Kunden. Schlachtung, Zerlegung, Verpackung, Tiefkühlung und Vertrieb in der MCKEEN-BEEF Gruppe. Viertel, Teilstücke, Abschnitte und Innereien.',
-    heroTitle: 'Rindfleisch vom polnischen Produzenten.',
+    // Soft hyphen: the compound must be able to break on narrow screens.
+    heroTitle: 'Polnisches Qualitäts­rindfleisch',
+    heroVideoPause: 'Hintergrundvideo anhalten',
+    heroVideoPlay: 'Hintergrundvideo abspielen',
     heroLead:
       'Wir liefern Rinderviertel, Teilstücke, Abschnitte und Innereien an Geschäftskunden in Polen und im Ausland.',
     heroLabel: 'MCKEEN-BEEF Gruppe, Lisków, seit 2009',
@@ -186,7 +205,6 @@ const de: Dictionary = {
     marketsTitle: 'Märkte',
     marketsNote: 'Ausgewählte Absatzmärkte.',
     sitesTitle: 'Betriebe und Büros',
-    exportSales: 'Vertrieb: MCKEEN-BEEF SO GmbH, Oelde',
     heroImageAlt: 'Rinderherde auf der Weide bei Sonnenaufgang',
     ctaProducts: 'Produkte ansehen',
     trustSince: 'Beginn der Tätigkeit',
@@ -205,6 +223,8 @@ const de: Dictionary = {
     salesLink: 'Vertrieb und Export',
     envTitle: 'Photovoltaik und Biogasanlagen-Projekt',
     envLink: 'Projekt Biogasanlage Linne',
+    coopEyebrow: 'Kontakt und Zusammenarbeit',
+    coopTitle: 'Sprechen wir über eine Zusammenarbeit',
     truckAlt: 'Kühl-Lkw mit McKeen-Beef-Logo auf der Autobahn',
   },
   products: {
@@ -218,7 +238,7 @@ const de: Dictionary = {
   },
   quality: {
     title: 'Qualität und Lebensmittelsicherheit',
-    description: 'Qualitätssystem der MCKEEN-BEEF Gruppe: HACCP, GMP, GHP, IFS Food und BRCGS. Geprüfte Betriebe, Tierwohl, Kontrolle auf jeder Stufe, Biogas und Photovoltaik.',
+    description: 'Qualitätssystem der MCKEEN-BEEF Gruppe: HACCP, GMP und GHP. BRCGS und IFS Food: Zertifikate des Zerlegebetriebs in Lisków. Geprüfte Betriebe, Tierwohl, Umwelt.',
     lead: 'Qualität beginnt im Stall. Wir überwachen jede Produktionsstufe und führen eine genaue Dokumentation. So funktioniert unser System.',
     systemTitle: 'Qualitätssystem',
     systemLead: 'Unsere Betriebe halten sich strikt an das Lebensmittelrecht. Seit 2010 arbeiten wir mit einem zertifizierten Qualitätsmanagementsystem.',

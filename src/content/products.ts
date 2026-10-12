@@ -52,13 +52,14 @@ export const products: ProductGroup[] = [
     name: { pl: 'Ćwierci wołowe', en: 'Beef quarters', de: 'Rinderviertel' },
     icon: 'quarter',
     summary: {
-      pl: 'Ćwierci wołowe z uboju w zakładach grupy.',
-      en: 'Beef quarters from slaughter at the group’s plants.',
-      de: 'Rinderviertel aus der Schlachtung in den Betrieben der Gruppe.',
+      pl: 'Ćwierci wołowe z uboju.',
+      en: 'Beef quarters from slaughter.',
+      de: 'Rinderviertel aus der Schlachtung.',
     },
-    // The 2023 IFS scope covers SH Linne only; no published evidence for SH II (Wydrzyn).
+    // Only SH Linne is documented (IFS scopes 2019–2023, EKO 2021). SH II (Wydrzyn) is not
+    // listed and the summary names no plants until the client confirms its products (C-51, GAP-06).
     facts: [{ label: formLabel, value: chilledFrozen, source: srcSh2023, site: 'sh' }],
-    sites: ['sh', 'sh2'],
+    sites: ['sh'],
     route: 'buy-beef',
   },
   {

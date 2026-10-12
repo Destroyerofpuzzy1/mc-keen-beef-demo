@@ -12,6 +12,7 @@ import { PageHeader } from '@/components/layout/PageHeader';
 import { ProductGroups } from '@/components/products/ProductGroups';
 import { MailLink, PhoneLink } from '@/components/ui/Contact';
 import { Photo } from '@/components/ui/Photo';
+import { BrandPatch, CutsDiagram } from '@/components/brand/BrandMarks';
 
 export async function generateMetadata({ params }: PageProps<'/[locale]/produkty'>): Promise<Metadata> {
   const { locale } = await params;
@@ -28,7 +29,18 @@ export default async function ProductsPage({ params }: PageProps<'/[locale]/prod
 
   return (
     <>
-      <PageHeader locale={locale} routeKey="products" title={d.products.title} lead={d.products.lead}>
+      <PageHeader
+        locale={locale}
+        routeKey="products"
+        title={d.products.title}
+        lead={d.products.lead}
+        motif={
+          <>
+            <BrandPatch id="products" motif="steak" size="sm" className="motif--phone" />
+            <CutsDiagram plate />
+          </>
+        }
+      >
         <nav className="jump" aria-label={d.products.title}>
           <ul className="plain">
             {products.map((p) => (

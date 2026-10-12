@@ -122,3 +122,23 @@ export const productIcon: Record<ProductKey, keyof typeof assets.icons> = {
 /** Ambient cattle loop (re-encoded legacy video) with its poster. */
 export const video = { ...assets.video!, poster: assets.images['cattle-grazing-poster'] };
 
+/**
+ * Home hero loop: the supplied `home_bottom.mp4` (same footage as the ambient loop). Desktop and
+ * tablet get the original H.264 stream unchanged (remuxed only: no re-encoding loss); phones get
+ * a centred 1:1 crop at the source's full height (CRF 22). The poster is frame 0 at 1920 px, so the
+ * first video frame lands exactly on it; a smaller poster would be upscaled and the browser would
+ * then count the video frame as the larger, later LCP element. Kept in public/video/, outside the
+ * folders rewritten by the import script; file names carry a content hash because /video/* is
+ * cached for seven days (see docs/asset-map.md).
+ */
+export const heroVideo = {
+  desktop: { src: '/video/home-hero-1920.429f8fc6.mp4', width: 1920, height: 800 },
+  mobile: { src: '/video/home-hero-800.c0ff7c32.mp4', width: 800, height: 800 },
+  poster: {
+    src: '/video/home-hero-poster.b0958c38.webp',
+    width: 1920,
+    height: 800,
+    alt: { pl: 'Stado bydła na pastwisku', en: 'Herd of cattle grazing on pasture', de: 'Rinderherde auf der Weide' },
+  } satisfies MediaItem,
+};
+

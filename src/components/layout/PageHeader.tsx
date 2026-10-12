@@ -8,7 +8,8 @@ import { JsonLd } from '@/components/ui/JsonLd';
 
 /**
  * Compact page header: breadcrumb, title, one lead paragraph. Replaces the legacy
- * full-height photo headers (research/03-design-audit.md).
+ * full-height photo headers (research/03-design-audit.md). `motif` (DESIGN-002) is the page's
+ * main beef-identity mark (an embroidered patch or the cuts diagram), placed beside the text.
  */
 export function PageHeader({
   locale,
@@ -16,6 +17,7 @@ export function PageHeader({
   title,
   lead,
   children,
+  motif,
   tone = 'paper',
 }: {
   locale: Locale;
@@ -23,6 +25,7 @@ export function PageHeader({
   title: string;
   lead?: string;
   children?: ReactNode;
+  motif?: ReactNode;
   tone?: 'paper' | 'dark';
 }) {
   const d = getDictionary(locale);
@@ -31,8 +34,9 @@ export function PageHeader({
     { name: title, path: href(locale, routeKey) },
   ];
   return (
-    <header className={`page-head page-head--${tone}`}>
+    <header className={`page-head page-head--${tone}${motif ? ' page-head--motif' : ''}`}>
       <div className="container">
+        {motif ? <div className="page-head__motif">{motif}</div> : null}
         <nav aria-label={d.a11y.breadcrumb} className="crumbs">
           <ol>
             <li>

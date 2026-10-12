@@ -9,8 +9,10 @@ import { environmentFacts } from '@/content/environment';
 import { media, video } from '@/content/media';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { CertificateLabel } from '@/components/certificates/CertificateStatus';
+import { QualityContactLink } from '@/components/certificates/QualityContactLink';
 import { AmbientVideo } from '@/components/ui/AmbientVideo';
 import { Photo } from '@/components/ui/Photo';
+import { BrandIcon, BrandPatch } from '@/components/brand/BrandMarks';
 
 export async function generateMetadata({ params }: PageProps<'/[locale]/jakosc'>): Promise<Metadata> {
   const { locale } = await params;
@@ -27,7 +29,13 @@ export default async function QualityPage({ params }: PageProps<'/[locale]/jakos
 
   return (
     <>
-      <PageHeader locale={locale} routeKey="quality" title={q.title} lead={q.lead} />
+      <PageHeader
+        locale={locale}
+        routeKey="quality"
+        title={q.title}
+        lead={q.lead}
+        motif={<BrandPatch id="quality" motif="seal" bottom={d.nav.quality.toUpperCase()} />}
+      />
 
       <section className="section" id="system-jakosci" aria-labelledby="sys-h">
         <div className="container">
@@ -55,6 +63,7 @@ export default async function QualityPage({ params }: PageProps<'/[locale]/jakos
           <Photo item={media.feedingCattle} locale={locale} ratio="1440 / 860" sizes="(min-width: 64rem) 60vw, 100vw" reveal />
         </div>
         <div className="origin__panel">
+          <BrandIcon name="cow" className="origin__icon" />
           <h2 id="src-h" className="h-section">
             {q.sourcesTitle}
           </h2>
@@ -103,6 +112,11 @@ export default async function QualityPage({ params }: PageProps<'/[locale]/jakos
             ))}
           </div>
           <p className="note">{d.cert.scopeNote}</p>
+          {/* UXA-05 stage 2: audits and certificate questions go to the quality departments (the
+              router's quality topic lists every plant; no person is picked for the visitor). */}
+          <p className="link-row">
+            <QualityContactLink locale={locale} />
+          </p>
         </div>
       </section>
 

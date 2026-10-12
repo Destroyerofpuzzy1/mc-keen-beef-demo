@@ -13,6 +13,7 @@ import { EntityCard } from '@/components/contacts/EntityCard';
 import { MailLink, PhoneLink } from '@/components/ui/Contact';
 import { Photo } from '@/components/ui/Photo';
 import { MobileFold } from '@/components/ui/MobileFold';
+import { BrandPatch } from '@/components/brand/BrandMarks';
 
 export async function generateMetadata({ params }: PageProps<'/[locale]/kontakt'>): Promise<Metadata> {
   const { locale } = await params;
@@ -56,7 +57,12 @@ export default async function ContactPage({ params, searchParams }: PageProps<'/
 
   return (
     <>
-      <PageHeader locale={locale} routeKey="contact" title={c.title} />
+      <PageHeader
+        locale={locale}
+        routeKey="contact"
+        title={c.title}
+        motif={<BrandPatch id="contact" motif="handshake" bottom={d.nav.contact.toUpperCase()} />}
+      />
 
       <section className="section section--tight">
         <div className="container">
@@ -65,7 +71,7 @@ export default async function ContactPage({ params, searchParams }: PageProps<'/
       </section>
 
       <section className="wide-photo wide-photo--slim wide-photo--no-phone">
-        <Photo item={media.mistyRiverside} locale={locale} ratio="21 / 6" sizes="100vw" decorative />
+        <Photo item={media.mistyRiverside} locale={locale} ratio="21 / 6" sizes="100vw" decorative className="photo--natural" />
       </section>
 
       <section className="section" id="dzialy" aria-labelledby="dir-h">

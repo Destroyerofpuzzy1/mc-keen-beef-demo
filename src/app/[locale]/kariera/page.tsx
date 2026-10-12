@@ -15,6 +15,7 @@ import { Icon } from '@/components/ui/Icon';
 import { JsonLd } from '@/components/ui/JsonLd';
 import { MailLink } from '@/components/ui/Contact';
 import { Photo } from '@/components/ui/Photo';
+import { BrandPatch } from '@/components/brand/BrandMarks';
 
 export async function generateMetadata({ params }: PageProps<'/[locale]/kariera'>): Promise<Metadata> {
   const { locale } = await params;
@@ -32,7 +33,13 @@ export default async function CareersPage({ params }: PageProps<'/[locale]/karie
 
   return (
     <>
-      <PageHeader locale={locale} routeKey="careers" title={c.title} lead={c.lead} />
+      <PageHeader
+        locale={locale}
+        routeKey="careers"
+        title={c.title}
+        lead={c.lead}
+        motif={<BrandPatch id="careers" motif="knife" bottom={d.nav.careers.toUpperCase()} />}
+      />
 
       <section className="section" id="oferty" aria-labelledby="jobs-h">
         <div className="container">

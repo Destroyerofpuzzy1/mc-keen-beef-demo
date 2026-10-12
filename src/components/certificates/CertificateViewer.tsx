@@ -31,7 +31,8 @@ interface Labels {
  * On-site certificate viewer (one instance, rendered in the layout).
  * Any link with `data-cert-view="<certificate id>"` and `data-cert-lang` opens the authentic
  * scan of that language version as an image; the link's href (the scan image itself) is
- * the no-JS / modifier-click fallback, so visitors never land on a PDF.
+ * the no-JS / modifier-click fallback. The original PDFs are separate plain links
+ * (CertificateFiles with `pdf`) and are not intercepted.
  * Native <dialog>: focus stays inside, Escape closes, background is inert; scroll lock and
  * focus return to the trigger are handled explicitly. Only the selected scan is loaded.
  */

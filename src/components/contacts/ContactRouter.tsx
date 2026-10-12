@@ -51,6 +51,11 @@ export function ContactRouter({
 
   const select = (tag: string) => {
     setActive(tag);
+    // Keep the chosen topic in the address (no new history entry), so a refresh, a shared link and
+    // the language switch open the same topic (UXA-02). The page reads `?temat=` on the server.
+    const url = new URL(window.location.href);
+    url.searchParams.set('temat', tag);
+    window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
     // Keep the answer in view (mainly on phones, where it opens below the topic).
     requestAnimationFrame(() => {
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -8,8 +8,16 @@
     "start": "next start",
     "lint": "eslint",
     "assets": "node scripts/import-source-assets.mjs",
-    "test": "node --test tests/forms-session.test.mjs",
-    "test:forms": "node --test tests/forms-api.test.mjs"
+    "test": "node --test tests/forms-session.test.mjs tests/drum-motion.test.mjs tests/form-result.test.mjs",
+    "test:forms": "node --test tests/forms-api.test.mjs",
+    "test:certs": "node --test tests/certificates-pdf.test.mjs tests/certificates-contact.test.mjs",
+    "test:nav": "node tests/navbar-browser.mjs",
+    "test:home": "node tests/home-browser.mjs",
+    "test:totop": "node tests/to-top-browser.mjs",
+    "test:notfound": "node tests/not-found-browser.mjs",
+    "test:lang": "node tests/language-browser.mjs",
+    "test:archive": "node tests/certificates-archive-browser.mjs",
+    "test:focus": "node tests/focus-ring-browser.mjs"
   },
   "dependencies": {
     "next": "16.3.8",
