@@ -17,6 +17,7 @@ const en: Dictionary = {
     external: 'opens in a new tab',
     footerNav: 'Footer navigation',
     close: 'Close',
+    toTop: 'Back to top',
   },
   nav: {
     home: 'Home',
@@ -36,6 +37,13 @@ const en: Dictionary = {
   },
   /** Shorter labels for the desktop bar only (full label stays in the mobile menu and footer). */
   navShort: { sales: 'Export' },
+  drum: {
+    previous: 'Previous section',
+    next: 'Next section',
+    hint: 'Click a tab or drag the selector',
+    keyboard:
+      'Left and right arrows move the selector across the tabs; Home and End move it to the first and last. Enter opens the selected page after the lock, Escape cancels the selection. The tabs can also simply be clicked.',
+  },
   draftNotice: 'This English version is under review. The Polish version is authoritative.',
   common: {
     illustrative: 'Illustrative photo',
@@ -89,10 +97,16 @@ const en: Dictionary = {
     files: 'Files',
     scopeNote: 'Results apply only to the plant named on the certificate.',
     noCurrent: 'A current certificate for this plant is not published on this website.',
-    verify: 'Certificates can be verified in the BRCGS Directory (brcdirectory.com) and the IFS database (ifs-certification.com).',
+    askQuality: 'Contact the quality department',
+    documentsLink: 'Certificate documents',
+    verify: 'Verifying certificates in the official BRCGS and IFS databases requires signing in to an account. BRCGS offers a free Directory Lite account.',
+    verifyBrcgs: 'BRCGS Directory (directory.brcgs.com)',
+    verifyIfs: 'IFS Database (login.ifs-certification.com)',
     archiveIntro: 'Expired certificates, published as a record of our certification history. They do not confirm current status.',
     validFor: 'Applies to',
     document: 'Document',
+    preview: 'Preview',
+    originalPdf: 'Original PDF',
     viewer: 'Certificate viewer',
     langGroup: 'Language version',
     zoomIn: 'Zoom in',
@@ -111,6 +125,8 @@ const en: Dictionary = {
     sentEnquiry: 'Our sales team will reply to the email address you provided.',
     sentCareers: 'We will contact shortlisted applicants by phone.',
     errorTitle: 'The form could not be sent.',
+    unknownTitle: 'No result to show',
+    unknownText: 'This page cannot confirm whether a form was sent. If you want to be sure, please contact us directly:',
     errorGeneric: 'Please try again shortly or contact us directly:',
     errorFields: 'Please correct the highlighted fields.',
     errorRate: 'Too many attempts in a short time. Please try again in a few minutes.',
@@ -172,7 +188,9 @@ const en: Dictionary = {
     title: 'McKeen Beef: beef producer from Poland',
     description:
       'Polish beef producer for B2B customers. Slaughter, cutting, packing, freezing and sales within the MCKEEN-BEEF group. Beef quarters, cuts, trimmings and offal.',
-    heroTitle: 'Beef from a Polish producer.',
+    heroTitle: 'Quality Polish beef',
+    heroVideoPause: 'Pause background video',
+    heroVideoPlay: 'Play background video',
     heroLead:
       'We supply beef quarters, cuts, trimmings and offal to business customers in Poland and abroad.',
     heroLabel: 'MCKEEN-BEEF group, Lisków, since 2009',
@@ -186,7 +204,6 @@ const en: Dictionary = {
     marketsTitle: 'Markets',
     marketsNote: 'Selected customer markets.',
     sitesTitle: 'Plants and offices',
-    exportSales: 'Sales: MCKEEN-BEEF SO GmbH, Oelde (Germany)',
     heroImageAlt: 'Herd of cattle on pasture at sunrise',
     ctaProducts: 'View products',
     trustSince: 'year operations began',
@@ -205,6 +222,8 @@ const en: Dictionary = {
     salesLink: 'Sales and export',
     envTitle: 'Photovoltaics and a biogas plant project',
     envLink: 'Biogas plant project in Linne',
+    coopEyebrow: 'Contact and cooperation',
+    coopTitle: 'Let’s talk about working together',
     truckAlt: 'Refrigerated truck with the McKeen-Beef logo on a motorway',
   },
   products: {
@@ -218,7 +237,7 @@ const en: Dictionary = {
   },
   quality: {
     title: 'Quality and food safety',
-    description: 'MCKEEN-BEEF quality system: HACCP, GMP, GHP, IFS Food and BRCGS. Verified farms, animal welfare, control at every stage, biogas and photovoltaics.',
+    description: 'MCKEEN-BEEF group quality system: HACCP, GMP and GHP. BRCGS and IFS Food: certificates of the Lisków cutting plant. Verified farms, animal welfare, environment.',
     lead: 'Quality starts on the farm. We monitor every stage of production and keep accurate records. This is how our system works.',
     systemTitle: 'Quality system',
     systemLead: 'Our plants comply with food law. Since 2010 we have operated a certified quality management system.',

@@ -228,6 +228,16 @@ export const standardName: Record<Standard, L> = {
   eko: { pl: 'Rolnictwo ekologiczne (EKO)', en: 'Organic production (EKO)', de: 'Ökologische Produktion (EKO)' },
 };
 
+/**
+ * Official certificate databases linked from Certyfikaty (UXA-08). Addresses as given by the user and
+ * checked on 2026-10-11: both ask for a sign-in (BRCGS: free Directory Lite account; IFS: login with
+ * registration). The site claims nothing about the records they hold (GAP-03 stays open).
+ */
+export const verificationDatabases = {
+  brcgs: 'https://directory.brcgs.com/',
+  ifs: 'https://login.ifs-certification.com/?lang=en',
+} as const;
+
 /** Today in Europe/Warsaw as YYYY-MM-DD; evaluated per request. */
 export function todayIso(now = new Date()): string {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Warsaw' }).format(now);

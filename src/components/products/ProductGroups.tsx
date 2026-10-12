@@ -4,11 +4,13 @@ import { getDictionary, t } from '@/i18n';
 import { href } from '@/i18n/routes';
 import { entityById } from '@/content/entities';
 import { products, type ProductGroup } from '@/content/products';
-import { currentCertificates, standardName, todayIso } from '@/content/certificates';
-import type { CSSProperties } from 'react';
+import { currentCertificates, sitesWithoutCurrentCertificate, standardName, todayIso } from '@/content/certificates';
+import { Fragment, type CSSProperties } from 'react';
 import { icons, productIcon } from '@/content/media';
 import { ProductVisual } from './ProductVisual';
 import { formatDate, formatScore } from '@/components/certificates/format';
+import { QualityContactLink } from '@/components/certificates/QualityContactLink';
+import { CertificateDocumentsLink } from '@/components/certificates/CertificateDocumentsLink';
 
 /**
  * The four product groups as real HTML (replaces the legacy flat image).
@@ -51,7 +53,13 @@ export function ProductGroups({ locale, variant = 'overview' }: { locale: Locale
 
 function CatalogueBlock({ product: p, locale, flip, priority }: { product: ProductGroup; locale: Locale; flip: boolean; priority: boolean }) {
   const d = getDictionary(locale);
-  const certs = currentCertificates(todayIso()).filter((c) => p.sites.includes(c.entity));
+  const today = todayIso();
+  const certs = currentCertificates(today).filter((c) => p.sites.includes(c.entity));
+  // Certificates belong to a plant: one line per certificate with its own validity, then the plant.
+  const certPlants = [...new Set(certs.map((c) => c.entity))];
+  // Plants of this product whose current certificate is not published (as on Certyfikaty and
+  // Zakłady): the same neutral sentence and the way to their quality department (UXA-03).
+  const pendingPlants = sitesWithoutCurrentCertificate(today).filter((s) => p.sites.includes(s));
   return (
     <article className={`cblock${flip ? ' cblock--flip' : ''}`} id={p.id} aria-labelledby={`${p.id}-h`}>
       <figure className={`photo cblock__photo${priority ? '' : ' photo--reveal'}`} style={{ '--ratio': '660 / 280' } as CSSProperties}>
@@ -91,19 +99,38 @@ function CatalogueBlock({ product: p, locale, flip, priority }: { product: Produ
               ))}
             </dd>
           </div>
-          {certs.length ? (
+          {certs.length || pendingPlants.length ? (
             <div className="specs__row">
               <dt>{d.nav.certificates}</dt>
               <dd>
-                {certs.map((c, i) => (
-                  <span key={c.id}>
-                    {i ? ', ' : ''}
-                    {t(standardName[c.standard], locale)} {c.score ? formatScore(c.score, locale) : c.result}
-                  </span>
+                {pendingPlants.map((plant) => (
+                  <Fragment key={plant}>
+                    {d.cert.noCurrent}
+                    <br />
+                    <QualityContactLink locale={locale} />
+                    <span className="specs__src">{t(entityById(plant).place, locale)}</span>
+                  </Fragment>
                 ))}
-                <span className="specs__src">
-                  {t(entityById('cp').role, locale)}, {d.common.validUntil} {formatDate(certs[0]!.expiresOn, locale)}
-                </span>
+                {certPlants.map((plant) => (
+                  <Fragment key={plant}>
+                    <ul className="plain">
+                      {certs
+                        .filter((c) => c.entity === plant)
+                        .map((c) => (
+                          <li key={c.id}>
+                            {t(standardName[c.standard], locale)} {c.score ? formatScore(c.score, locale) : c.result},{' '}
+                            <span className="specs__validity">
+                              {d.common.validUntil} <span className="tnum">{formatDate(c.expiresOn, locale)}</span>
+                            </span>
+                          </li>
+                        ))}
+                    </ul>
+                    {/* UXA-05 stage 2: the plant's documents, in the place where Linne products have the
+                        quality link (UXA-03). */}
+                    <CertificateDocumentsLink locale={locale} entity={plant} />
+                    <span className="specs__src">{t(entityById(plant).place, locale)}</span>
+                  </Fragment>
+                ))}
               </dd>
             </div>
           ) : null}

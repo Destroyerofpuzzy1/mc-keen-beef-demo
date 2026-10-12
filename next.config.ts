@@ -34,6 +34,10 @@ const nextConfig: NextConfig = {
         source: '/assets/:path*',
         headers: [{ key: 'Cache-Control', value: 'public, max-age=604800' }],
       },
+      {
+        source: '/video/:path*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=604800' }],
+      },
     ];
   },
 };

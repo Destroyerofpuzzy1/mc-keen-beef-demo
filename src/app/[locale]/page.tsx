@@ -8,9 +8,9 @@ import { pageMetadata } from '@/lib/seo';
 import { company } from '@/content/company';
 import { entities } from '@/content/entities';
 import { currentCertificates, todayIso } from '@/content/certificates';
-import { primarySalesPhone, salesContacts } from '@/content/contacts';
+import { salesContacts } from '@/content/contacts';
 import { environmentFacts } from '@/content/environment';
-import { media } from '@/content/media';
+import { heroVideo, media } from '@/content/media';
 import { uppz } from '@/content/products';
 import { ProductTiles } from '@/components/products/ProductTiles';
 import { ProductionChain } from '@/components/sections/ProductionChain';
@@ -19,6 +19,8 @@ import { CertificateLabel } from '@/components/certificates/CertificateStatus';
 import { formatDate, formatScore } from '@/components/certificates/format';
 import { MailLink, PhoneLink } from '@/components/ui/Contact';
 import { Photo } from '@/components/ui/Photo';
+import { HeroVideo } from '@/components/ui/HeroVideo';
+import { BrandIcon, BrandPatch, type BrandIconName } from '@/components/brand/BrandMarks';
 
 export async function generateMetadata({ params }: PageProps<'/[locale]'>): Promise<Metadata> {
   const { locale } = await params;
@@ -37,45 +39,46 @@ export default async function HomePage({ params }: PageProps<'/[locale]'>) {
   const ifs = current.find((c) => c.standard === 'ifs-food');
   const vetCount = entities.filter((e) => e.vetNumber).length;
   const office = entities.find((e) => e.id === 'gmbh')!.office.email!;
-  const hero = media.heroHerd;
+  const poster = heroVideo.poster;
+  const envMeasures = environmentFacts.filter((f) => f.id !== 'biogas');
+  const envProject = environmentFacts.find((f) => f.id === 'biogas')!;
+  const envIcon: Record<(typeof environmentFacts)[number]['id'], BrandIconName> = { waste: 'recycle', solar: 'solar', biogas: 'biogas' };
+  // The other audiences' topics, with the contact router's own labels and hints.
+  const contactHref = href(locale, 'contact');
+  const coopPaths: { key: string; icon: BrandIconName; label: string; hint: string; href: string }[] = [
+    { key: 'sell-cattle', icon: 'cow', label: d.contact.routes['sell-cattle'], hint: d.contact.routeHints['sell-cattle'], href: `${contactHref}?temat=sell-cattle#pomoc` },
+    { key: 'supply', icon: 'box', label: d.contact.routes.supply, hint: d.contact.routeHints.supply, href: `${contactHref}?temat=supply#pomoc` },
+    { key: 'quality', icon: 'seal', label: d.contact.routes.quality, hint: d.contact.routeHints.quality, href: `${contactHref}?temat=quality#pomoc` },
+    { key: 'jobs', icon: 'knife', label: d.nav.careers, hint: d.contact.routeHints.jobs, href: href(locale, 'careers') },
+  ];
 
   return (
     <>
-      {/* Hero: editorial asymmetry, photo ~62% of the field, slanted oxblood panel. */}
+      {/* Hero: full-bleed footage in natural colour over its poster (the LCP image); only the
+          headline and one CTA. The copy sits in the darker band of the frame (no veil). */}
       <section className="hero" aria-labelledby="hero-h">
         <div className="hero__media">
           <Image
-            src={hero.src}
-            alt={t(hero.alt, locale)}
+            src={poster.src}
+            alt={t(poster.alt, locale)}
             fill
-            priority
+            loading="eager"
             fetchPriority="high"
-            sizes="(min-width: 64rem) 64vw, 100vw"
+            // Rendered width of the 2.4:1 cover image in each hero shape; never smaller than rendered,
+            // or LCP would treat the poster as upscaled and pick the later video frame instead.
+            sizes="(min-width: 64rem) 2000px, (min-width: 48rem) calc(180vw + 4px), calc(240vw + 4px)"
             quality={80}
-            style={{ objectPosition: hero.position }}
+            className="hero__poster"
           />
+          <HeroVideo desktop={heroVideo.desktop} mobile={heroVideo.mobile} labels={{ pause: h.heroVideoPause, play: h.heroVideoPlay }} />
         </div>
-        <div className="hero__panel">
-          <div className="hero__inner">
-            <p className="hero__label">{h.heroLabel}</p>
-            <h1 id="hero-h" className="hero__title">
-              {h.heroTitle}
-            </h1>
-            <p className="hero__sub">{h.heroSub}</p>
-            <p className="hero__lead">{h.heroLead}</p>
-            <div className="hero__actions">
-              <Link href={href(locale, 'enquiry')} className="btn btn--primary btn--lg btn--arrow" data-enquiry="">
-                {d.nav.enquiry}
-              </Link>
-              <Link href={href(locale, 'products')} className="btn btn--ghost-light btn--lg">
-                {h.ctaProducts}
-              </Link>
-            </div>
-            <p className="hero__sales">
-              <span>{d.common.salesDept}</span>
-              <PhoneLink phone={primarySalesPhone} className="clink clink--light" />
-            </p>
-          </div>
+        <div className="hero__copy container">
+          <h1 id="hero-h" className="hero__title">
+            {h.heroTitle}
+          </h1>
+          <Link href={href(locale, 'enquiry')} className="btn btn--primary btn--lg btn--arrow hero__cta" data-enquiry="">
+            {d.nav.enquiry}
+          </Link>
         </div>
       </section>
 
@@ -122,7 +125,10 @@ export default async function HomePage({ params }: PageProps<'/[locale]'>) {
               <h2 id="products-h" className="h-section">
                 {h.productsTitle}
               </h2>
-              <p className="lead">{h.productsLead}</p>
+              {/* The former hero lead opens the product overview. */}
+              <p className="lead">
+                {h.heroLead} {h.productsLead}
+              </p>
             </div>
             <Link href={href(locale, 'products')} className="btn btn--line btn--arrow">
               {d.nav.products}
@@ -170,7 +176,44 @@ export default async function HomePage({ params }: PageProps<'/[locale]'>) {
         </div>
       </section>
 
-      {/* Logistics & export: the truck as a full-bleed photograph, panel overlapping. */}
+      {/* Environment, between quality and sales (UX-IA-001 stages 1 and 1.3): the plants' own measures
+          as ruled rows, the biogas plant project as the one stitched card with the link to its
+          documentation. Texts from environment.ts (shared with Jakość); the eyebrow is Jakość's
+          section title. No company is named with the project (GAP-07, C-64). */}
+      <section className="section env-home" aria-labelledby="env-h">
+        <div className="container env-home__grid">
+          <div className="env-home__head">
+            <p className="eyebrow-plain">{d.quality.envTitle}</p>
+            <h2 id="env-h" className="h-section">
+              {h.envTitle}
+            </h2>
+          </div>
+          <ul className="env-home__list plain">
+            {envMeasures.map((f) => (
+              <li key={f.id} className="env-home__item">
+                <BrandIcon name={envIcon[f.id]} />
+                <div>
+                  <h3 className="env-home__title">{t(f.title, locale)}</h3>
+                  <p>{t(f.text, locale)}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <div className="env-home__project stitched">
+            <BrandPatch id="biogas" motif={envIcon.biogas} size="sm" />
+            <h3 className="env-home__title">{t(envProject.title, locale)}</h3>
+            <p>{t(envProject.text, locale)}</p>
+            <Link href={href(locale, 'biogas')} className="btn btn--line btn--arrow">
+              {h.envLink}
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Sales, markets and sites as one composition: the truck full-bleed, the sales panel
+          overlapping it, markets and sites beside the panel (below it on phones). Formerly two
+          sections ("Rynki i zakłady" was its own band). The band's GmbH line was removed with the
+          user's consent: the panel text and the Oelde ledger row carry the same facts. */}
       <section className="logistics" aria-labelledby="sales-h">
         <div className="logistics__photo">
           <Image src={media.truck.src} alt={t(media.truck.alt, locale)} fill sizes="100vw" quality={80} style={{ objectPosition: media.truck.position }} />
@@ -196,39 +239,53 @@ export default async function HomePage({ params }: PageProps<'/[locale]'>) {
               {h.salesLink}
             </Link>
           </div>
-        </div>
-      </section>
-
-      <section className="section section--paper2 export" aria-labelledby="export-h">
-        <div className="container export__grid">
-          <div>
-            <h2 id="export-h" className="h-section">
-              {h.exportTitle}
-            </h2>
-            <p className="note">{h.exportSales}</p>
+          <div className="logistics__markets">
+            <h3 className="logistics__subhead">{h.exportTitle}</h3>
+            <MarketsLedger locale={locale} headingLevel={4} />
           </div>
-          <MarketsLedger locale={locale} />
         </div>
       </section>
 
-      <section className="section" aria-labelledby="env-h">
+      {/* Contact and cooperation: the buyer's path first, then the other audiences' topics of the
+          contact router and the full directory. Phones and e-mail stay in the sales panel above. */}
+      <section className="coop" aria-labelledby="coop-h">
         <div className="container">
-          <div className="section__head section__head--split">
-            <h2 id="env-h" className="h-section">
-              {h.envTitle}
-            </h2>
-            <Link href={href(locale, 'biogas')} className="btn btn--line btn--arrow">
-              {h.envLink}
-            </Link>
+          <p className="eyebrow-plain">{h.coopEyebrow}</p>
+          <h2 id="coop-h" className="h-section">
+            {h.coopTitle}
+          </h2>
+          {/* One sewn board: the buyer's side, a seam, the other audiences' topics. */}
+          <div className="coop__board">
+            <div className="coop__buy">
+              <h3 className="coop__label">
+                <BrandIcon name="handshake" className="coop__icon" />
+                {d.contact.routes['buy-beef']}
+              </h3>
+              <p>{d.contact.routeHints['buy-beef']}</p>
+              <Link href={href(locale, 'enquiry')} className="btn btn--primary btn--lg btn--arrow" data-enquiry="">
+                {d.nav.enquiry}
+              </Link>
+            </div>
+            <div className="coop__paths">
+              <p className="coop__intro">{d.contact.routerLead}</p>
+              <ul className="coop__list plain">
+                {coopPaths.map((p) => (
+                  <li key={p.key}>
+                    <Link href={p.href} className="coop__path">
+                      <BrandIcon name={p.icon} className="coop__path-icon" />
+                      <span className="coop__path-text">
+                        <span className="coop__path-label">{p.label}</span>
+                        <span className="coop__path-hint">{p.hint}</span>
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <Link href={href(locale, 'contact', 'dzialy')} className="arrow-link coop__all">
+                {d.contact.directoryTitle}
+              </Link>
+            </div>
           </div>
-          <ul className="facts-row plain">
-            {environmentFacts.map((f) => (
-              <li key={f.title.pl}>
-                <h3 className="facts-row__title">{t(f.title, locale)}</h3>
-                <p>{t(f.text, locale)}</p>
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
     </>

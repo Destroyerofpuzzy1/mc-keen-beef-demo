@@ -32,6 +32,15 @@ export const env = {
     salt: str(process.env.RATE_LIMIT_SALT) ?? 'dev-only-salt',
   },
 
+  forms: {
+    /**
+     * Key material for the signed no-JS form result (lib/forms/result.ts): `RATE_LIMIT_SALT` as
+     * configured and never the development fallback above, so a missing secret signs and
+     * confirms nothing (SECURITY-001).
+     */
+    resultSecret: str(process.env.RATE_LIMIT_SALT),
+  },
+
   turnstile: {
     siteKey: str(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY),
     secret: str(process.env.TURNSTILE_SECRET_KEY),
@@ -50,6 +59,8 @@ export function configWarnings(): string[] {
   if (!process.env.NEXT_PUBLIC_SITE_URL?.trim()) w.push('NEXT_PUBLIC_SITE_URL missing: canonical URLs and the same-origin check fall back to http://localhost:3000');
   else if (!env.siteUrl.startsWith('https://')) w.push('NEXT_PUBLIC_SITE_URL is not https');
   if (Boolean(env.turnstile.siteKey) !== Boolean(env.turnstile.secret)) w.push('Turnstile half-configured: set both NEXT_PUBLIC_TURNSTILE_SITE_KEY and TURNSTILE_SECRET_KEY or neither (challenge disabled)');
-  if (!process.env.RATE_LIMIT_SALT?.trim()) w.push('RATE_LIMIT_SALT missing: using the development salt');
+  const salt = process.env.RATE_LIMIT_SALT?.trim();
+  if (!salt) w.push('RATE_LIMIT_SALT missing: the rate limit hashes IPs with the development salt and no-JS form results are not signed');
+  else if (salt.length < 32) w.push('RATE_LIMIT_SALT shorter than 32 characters: no-JS form results are not signed');
   return w;
 }

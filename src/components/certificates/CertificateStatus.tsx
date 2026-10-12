@@ -11,7 +11,18 @@ import { formatDate, formatScore } from './format';
  * validity, audit type and the plant it applies to. Used on Home (compact) and
  * Certyfikaty / Jakość (full).
  */
-export function CertificateLabel({ cert, locale, compact = false }: { cert: Certificate; locale: Locale; compact?: boolean }) {
+export function CertificateLabel({
+  cert,
+  locale,
+  compact = false,
+  pdf = false,
+}: {
+  cert: Certificate;
+  locale: Locale;
+  compact?: boolean;
+  /** Also link the original PDFs (Certyfikaty page). */
+  pdf?: boolean;
+}) {
   const d = getDictionary(locale);
   const e = entityById(cert.entity);
   const headline = cert.score ? formatScore(cert.score, locale) : cert.result;
@@ -80,26 +91,38 @@ export function CertificateLabel({ cert, locale, compact = false }: { cert: Cert
           </>
         ) : null}
       </dl>
-      <CertificateFiles cert={cert} locale={locale} />
+      <CertificateFiles cert={cert} locale={locale} pdf={pdf} />
     </article>
   );
 }
 
 /**
  * Language controls for a certificate: PL / EN / DE open the authentic scan in the on-site
- * viewer (CertificateViewer). The href is the scan image itself (no-JS and new-tab fallback);
- * the PDFs stay published as archive files but are no longer the visitor's path.
+ * viewer (CertificateViewer). The href is the scan image itself (no-JS and new-tab fallback).
+ * With `pdf` (Certyfikaty page: current certificates and archive) a second row links the
+ * original PDF of every language version as plain links the browser opens or downloads.
+ * `context` (archive: the plant) is added to every link name, so equal titles of different
+ * plants, e.g. "IFS Food 2023" of Lisków and of Linne, stay distinct in a list of links (UXA-07).
  */
-export function CertificateFiles({ cert, locale }: { cert: Certificate; locale: Locale }) {
+export function CertificateFiles({
+  cert,
+  locale,
+  pdf = false,
+  context,
+}: {
+  cert: Certificate;
+  locale: Locale;
+  pdf?: boolean;
+  context?: string;
+}) {
   const d = getDictionary(locale);
   const scans = certificateScans(cert);
-  if (!scans.length) return null;
-  const title = certificateTitle(cert, locale);
-  return (
+  const title = context ? `${certificateTitle(cert, locale)} (${context})` : certificateTitle(cert, locale);
+  const preview = scans.length ? (
     <div className="cert-files">
       <span className="cert-files__label">
-        <Icon name="doc" size={18} />
-        {d.cert.document}
+        <Icon name={pdf ? 'zoom' : 'doc'} size={18} />
+        {pdf ? <span className="cert-files__text">{d.cert.preview}</span> : d.cert.document}
       </span>
       <ul className="cert-files__langs plain">
         {scans.map((s) => (
@@ -110,13 +133,44 @@ export function CertificateFiles({ cert, locale }: { cert: Certificate; locale: 
               hrefLang={s.lang}
               data-cert-view={cert.id}
               data-cert-lang={s.lang}
-              aria-label={`${title}, ${d.cert.langVersion[s.lang]}`}
+              aria-label={
+                pdf
+                  ? `${title}, ${d.cert.preview} ${s.lang.toUpperCase()} (${d.cert.langVersion[s.lang]})`
+                  : `${title}, ${d.cert.langVersion[s.lang]}`
+              }
             >
               {s.lang.toUpperCase()}
             </a>
           </li>
         ))}
       </ul>
+    </div>
+  ) : null;
+  if (!pdf) return preview;
+  return (
+    <div className="cert-docs">
+      {preview}
+      <div className="cert-files cert-files--pdf">
+        <span className="cert-files__label">
+          <Icon name="download" size={18} />
+          <span className="cert-files__text">{d.cert.originalPdf}</span>
+        </span>
+        <ul className="cert-files__langs plain">
+          {cert.files.map((f) => (
+            <li key={f.lang}>
+              <a
+                href={f.path}
+                type="application/pdf"
+                className={`cert-files__lang${f.lang === locale ? ' is-local' : ''}`}
+                hrefLang={f.lang}
+                aria-label={`${title}, ${d.cert.originalPdf} ${f.lang.toUpperCase()} (${d.cert.langVersion[f.lang]})`}
+              >
+                {f.lang.toUpperCase()}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

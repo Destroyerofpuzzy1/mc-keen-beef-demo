@@ -16,6 +16,8 @@ const paths = {
   chevron: 'M9 5.5 15.5 12 9 18.5',
   zoom: 'M10.5 4.5a6 6 0 1 0 0 12 6 6 0 0 0 0-12ZM15 15l5 5M10.5 8v5M8 10.5h5',
   zoomOut: 'M10.5 4.5a6 6 0 1 0 0 12 6 6 0 0 0 0-12ZM15 15l5 5M8 10.5h5',
+  pause: 'M8.5 5.5v13M15.5 5.5v13',
+  play: 'M7.5 5.5v13l11-6.5Z',
 } as const;
 
 export type IconName = keyof typeof paths;

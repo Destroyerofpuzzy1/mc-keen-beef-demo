@@ -5,6 +5,7 @@ import '@/styles/components.css';
 import '@/styles/pages.css';
 import '@/styles/sections.css';
 import '@/styles/art.css';
+import '@/styles/craft.css';
 
 export const metadata: Metadata = {
   title: '404 | McKeen Beef',

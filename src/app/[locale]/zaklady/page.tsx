@@ -13,6 +13,9 @@ import { PageHeader } from '@/components/layout/PageHeader';
 import { EntityCard } from '@/components/contacts/EntityCard';
 import { Photo } from '@/components/ui/Photo';
 import { formatDate, formatScore } from '@/components/certificates/format';
+import { QualityContactLink } from '@/components/certificates/QualityContactLink';
+import { CertificateDocumentsLink } from '@/components/certificates/CertificateDocumentsLink';
+import { BrandIcon, BrandPatch } from '@/components/brand/BrandMarks';
 
 export async function generateMetadata({ params }: PageProps<'/[locale]/zaklady'>): Promise<Metadata> {
   const { locale } = await params;
@@ -39,7 +42,13 @@ export default async function PlantsPage({ params }: PageProps<'/[locale]/zaklad
 
   return (
     <>
-      <PageHeader locale={locale} routeKey="plants" title={d.plants.title} lead={d.plants.lead} />
+      <PageHeader
+        locale={locale}
+        routeKey="plants"
+        title={d.plants.title}
+        lead={d.plants.lead}
+        motif={<BrandPatch id="plants" motif="pin" bottom={d.nav.plants.toUpperCase()} />}
+      />
 
       <section className="section section--tight" aria-labelledby="struct-h">
         <div className="container">
@@ -88,11 +97,30 @@ export default async function PlantsPage({ params }: PageProps<'/[locale]/zaklad
                   <EntityCard entity={e} locale={locale} headingLevel={3}>
                     <p className="facility__activity">{t(profile.activity, locale)}</p>
                     {profile.details.length ? (
-                      <ul className="ticks facility__details">
+                      <ul className="ticks ticks--check facility__details">
                         {profile.details.map((x) => (
-                          <li key={x.pl}>{t(x, locale)}</li>
+                          <li key={x.text.pl}>
+                            {t(x.text, locale)}
+                            {/* UXA-05 stage 4: the department's topic in the contact router, which
+                                lists its people by plant; nobody is picked for the visitor. */}
+                            {x.topic ? (
+                              <>
+                                <br />
+                                <Link href={`${href(locale, 'contact')}?temat=${x.topic}#pomoc`} className="arrow-link">
+                                  {d.contact.routes[x.topic]}
+                                </Link>
+                              </>
+                            ) : null}
+                          </li>
                         ))}
                       </ul>
+                    ) : null}
+                    {profile.page ? (
+                      <p className="facility__meta">
+                        <Link href={href(locale, profile.page)} className="arrow-link">
+                          {d.nav[profile.page]}
+                        </Link>
+                      </p>
                     ) : null}
                     {made.length ? (
                       <p className="facility__meta">
@@ -109,16 +137,23 @@ export default async function PlantsPage({ params }: PageProps<'/[locale]/zaklad
                       <p className="facility__meta">
                         <span className="facility__label">{d.nav.certificates}:</span>{' '}
                         {certs.length ? (
-                          certs.map((c, j) => (
-                            <span key={c.id}>
-                              {j ? ', ' : ''}
-                              {t(standardName[c.standard], locale)} {c.result}
-                              {c.score ? ` ${formatScore(c.score, locale)}` : ''} ({d.common.validUntil} <span className="tnum">{formatDate(c.expiresOn, locale)}</span>)
-                            </span>
-                          ))
+                          <>
+                            {certs.map((c, j) => (
+                              <span key={c.id}>
+                                {j ? ', ' : ''}
+                                {t(standardName[c.standard], locale)} {c.result}
+                                {c.score ? ` ${formatScore(c.score, locale)}` : ''} ({d.common.validUntil} <span className="tnum">{formatDate(c.expiresOn, locale)}</span>)
+                              </span>
+                            ))}
+                            {/* UXA-05 stage 2: same pattern as the quality link below (UXA-03). */}
+                            <br />
+                            <CertificateDocumentsLink locale={locale} entity={e.id} />
+                          </>
                         ) : (
                           <>
                             {d.cert.noCurrent}
+                            <br />
+                            <QualityContactLink locale={locale} />
                           </>
                         )}
                       </p>
@@ -136,6 +171,7 @@ export default async function PlantsPage({ params }: PageProps<'/[locale]/zaklad
         <div className="container cold">
           <Photo item={media.truckTrailer} locale={locale} ratio="4 / 3" sizes="(min-width: 64rem) 48vw, 100vw" className="cold__photo" reveal />
           <div className="cold__body">
+            <BrandIcon name="cold" className="section-icon" />
             <h2 id="cold-h" className="h-section">
               {d.plants.coldTitle}
             </h2>

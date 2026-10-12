@@ -1,4 +1,6 @@
 import type { L } from '@/i18n/config';
+import type { RouteKey } from '@/i18n/routes';
+import type { RoutingTag } from './contacts';
 import type { EntityId } from './entities';
 
 /**
@@ -6,10 +8,21 @@ import type { EntityId } from './entities';
  * chain shown on the homepage. No operational details beyond the source
  * (research/01 §Production, §Logistics). pending: C-08, C-10.
  */
+export interface EntityDetail {
+  text: L;
+  /**
+   * The contact router topic of the department named in `text`, linked next to it on Zakłady
+   * (UXA-05 stage 4). Only where the topic's contacts belong to that department (contacts.ts).
+   */
+  topic?: RoutingTag;
+}
+
 export interface EntityProfile {
   entity: EntityId;
   activity: L;
-  details: L[];
+  details: EntityDetail[];
+  /** The page that describes this company's work, linked from its card on Zakłady (UXA-05 stage 4). */
+  page?: Extract<RouteKey, 'products' | 'quality' | 'certificates' | 'about' | 'sales' | 'careers'>;
 }
 
 export const entityProfiles: EntityProfile[] = [
@@ -22,28 +35,31 @@ export const entityProfiles: EntityProfile[] = [
     entity: 'sh',
     activity: { pl: 'Ubój bydła', en: 'Cattle slaughter', de: 'Rinderschlachtung' },
     details: [
-      { pl: 'Własny dział skupu żywca', en: 'Own livestock purchasing department', de: 'Eigene Viehankaufsabteilung' },
-      { pl: 'Sprzedaż podrobów i UPPZ', en: 'Offal and animal by-products sales', de: 'Verkauf von Innereien und tierischen Nebenprodukten' },
-      { pl: 'Biogazownia rolnicza w Linne (projekt UE)', en: 'Agricultural biogas plant in Linne (EU project)', de: 'Landwirtschaftliche Biogasanlage in Linne (EU-Projekt)' },
+      { text: { pl: 'Własny dział skupu żywca', en: 'Own livestock purchasing department', de: 'Eigene Viehankaufsabteilung' }, topic: 'sell-cattle' },
+      // No topic link for offal and UPPZ until the client decides on that route (UXA-04, C-25).
+      { text: { pl: 'Sprzedaż podrobów i UPPZ', en: 'Offal and animal by-products sales', de: 'Verkauf von Innereien und tierischen Nebenprodukten' } },
+      // The biogas project in Linne is not listed under any company: the EU disclosure names
+      // no beneficiary (C-64, GAP-07). It is presented by location (biogas page, environment).
     ],
   },
   {
     entity: 'sh2',
     activity: { pl: 'Ubój bydła', en: 'Cattle slaughter', de: 'Rinderschlachtung' },
-    details: [{ pl: 'Własny dział skupu żywca', en: 'Own livestock purchasing department', de: 'Eigene Viehankaufsabteilung' }],
+    details: [{ text: { pl: 'Własny dział skupu żywca', en: 'Own livestock purchasing department', de: 'Eigene Viehankaufsabteilung' }, topic: 'sell-cattle' }],
   },
   {
     entity: 'cp',
     activity: { pl: 'Rozbiór i pakowanie wołowiny', en: 'Beef cutting and packing', de: 'Zerlegung und Verpackung von Rindfleisch' },
     details: [
-      { pl: 'Mroźnia zintegrowana z zakładem rozbioru (od 2012)', en: 'Freezer store integrated with the cutting plant (since 2012)', de: 'In den Zerlegebetrieb integriertes Tiefkühllager (seit 2012)' },
-      { pl: 'Dział transportu', en: 'Transport department', de: 'Transportabteilung' },
+      { text: { pl: 'Mroźnia zintegrowana z zakładem rozbioru (od 2012)', en: 'Freezer store integrated with the cutting plant (since 2012)', de: 'In den Zerlegebetrieb integriertes Tiefkühllager (seit 2012)' } },
+      { text: { pl: 'Dział transportu', en: 'Transport department', de: 'Transportabteilung' }, topic: 'transport' },
     ],
   },
   {
     entity: 'gmbh',
     activity: { pl: 'Sprzedaż', en: 'Sales', de: 'Vertrieb' },
     details: [],
+    page: 'sales',
   },
 ];
 

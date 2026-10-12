@@ -1,6 +1,6 @@
 # Asset map
 
-**Source library:** `D:\Projekty\dla-klientow\mc-beef\source-assets` (relative to the site: `../source-assets`). This is the only source. There is no `mc-beef/photos` directory; older notes that mention it are obsolete.
+**Source library:** `../source-assets` relative to the repository root (on the original build machine: `D:\Projekty\dla-klientow\mc-beef\source-assets`). It is not part of this repository and is not present next to this checkout, so the import scripts cannot run here; the generated output is committed under `public/`. This is the only source. There is no `mc-beef/photos` directory; older notes that mention it are obsolete.
 
 **Import:** `npm run assets` → `scripts/import-source-assets.mjs` (explicit allow-list; nothing else is published). The script cleans and rewrites only its own output folders.
 
@@ -8,9 +8,12 @@
 
 | Folder | Content |
 |---|---|
-| `site/public/photos/<category>/` | Photographs as WEBP (`hero`, `cattle`, `quality`, `production`, `logistics`, `company`, `products`, `certificates`), category icons `icons/*.png`, OG images |
-| `site/public/assets/` | Brand vectors (`brand/logo.svg`, `brand/horns.svg`, `brand/beef-cuts-line-art.svg`, `brand/beef-cuts-bull.svg`, `brand/eu/*`) and `video/cattle-grazing.mp4` |
-| `site/public/documents/` | Certificate PDFs `certificates/<site>/*.pdf` and tax strategy PDFs `legal/*.pdf` |
+| `public/photos/<category>/` | Photographs as WEBP (`hero`, `cattle`, `quality`, `production`, `logistics`, `company`, `products`, `certificates`), category icons `icons/*.png`, default OG image `og-default.jpg` |
+| `public/assets/` | Brand vectors (`brand/logo.svg`, `brand/horns.svg`, `brand/beef-cuts-line-art.svg`, `brand/beef-cuts-bull.svg`, `brand/eu/*`) and `video/cattle-grazing.mp4` |
+| `public/documents/` | Certificate PDFs `certificates/<site>/*.pdf` and tax strategy PDFs `legal/*.pdf` |
+| `public/og/` | Route-specific Open Graph images (see below; not touched by the import script) |
+| `public/video/` | Home hero loop and its poster (see "Home hero video"; not touched by the import script) |
+| `public/craft/` | `cattle-outline.svg`, the embroidered-bull outline derived in this repository (DESIGN-001), and `icons/*.svg`, line icons drawn here in the style of the legacy category icons (DESIGN-002, see below); outside `public/assets/`, which the import script deletes and rebuilds |
 
 Intrinsic image sizes go to `src/content/generated/assets.json`; pages ask `src/content/media.ts` for what a picture shows (`media.carcassInspection`), never for a path.
 
@@ -22,15 +25,18 @@ Chain: `source-assets` → `scripts/import-source-assets.mjs` → `public/photos
 
 | Public path | Source (`source-assets/…`) | Used for |
 |---|---|---|
-| `/photos/hero/cattle-herd-sunrise.webp` | `images/hero/cattle-herd-golden-sunrise-hero.webp` (crop 1680×1015) | Home hero, default OG |
-| `/photos/cattle/hand-feeding.webp`, `hereford-pasture.webp`, `hereford-bull.webp`, `misty-riverside.webp`, `grazing-poster.webp` | `images/hero/*`, `images/cattle/*` | Origin / welfare bands, Zakłady SH II band, Kontakt band (hidden on phones), video poster |
+| `/photos/cattle/hand-feeding.webp`, `hereford-pasture.webp`, `hereford-bull.webp`, `misty-riverside.webp`, `grazing-poster.webp` | `images/hero/*`, `images/cattle/*` | Origin / welfare bands, Zakłady SH II band, Kontakt band (hidden on phones), poster of the Jakość ambient video |
 | `/photos/quality/carcass-inspection.webp` | `images/hero/carcass-inspection-clipboard-hero.webp` (crop 1080×860) | Home quality, Jakość control, Zakłady SH, UPPZ |
 | `/photos/production/butcher-cutting.webp` | `images/production/butcher-cutting-beef-mesh-glove.webp` | Kariera, production chain, Zakłady CP |
 | `/photos/logistics/truck-highway.webp`, `truck-trailer.webp` | `images/logistics/mckeen-beef-branded-truck-highway.webp` | Logistics band, Sprzedaż i eksport, Zakłady GmbH; trailer crop for the cold chain block |
 | `/photos/company/staff-beef.webp` | `images/company/staff-presenting-beef-branded-uniform.webp` | Zakłady centrala |
 | `/photos/products/raw-tbone-paper.webp` | `images/products/raw-t-bone-steak-butcher-paper-cutout.webp` (595 px, alpha kept) | Elementy wołowe, labelled "Zdjęcie poglądowe" |
 | `/photos/products/miesa-drobne.webp`, `podroby.webp` | crops of `images/products/product-groups-panel-pl.webp` (660 px) | Mięsa drobne, Podroby, labelled "Zdjęcie poglądowe" |
-| `/assets/brand/beef-cuts-bull.svg` | bull half of `brand/beef-cuts-bull-and-cow-line-art.svg` (viewBox crop) | Ćwierci wołowe: no authentic quarter photo exists, so the group uses this brand line art instead of a photo |
+| `/assets/brand/beef-cuts-bull.svg` | bull half of `brand/beef-cuts-bull-and-cow-line-art.svg` (viewBox crop) | Ćwierci wołowe: no authentic quarter photo exists, so the group uses this brand line art instead of a photo (sewn in red thread since DESIGN-002); also the embroidered cuts diagram on the felt plate in the Produkty page header (`CutsDiagram`) |
+| `/craft/icons/knife.svg`, `box.svg`, `cold.svg`, `seal.svg`, `certificate.svg`, `pin.svg`, `clipboard.svg` (0.3–1.3 kB each) | drawn in this repository (DESIGN-002, 2026-10-10) to match the legacy category icons: 192 grid, 7 px round strokes; generated by a script kept outside the repository (paths only, no external source) | Embroidered icons (`BrandIcon`): production-chain steps (knife, box, cold), page patches (seal, certificate, pin, knife), section icons (cold chain), certificate site marker (pin). The legacy `/photos/icons/*.png` (cow, bull, steak, liver, truck, handshake, globe) are used the same way (chain steps, category badges, patches, section icons) |
+| `/craft/icons/arrow-up.svg` (0.2 kB) | drawn by hand in this repository (UX-001, 2026-10-11): 192 grid, two round strokes (22 px, so it stays bold at 22 px display size); no external source | Embroidered arrow of the back-to-top ear tag (`components/ui/BackToTop.module.css`, CSS mask over the red satin thread) on every page |
+| `/craft/icons/recycle.svg`, `solar.svg`, `biogas.svg` (0.3–0.5 kB each) | Drawn by hand in this repository (UX-IA-001 stage 1.3, 2026-10-11) in the DESIGN-002 style: 192 grid, 7 px round strokes; no external source. Generic symbols (circular arrows; a photovoltaic panel with the sun; a domed digester tank with a lightning bolt), not a picture of the company's installation | Embroidered icons (`BrandIcon` `recycle`, `solar`, and `biogas` as the motif of a small felt patch) in the home environment section |
+| `/craft/cattle-outline.svg` (3.9 kB) | derived here from `/assets/brand/beef-cuts-bull.svg` (DESIGN-001, 2026-10-10): the line art rasterized with every cut region filled, the outer contour traced, simplified to 113 points (Ramer–Douglas–Peucker, 4 px at 1600 px width) and smoothed into cubic Béziers (corners sharper than 62° kept); drawn as a 2.2 px stitched stroke (`stroke-dasharray 3.6 1`, `vector-effect: non-scaling-stroke`) | Embroidered bull (`.cattle-mark`, a CSS mask over the wordmark's satin texture): home production-chain introduction, footer brand column, O firmie page header (desktop). Decorative only |
 | `/photos/certificates/<pdf name>.webp` (61) | `images/certificates/<pdf name>-preview.webp` (1240 px), or for the 18 older certificates with only 600 px previews `images/certificates-rendered/<pdf name>.png` (150 dpi render of the original PDF, `scripts/render-certificate-scans.py`) | On-site certificate viewer and Certyfikaty thumbnails (`scripts/import-certificate-scans.mjs`, manifest `certificateScans` keyed by PDF path) |
 | `/og/*.jpg` | composed from the images above + logo | Route-specific Open Graph images (see below) |
 
@@ -42,21 +48,57 @@ Chain: `source-assets` → `scripts/import-source-assets.mjs` → `public/photos
 | `/photos/products/elementy.webp` | Sliced prepared steak: restaurant association |
 | `/photos/quality/ifs-brcgs-banner.webp` | Dated meat/flare banner with floating marks, weaker than the real certificate documents |
 | `/photos/company/europe-map.webp` | Decorative sepia map without readable locations and without Japan; replaced by the markets/sites ledger (`MarketsLedger`) |
+| `/photos/hero/cattle-herd-sunrise.webp` | Former home hero (crop 1680×1015 of `images/hero/cattle-herd-golden-sunrise-hero.webp`); replaced by the looping hero video on 2026-10-09. `media.heroHerd` still describes it; the existing `og-default.jpg` stays as it is |
 
 They remain in the import list for the record and can be dropped from `IMAGES` once the client confirms.
 
-### Open Graph images
+## Home hero video
 
-`/og/{home,products,quality,careers}-{pl,en,de}.jpg` (1200×630, outside `public/photos` so `npm run assets` does not delete them; spec in `scripts/og/cards.json`, rendered in a browser on the dev server with the site fonts), composed from existing assets with the real page name in the site typography; every other route uses `/photos/og-default.jpg`. Mapping lives in `src/lib/seo/index.ts` (`ogImageFor`).
+Source: `home_bottom.mp4`, supplied by the client/user on 2026-10-09 and kept **outside the repository** (`C:\Users\lukas\Downloads\home_bottom.mp4` on this machine). Re-verified 2026-10-09: H.264 Main@4.1, 1920×800 (2.4:1), yuv420p TV range, BT.709, 25 fps, 10.0 s (250 frames), no audio, 8.0 Mbit/s, 10 024 127 B, `moov` before `mdat`. It is the same footage as the legacy ambient loop `/assets/video/cattle-grazing.mp4` (licences: C-43). First and last frames match, so the clip loops seamlessly (end→start SSIM 0.70, a normal step for this moving shot is 0.77); at ≈4.2–5.2 s a foreground tree wipes across the frame.
 
-Line icons (cow, knife, truck, snowflake/cold, box, handshake, liver, steak, bull) are **redrawn as inline SVG** in `src/components/ui/Icon.tsx`: the legacy sprite icons are embedded bitmaps and cannot be recoloured or scaled cleanly.
+File names carry a short content hash because `/video/*` is cached for seven days and the image optimiser caches the poster by URL: a changed file must get a new name (a stale poster next to a new video showed as a ghosted cross-fade during development).
+
+| Public path | Content | Size |
+|---|---|---|
+| `/video/home-hero-1920.429f8fc6.mp4` | **The original H.264 stream, unchanged** (remuxed only: metadata stripped, faststart; video bitstream MD5-identical to the source). Desktop and tablet (≥ 48rem) | 10 003 919 B (9.54 MiB, 8.0 Mbit/s) |
+| `/video/home-hero-800.c0ff7c32.mp4` | Centred 1:1 crop 800×800 (the source's full height), H.264 CRF 22, phones (< 48rem) | 3 351 627 B (3.20 MiB, 2.7 Mbit/s) |
+| `/video/home-hero-poster.b0958c38.webp` | Frame 0 of the source, 1920×800, converted with the BT.709 matrix, WebP q90; the LCP image (served by `next/image`) | 294 114 B source file |
+
+Commands (25 fps kept, no audio, `moov` first; hash the files and rename after encoding):
+
+```bash
+ffmpeg -i home_bottom.mp4 -map 0:v:0 -c copy -an -map_metadata -1 -movflags +faststart home-hero-1920.mp4
+ffmpeg -i home_bottom.mp4 -vf "crop=800:800:560:0" -an -c:v libx264 -preset veryslow -tune film -profile:v high -level 3.1 -pix_fmt yuv420p -g 50 -color_primaries bt709 -color_trc bt709 -colorspace bt709 -movflags +faststart -map_metadata -1 -crf 22 home-hero-800.mp4
+ffmpeg -i home_bottom.mp4 -vf "select=eq(n\,0),scale=in_color_matrix=bt709:in_range=tv:out_range=pc:flags=accurate_rnd+full_chroma_int,format=rgb24" -frames:v 1 poster.png
+ffmpeg -i poster.png -c:v libwebp -quality 90 -compression_level 6 -map_metadata -1 home-hero-poster.webp
+```
+
+Comparison (2026-10-09, all 250 frames against a lossless decode of the source; H.264 High, `veryslow`, `tune film`; blur = ffmpeg `blurdetect` mean, higher is softer; the source scores 4.156):
+
+| Desktop variant | Size | Avg / peak (1 s) | VMAF | SSIM | Blur |
+|---|---|---|---|---|---|
+| **Original stream (used)** | 9.54 MiB | 8.0 Mbit/s | reference | reference | 4.156 |
+| CRF 18 | 12.07 MiB | 10.1 / 11.9 Mbit/s | 99.98 | 0.990 | 4.159 |
+| CRF 20 | 9.77 MiB | 8.2 / 9.5 | 99.94 | 0.988 | 4.166 |
+| CRF 22 | 7.74 MiB | 6.5 / 7.4 | 99.64 | 0.984 | 4.176 |
+| CRF 24 (HERO-002 file, replaced) | 6.01 MiB | 5.0 / 5.8 | 98.57 | 0.979 | 4.191 |
+
+Re-encoding cannot add detail: CRF 18 and 20 are larger than the source itself, and at 2× zoom on grass, trees, coat and the tree wipe all variants look like the source, whose own compression is visible. The original stream is therefore used unchanged on desktop. (An earlier measurement through a different reference pipeline reported VMAF 99.6 for the CRF 24 file; 98.6 is the like-for-like figure.)
+
+Why the hero can still look soft: the source is a compressed 1920×800 delivery file, and screens enlarge it. Measured scale (device pixels per source pixel): 0.83 at 1440×900 @1×, ≈1.7 at 1440 px on a 2× display, 1.46 on a 390 px phone @3× with the 800×800 crop (1.82 with the earlier 4:5 crop). Only a higher-resolution master (for example 4K) would improve large or high-density screens (C-63). Playback itself is smooth: hardware decoding (`mediaCapabilities`: smooth, power-efficient), 0–2 dropped of ~104–205 frames, main thread ≈ 1 % busy; the poster's colour matches the first frame (mean difference ≤ 0.7 levels, no cast).
+
+Mobile 800×800 crop: CRF 20 3.98 MiB (VMAF 99.98), **CRF 22 3.20 MiB (VMAF 99.97, blur +0.5 %), used**. Cattle stay in frame throughout the loop.
 
 ## Certificate PDFs
 
-Visitors no longer open PDFs: PL / EN / DE controls and the scan thumbnails open the authentic scan in `CertificateViewer` (native dialog, loaded on demand). The PDFs below stay published as archive files and for the legacy 308 redirects.
+On the Certyfikaty page every certificate (current cards and archive rows) has two rows of PL / EN / DE controls:
+- "Podgląd": the controls and the scan thumbnails open the authentic scan in `CertificateViewer` (native dialog, loaded on demand).
+- "Oryginał PDF": plain links to the original PDF, which the browser opens or downloads (GAP-01, 2026-10-10; checked by `npm run test:certs`).
+
+Home and Jakość show only the preview row. The PDFs also serve the legacy 308 redirects.
 
 All 61 originals are published (archive must stay complete). Mapping: `source-assets/pdfs/certificates/<site>/<file>.pdf` → `/documents/certificates/<site>/<file>.pdf`.
-Previews (WEBP scans) are **not** published by default; the certificate UI uses typographic data. The 2026 CP previews are imported for the certificate detail page thumbnails only:
+Scans of all 61 certificates are published as WEBP in `public/photos/certificates/` (see "Images in use" above) and are what the viewer and the thumbnails show. Records and their PDFs:
 
 | Record (content/certificates.ts) | PL | EN | DE |
 |---|---|---|---|
@@ -66,6 +108,8 @@ Previews (WEBP scans) are **not** published by default; the certificate UI uses 
 | CP EKO 2021, 2022 | `cutting-plant-cp/cutting-plant-cp-<year>-ekogwarancja-pl.pdf` | – | – |
 | SH IFS 2019, 2022, 2023 | `slaughterhouse-sh/slaughterhouse-sh-<year>-ifs-food-<lang>.pdf` | ✓ | ✓ |
 | SH EKO 2021 | `slaughterhouse-sh/slaughterhouse-sh-2021-ekogwarancja-{pl,de}.pdf` | – | DE |
+
+The SH EKO 2021 "DE" file is byte-identical to the PL file (same SHA-256; so are their scans). It is the bilingual Polish/English certificate, which the legacy German page linked under a `_de` file name; there is no German version. The site still labels it "DE" (GAP-27, open). The CP EKO 2022 PDF is a scan without a text layer, checked visually: PL-EKO-01-015040/2A, MCKEEN-BEEF CP, valid 22.04.2022–21.07.2023.
 
 Legacy URLs (`/html/images/certyfikaty/{SH|CP}/<year>/<original>.pdf`) redirect 308 to these paths (generated from `content/certificates.ts`, which stores the original filename of every file).
 
@@ -101,7 +145,6 @@ These are image PDFs (≈5.4 MB, not text-searchable). They are a faithful archi
 | `company/europe-map-sepia-locations.webp` | Imported once, now unused (see above); locations are presented as structured data |
 | `brand/certification-marks/*.png` | 220 px greyscale; GQ/PCA/EKO marks unclear or expired. Certification is shown as typography + PDFs until the client supplies official artwork with permission |
 | `brand/favicon.ico` | Replaced by horns SVG icon |
-| `images/certificates/*-preview.webp` (except 2026 CP) | Not needed on the public site |
 | `documents/page-text-archive/`, `documents/page-html-archive/` | Internal research material |
 
 ## Images that should be replaced by real photography (priority order)
@@ -112,5 +155,8 @@ These are image PDFs (≈5.4 MB, not text-searchable). They are a faithful archi
 4. People: quality team, sales team (Oelde), production staff (with consent).
 5. Fleet / loading dock (confirm whether the truck livery image is real).
 6. Biogas plant in Linne and photovoltaic installation.
+7. Cattle and origin (TODO from DESIGN-001): herds the group actually buys from (breeds, partner farms, livestock purchasing in Linne/Wydrzyn), close-ups of coat, feed and pasture textures, all with permission. With such material the home page could get one large, calm origin band and the chain could open on the group's own animals. Until then no stock cattle are added; `vet-farmer-herd.webp` (492 px) is too small for any large frame.
 
 Until then the layout relies on typography, data tables and the few stronger existing images.
+
+**Presentation (DESIGN-001):** content photographs are shown as mounted prints (soft corners, light edge, quiet shadow; full-bleed bands stay square); the three chain photographs use varied proportions (the 3:1 Hereford close-up leads). `hereford-pasture.webp` (O firmie band) and `misty-riverside.webp` (Kontakt band) carry a strong golden-hour cast; they get a gentle CSS grade (`.photo--natural`: saturation 0.84, sepia 0.05, brightness 1.02) closer to the natural light of the hero footage. The files themselves are unchanged; certificate scans and documents are never graded or framed.

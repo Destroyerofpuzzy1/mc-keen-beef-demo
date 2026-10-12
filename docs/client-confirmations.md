@@ -11,7 +11,7 @@ Status: **open** unless marked otherwise. Priority P1 = must be answered before 
 | C-01 | P1 | Does MCKEEN-BEEF SH (Linne) hold a current IFS/BRCGS certificate? Latest published IFS expired 21.09.2024. | SH shown with the neutral line "Aktualny certyfikat tego zakładu nie jest opublikowany na stronie" (no public "Do potwierdzenia" tag); all SH certificates in archive. |
 | C-02 | P1 | Does MCKEEN-BEEF SH II (Wydrzyn/Wieniawa) hold any certificates? | Same neutral line. |
 | C-03 | P1 | Is organic (EKO) production still certified? All EKO certificates expired (latest 21.07.2023). | EKO only in archive; no EKO mark anywhere. |
-| C-04 | P2 | Official BRCGS / IFS / Global Quality logo artwork and permission to use; what the "PCA AC 169" mark on the old site refers to. | Certifications shown as text and PDFs, no marks. |
+| C-04 | P2 | Official BRCGS / IFS / Global Quality logo artwork and permission to use; what the "PCA AC 169" mark on the old site refers to. | Certifications shown as text and PDFs, no marks. Gap audit 2026-10-10: on the CP 2026 certificates the "PCA … AC 169" mark is printed next to the Global Quality marks, so it is the certification body's accreditation, not a McKeen mark; permission to use logos is still open. |
 | C-09 | P2 | "Certified IFS/BRC system since 2010" — older certificates available? | Claim shown attributed as company statement; archive starts 2019. |
 | C-11 | P3 | Is mincing still performed at CP (in 2023 scope only)? | Not mentioned. |
 
@@ -66,7 +66,7 @@ Status: **open** unless marked otherwise. Priority P1 = must be answered before 
 | Id | P | Question | Current site behaviour |
 |---|---|---|---|
 | C-35 | P1 | Legal review of the privacy policy: add SH II, website forms, recruitment, cookies. | Legacy clauses published verbatim; a clearly marked section describes the website forms factually. |
-| C-36 | done | Cookie consent. | No non-essential cookies; consent architecture ready but inactive. |
+| C-36 | done | Cookie consent. | No non-essential cookies, so no banner is needed. No consent mechanism is implemented; it must be built before any analytics (C-47, `security.md` §7). |
 | C-37 | P2 | EU funding visibility rules for the biogas project (placement, duration). | Dedicated page + footer link with EU marks on the page. |
 | C-38 | P1 | Original PDFs of the tax strategy 2023 and whether 2024 reports exist. | Image PDFs archived from the legacy pages. |
 | C-39 | P1 | Impressum for MCKEEN-BEEF SO GmbH (German law). | Not created (needs legal input: managing directors, register court, HRB number). |
@@ -76,7 +76,8 @@ Status: **open** unless marked otherwise. Priority P1 = must be answered before 
 | Id | P | Question | Current site behaviour |
 |---|---|---|---|
 | C-42 | P1 | Real photography of plants, product, people, PV, biogas (see `asset-map.md`). | Best existing stock-like images + typography. |
-| C-43 | P2 | Licences for legacy images and videos. | Assumed transferable; must be confirmed. |
+| C-43 | P2 | Licences for legacy images and videos. | Assumed transferable; must be confirmed. Also covers the home hero video: the supplied `home_bottom.mp4` is the same footage as the legacy cattle loop (`asset-map.md`, "Home hero video"). |
+| C-63 | P2 | Is a higher-resolution master of the hero footage available (for example 4K or ProRes), or new footage? | The site serves the supplied 1920×800 file unchanged; it looks soft on high-density and very large screens because the browser has to enlarge it (`asset-map.md`, "Home hero video"). |
 | C-46 | P1 | Domain/DNS/hosting control; valid TLS. | Site assumes HTTPS; HSTS only in production. |
 | C-47 | P2 | Analytics: GA4 or other, Search Console access. | Analytics disabled. |
 | C-50 | P1 | Professional EN/DE translation and approval. | EN/DE marked draft, noindex, notice shown. |
@@ -87,12 +88,20 @@ Status: **open** unless marked otherwise. Priority P1 = must be answered before 
 |---|---|---|---|
 | C-40 | P1 | Is the biogas plant in Linne built and operating (commissioning date)? | Described only as a project whose installation "ma służyć" generating electricity and heat (source wording). No claim that it produces energy. All project figures unchanged. |
 | C-41 | P2 | Exact scope of production records / traceability (per batch? per lot? per animal?). | Only the source statement: monitoring of every production stage and accurate documentation. "Dokumentacja każdej partii" removed. |
-| C-51 | P1 | Which products and forms does SH II (Wydrzyn) supply? | Quarters list both slaughterhouses as plants; the chilled/frozen fact is attributed to SH Linne only (2023 IFS scope). Nothing inferred for SH II. |
+| C-51 | P1 | Which products and forms does SH II (Wydrzyn) supply? | Since GAP-06 (2026-10-10) nothing links SH II to a product. Quarters list only SH Linne (documented by its IFS scopes 2019–2023 and EKO 2021), and their summary names no plant. The SH II card on /zaklady has no products line. SH II itself (activity, livestock purchasing, legal data, certificate line) is unchanged. |
 | C-52 | P1 | Real publication date of the vacancy (and validity). | Visible job offer unchanged. JobPosting structured data is withheld until `datePosted` is set in `src/content/jobs.ts`; the data-collection date is not used. |
 | C-53 | P1 | Legal approval of the EN/DE privacy translations. | Historical EN/DE texts are prepared verbatim in `src/content/privacy-drafts.ts` (generated by `scripts/build-privacy-drafts.mjs`) but NOT published; EN/DE pages show the Polish text and stay noindex. Switch: `privacyTranslationApproved` in `src/content/privacy.ts`. The archived EN text contains truncated sentences. |
 | C-54 | P1 | Controller information for MCKEEN-BEEF SH II in the privacy policy. | Missing on the legacy site as well; not written by us. |
 | C-61 | P1 | Authentic product photography (quarters, packed cuts, trimmings, offal). | Ćwierci: brand beef-cuts line art instead of a photo. Elementy: raw bone-in cut (existing library image). All product photos labelled "Zdjęcie poglądowe". |
 | C-62 | P1 | Delivery parameters (lead times, area, temperature control, Incoterms). | None stated. |
+
+## Gap audit (2026-10-10): new ids
+
+Findings and evidence: [`gap-audit-2026-10-10.md`](gap-audit-2026-10-10.md); live status: [`STATUS.md`](STATUS.md), "Gap audit tracker".
+
+| Id | P | Question | Current site behaviour |
+|---|---|---|---|
+| C-64 | P2 | Which company is the beneficiary of the EU project "Budowa biogazowni rolniczej w Linne"? The disclosure does not name it. | Since GAP-07 (2026-10-10) no company is named. The project is shown by location only: the Biogazownia page (verbatim disclosure, EU marks), the Środowisko sections of Home and Jakość, and the footer link. It is no longer listed on the MCKEEN-BEEF SH card on /zaklady. Checked: the research documents, the verbatim disclosure and the EU logos name no beneficiary; the raw legacy page archive is not available here. |
 
 ### Client confirmation checklist (one pass with the client)
 
@@ -106,7 +115,7 @@ Nothing below is shown on the site as "Do potwierdzenia"; where a fact is open t
 6. Delivery parameters: C-62.
 7. Current export approvals: C-18.
 8. Logistics / transport parameters, own fleet, temperature control: C-22.
-9. Is the biogas plant operating: C-40.
+9. Is the biogas plant operating, and which company is the project's beneficiary: C-40, C-64.
 10. Exact traceability / documentation scope: C-41, C-19.
 11. SH II product scope: C-51.
 12. Current contacts and the `.de` / `.eu` e-mail discrepancy: C-05, C-26.

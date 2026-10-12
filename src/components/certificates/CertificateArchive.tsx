@@ -8,6 +8,12 @@ import { formatDate, formatScore } from './format';
 /**
  * Archive of expired certificates, grouped by plant and year, in a data table.
  * Native <details> keeps it collapsible without JavaScript.
+ *
+ * Phones (UXA-07): the same table is laid out as one compact entry per certificate
+ * (components.css), so the preview and PDF buttons are always in view; no second markup.
+ * The explicit table roles keep the table semantics when CSS changes the display of its parts.
+ * The field labels are visible only in that layout and hidden from assistive technology,
+ * which reads the column headers instead.
  */
 export function CertificateArchive({ locale, today }: { locale: Locale; today: string }) {
   const d = getDictionary(locale);
@@ -30,34 +36,40 @@ export function CertificateArchive({ locale, today }: { locale: Locale; today: s
               <span className="archive__count tnum">{certs.length}</span>
             </summary>
             <div className="table-wrap" role="region" aria-label={`${d.certificates.archiveTitle}: ${t(e.role, locale)}`} tabIndex={0}>
-              <table className="data-table">
-                <thead>
-                  <tr>
-                    <th scope="col">{d.cert.archive}</th>
-                    <th scope="col">Standard</th>
-                    <th scope="col">{d.cert.score}</th>
-                    <th scope="col">{d.cert.validity}</th>
-                    <th scope="col">{d.cert.files}</th>
+              <table className="data-table" role="table">
+                <thead role="rowgroup">
+                  <tr role="row">
+                    <th scope="col" role="columnheader">{d.cert.archive}</th>
+                    <th scope="col" role="columnheader">Standard</th>
+                    <th scope="col" role="columnheader">{d.cert.score}</th>
+                    <th scope="col" role="columnheader">{d.cert.validity}</th>
+                    <th scope="col" role="columnheader">{d.cert.files}</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody role="rowgroup">
                   {certs.map((c) => (
-                    <tr key={c.id}>
-                      <th scope="row" className="tnum">
+                    <tr key={c.id} role="row">
+                      <th scope="row" role="rowheader" className="tnum">
                         {c.year}
                       </th>
-                      <td>
+                      <td role="cell">
                         {t(standardName[c.standard], locale)}
                         {c.version ? <span className="muted"> {c.standard === 'brcgs' ? c.version : `v${c.version}`}</span> : null}
                       </td>
-                      <td className="tnum">
+                      <td role="cell" className={c.result ? 'tnum' : 'tnum archive__none'}>
+                        <span className="archive__label" aria-hidden="true">
+                          {d.cert.score}
+                        </span>
                         {c.score ? `${c.result}, ${formatScore(c.score, locale)}` : (c.result ?? '–')}
                       </td>
-                      <td className="tnum">
+                      <td role="cell" className="tnum">
+                        <span className="archive__label" aria-hidden="true">
+                          {d.cert.validity}
+                        </span>
                         <span className="badge badge--archive">{d.cert.expired}</span> {formatDate(c.expiresOn, locale)}
                       </td>
-                      <td>
-                        <CertificateFiles cert={c} locale={locale} />
+                      <td role="cell">
+                        <CertificateFiles cert={c} locale={locale} pdf context={t(e.place, locale)} />
                       </td>
                     </tr>
                   ))}

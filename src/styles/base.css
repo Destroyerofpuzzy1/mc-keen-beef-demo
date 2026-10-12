@@ -86,6 +86,15 @@ textarea {
 main:focus {
   outline: none;
 }
+/* A11Y-001: the blue ring reaches only 2.7–3:1 on maroon and dark brown, so dark surfaces switch it to
+   light blue. Over the hero's moving picture neither colour is safe alone: a maroon halo fills the gap,
+   making a two-colour indicator (WCAG technique C40; the two colours are 10.6:1 apart). */
+:is(.hero, .chain, .section--dark, .logistics__panel, .origin__panel, .sales-card--dark, .site-foot, .mmenu__panel) {
+  --focus: var(--focus-on-dark);
+}
+.hero :focus-visible {
+  box-shadow: 0 0 0 2px var(--maroon);
+}
 
 .container {
   width: 100%;
@@ -132,6 +141,11 @@ main:focus {
 }
 .skip-link:focus {
   top: var(--s-4);
+}
+/* A11Y-001: on tablets the link opens over the red wordmark, which the blue ring matches in lightness; a
+   cream halo in the gap keeps the ring readable there (on the cream header the halo does not show). */
+.skip-link:focus-visible {
+  box-shadow: 0 0 0 2px var(--on-dark);
 }
 
 .stack-s > * + * {

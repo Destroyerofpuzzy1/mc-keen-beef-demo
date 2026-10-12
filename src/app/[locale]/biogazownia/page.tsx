@@ -1,7 +1,9 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import type { Metadata } from 'next';
 import { getDictionary, resolveLocale } from '@/i18n';
 import { hasLocale } from '@/i18n/config';
+import { href } from '@/i18n/routes';
 import { pageMetadata } from '@/lib/seo';
 import { biogas } from '@/content/biogas';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -97,6 +99,15 @@ export default async function BiogasPage({ params }: PageProps<'/[locale]/biogaz
                 </ul>
               </div>
             </div>
+          </div>
+          {/* UXA-05 stage 5: back to the group's environment section, where this project is listed.
+              Navigation only, after the EU disclosure (unchanged); in the page's language. */}
+          <div className="container" lang={locale}>
+            <p className="link-row">
+              <Link href={href(locale, 'quality', 'srodowisko')} className="arrow-link">
+                {d.quality.envTitle}
+              </Link>
+            </p>
           </div>
         </section>
       </div>

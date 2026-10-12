@@ -10,6 +10,7 @@ import { salesContacts } from '@/content/contacts';
 import { MailLink, PhoneLink } from '@/components/ui/Contact';
 import { Horns } from '@/components/ui/Icon';
 import { MobileFold } from '@/components/ui/MobileFold';
+import { BrandPatch } from '@/components/brand/BrandMarks';
 
 export function SiteFooter({ locale }: { locale: Locale }) {
   const d = getDictionary(locale);
@@ -23,6 +24,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
           <div className="site-foot__brand">
             <Image src="/assets/brand/logo.svg" alt="McKeen-Beef" width={204} height={43} unoptimized className="site-foot__logo" />
             <p>{d.footer.tagline}</p>
+            <BrandPatch id="footer" motif="cattle" bottom="LISKÓW · 2009" className="site-foot__patch" />
           </div>
           <div className="site-foot__sales">
             <h2 className="site-foot__h">{d.common.salesDept}</h2>

@@ -10,6 +10,7 @@ import { PageHeader } from '@/components/layout/PageHeader';
 import { EnquiryForm } from '@/components/forms/EnquiryForm';
 import { enquiryFormProps } from '@/components/forms/formProps';
 import { MailLink, PhoneLink } from '@/components/ui/Contact';
+import { BrandPatch } from '@/components/brand/BrandMarks';
 
 export async function generateMetadata({ params }: PageProps<'/[locale]/zapytaj-o-oferte'>): Promise<Metadata> {
   const { locale } = await params;
@@ -30,7 +31,13 @@ export default async function EnquiryPage({ params, searchParams }: PageProps<'/
 
   return (
     <>
-      <PageHeader locale={locale} routeKey="enquiry" title={d.enquiry.title} lead={d.enquiry.lead} />
+      <PageHeader
+        locale={locale}
+        routeKey="enquiry"
+        title={d.enquiry.title}
+        lead={d.enquiry.lead}
+        motif={<BrandPatch id="enquiry" motif="steak" bottom={d.nav.enquiry.toUpperCase()} />}
+      />
       <section className="section">
         <div className="container layout-aside">
           <EnquiryForm

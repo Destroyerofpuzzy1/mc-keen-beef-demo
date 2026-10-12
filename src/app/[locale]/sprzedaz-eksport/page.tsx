@@ -12,6 +12,7 @@ import { EntityLegal } from '@/components/contacts/EntityCard';
 import { MailLink, PhoneLink } from '@/components/ui/Contact';
 import { Photo } from '@/components/ui/Photo';
 import { MarketsLedger } from '@/components/sections/MarketsLedger';
+import { BrandIcon, BrandPatch } from '@/components/brand/BrandMarks';
 
 export async function generateMetadata({ params }: PageProps<'/[locale]/sprzedaz-eksport'>): Promise<Metadata> {
   const { locale } = await params;
@@ -29,7 +30,13 @@ export default async function SalesPage({ params }: PageProps<'/[locale]/sprzeda
 
   return (
     <>
-      <PageHeader locale={locale} routeKey="sales" title={s.title} lead={s.lead} />
+      <PageHeader
+        locale={locale}
+        routeKey="sales"
+        title={s.title}
+        lead={s.lead}
+        motif={<BrandPatch id="sales" motif="truck" bottom={d.nav.sales.toUpperCase()} />}
+      />
 
       <section className="wide-photo">
         <Photo item={media.truck} locale={locale} ratio="21 / 8" sizes="100vw" priority quality={80} />
@@ -38,6 +45,7 @@ export default async function SalesPage({ params }: PageProps<'/[locale]/sprzeda
       <section className="section" aria-labelledby="mk-h">
         <div className="container layout-split">
           <div>
+            <BrandIcon name="globe" className="section-icon" />
             <h2 id="mk-h" className="h-section">
               {s.marketsTitle}
             </h2>
@@ -45,8 +53,9 @@ export default async function SalesPage({ params }: PageProps<'/[locale]/sprzeda
             <MarketsLedger locale={locale} />
           </div>
           <div>
+            <BrandIcon name="truck" className="section-icon" />
             <h2 className="h-section">{s.logisticsTitle}</h2>
-            <ul className="ticks">
+            <ul className="ticks ticks--check">
               {s.logistics.map((x) => (
                 <li key={x}>{x}</li>
               ))}
@@ -90,6 +99,13 @@ export default async function SalesPage({ params }: PageProps<'/[locale]/sprzeda
             <Link href={href(locale, 'enquiry')} className="btn btn--primary btn--block" data-enquiry="">
               {d.nav.enquiry}
             </Link>
+            {/* UXA-05 stage 3: the assortment as the secondary step after the enquiry (the dark-surface
+                button of the home sales panel); each product there leads on to an enquiry. */}
+            <p className="link-row">
+              <Link href={href(locale, 'products')} className="btn btn--ghost-light btn--arrow">
+                {d.nav.products}
+              </Link>
+            </p>
           </div>
         </div>
       </section>

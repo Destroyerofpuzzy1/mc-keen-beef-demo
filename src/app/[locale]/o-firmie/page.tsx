@@ -8,6 +8,7 @@ import { media } from '@/content/media';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { HistoryTimeline } from '@/components/sections/HistoryTimeline';
 import { Photo } from '@/components/ui/Photo';
+import { BrandPatch } from '@/components/brand/BrandMarks';
 
 export async function generateMetadata({ params }: PageProps<'/[locale]/o-firmie'>): Promise<Metadata> {
   const { locale } = await params;
@@ -23,10 +24,16 @@ export default async function AboutPage({ params }: PageProps<'/[locale]/o-firmi
 
   return (
     <>
-      <PageHeader locale={locale} routeKey="about" title={a.title} lead={a.lead} />
+      <PageHeader
+        locale={locale}
+        routeKey="about"
+        title={a.title}
+        lead={a.lead}
+        motif={<BrandPatch id="about" motif="cattle" bottom="LISKÓW · 2009" size="lg" className="patch--hero" />}
+      />
 
       <section className="wide-photo" aria-hidden="false">
-        <Photo item={media.herefordPasture} locale={locale} ratio="21 / 8" sizes="100vw" priority quality={80} />
+        <Photo item={media.herefordPasture} locale={locale} ratio="21 / 8" sizes="100vw" priority quality={80} className="photo--natural" />
       </section>
 
       <section className="section" id="o-nas" aria-label={a.title}>

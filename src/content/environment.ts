@@ -4,8 +4,9 @@ import type { L } from '@/i18n/config';
  * Environment facts. Legacy Jakość page "W trosce o środowisko" + Biogazownia page.
  * Figures are quoted from the EU project disclosure (content/biogas.ts).
  */
-export const environmentFacts: { title: L; text: L }[] = [
+export const environmentFacts: { id: 'waste' | 'solar' | 'biogas'; title: L; text: L }[] = [
   {
+    id: 'waste',
     title: { pl: 'Odpady', en: 'Waste', de: 'Abfälle' },
     text: {
       pl: 'W zakładach ograniczamy ilość odpadów i segregujemy je.',
@@ -14,6 +15,7 @@ export const environmentFacts: { title: L; text: L }[] = [
     },
   },
   {
+    id: 'solar',
     title: { pl: 'Fotowoltaika', en: 'Photovoltaics', de: 'Photovoltaik' },
     text: {
       pl: 'Stale zwiększamy produkcję zielonej energii z własnej instalacji fotowoltaicznej.',
@@ -22,6 +24,7 @@ export const environmentFacts: { title: L; text: L }[] = [
     },
   },
   {
+    id: 'biogas',
     title: { pl: 'Biogazownia w Linne', en: 'Biogas plant in Linne', de: 'Biogasanlage in Linne' },
     text: {
       // Project wording only (legacy Biogazownia page: "będzie służyć"). Operation is not confirmed (C-40).

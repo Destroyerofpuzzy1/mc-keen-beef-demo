@@ -7,6 +7,7 @@ import { clientIp, clientKey, contentLengthWithin, isSameOrigin, wantsJson } fro
 import { logEvent, newId } from '@/lib/security/log';
 import { verifyTurnstile } from '@/lib/security/turnstile';
 import type { FieldErrorCode } from '@/lib/validation/forms';
+import { signFormResult } from './result';
 import { checkFormSession } from './session';
 
 export type FormName = 'enquiry' | 'careers';
@@ -48,7 +49,31 @@ export function respond(
   const url = new URL(href(locale, 'sent'), env.siteUrl);
   url.searchParams.set('form', form);
   url.searchParams.set('status', outcome);
+  // Signed, so the result page states only outcomes this server produced (lib/forms/result.ts).
+  // Without a usable RATE_LIMIT_SALT nothing is signed and the page shows its neutral state.
+  const signed = signFormResult(env.forms.resultSecret, form, outcome, Date.now() / 1000);
+  if (signed) {
+    url.searchParams.set('t', signed.t);
+    url.searchParams.set('sig', signed.sig);
+  }
   return new Response(null, { status: 303, headers: { ...headers, Location: url.pathname + url.search } });
+}
+
+/**
+ * Language of the result page for failures before the form body is read (rate limit, parse error):
+ * the same-origin page the form was sent from (Referrer-Policy strict-origin-when-cross-origin
+ * sends the path for same-origin requests). Anything else falls back to Polish.
+ */
+function refererLocale(req: Request): Locale {
+  try {
+    const ref = new URL(req.headers.get('referer') ?? '');
+    const sameOrigin = ref.origin === new URL(env.siteUrl).origin || (!env.isProd && ref.host === req.headers.get('host'));
+    if (!sameOrigin) return 'pl';
+    const first = ref.pathname.split('/')[1] ?? '';
+    return hasLocale(first) ? first : 'pl';
+  } catch {
+    return 'pl';
+  }
 }
 
 interface GuardOptions {
@@ -73,7 +98,7 @@ export async function guardFormRequest(req: Request, opts: GuardOptions): Promis
     for (const message of configWarnings()) logEvent('error', 'config.invalid', { message });
   }
   const id = newId();
-  const fallbackLocale: Locale = 'pl';
+  const fallbackLocale: Locale = refererLocale(req);
   const fail = (outcome: Outcome, reason: string, extra: Parameters<typeof respond>[4] = {}, locale: Locale = fallbackLocale) => {
     logEvent(outcome === 'error' ? 'error' : 'warn', `form.${opts.form}.rejected`, { id, reason });
     return { ok: false as const, response: respond(req, opts.form, locale, outcome, { ...extra, id }) };
